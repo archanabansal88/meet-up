@@ -1,0 +1,13 @@
+.ui-component-button {
+	padding: 10px;
+	margin-bottom: 10px;
+	width: 100%;
+	border: 0;
+	background-color: #ffa181;
+	color: white;
+	border-radius: 3px;
+	text-transform: uppercase;
+}
+.buttonContainer {
+	padding: 0 20px;
+}
