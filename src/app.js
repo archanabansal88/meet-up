@@ -1,5 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import SignUp from './components/signup'
+import GoogleOauth from './components/googleOauth'
 
-ReactDOM.render(<SignUp />, document.getElementById('root'))
+ReactDOM.render(<GoogleOauth />, document.getElementById('root'))
