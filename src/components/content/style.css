@@ -1,0 +1,7 @@
+.content{
+    min-height: 460px;
+    border-bottom: 1px solid #c1bbbb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
