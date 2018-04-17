@@ -1,0 +1,13 @@
+.header-container{
+    padding: 15px;
+    border-bottom: 1px solid #c1bbbb;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-title{
+    margin: 0;
+    padding: 0;
+}

@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import GoogleOauth from './components/googleOauth'
+import Container from './components/maincontainer'
+import '../css/style.css'
 
-ReactDOM.render(<GoogleOauth />, document.getElementById('root'))
+ReactDOM.render(<Container />, document.getElementById('root'))
