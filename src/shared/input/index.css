@@ -1,0 +1,47 @@
+.ui-component__input {
+	position: relative;
+    margin-bottom: 20px;
+}
+
+.ui-component__input-field {
+    border: 1px solid #ccc;
+    padding: 10px;
+    color: #666;
+    outline: none;
+    box-sizing: border-box;
+    height: 40px;
+    transition: all 0.3s ease-in;
+    font-size: 1em;
+}
+
+.ui-component__input-field:focus {
+    border-color: #009cda;
+    box-shadow: 0px 0px 0px 4px rgba(0, 141, 200, 0.4);
+    background-color: #fff;
+}
+
+.ui-component__input--error {
+    color: #cc3333;
+    font-size: 1em;
+    margin-top: 0.8em;
+}
+
+.ui-component__input--isInvalid .ui-component__input-field {
+	border: 1px solid #cc3333;	
+}
+
+.ui-component__input--isInvalid .ui-component__input-field:focus{
+    box-shadow: 0px 0px 0px 4px  rgba(204, 51, 51, 0.2);
+}
+
+.ui-component__input--isInvalid .ui-component__input--label{
+    color: #cc3333;
+}
+
+.ui-component__input--label{
+    display: block;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}

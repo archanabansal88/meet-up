@@ -1,10 +1,12 @@
 .header-container{
-    padding: 25px;
     border-bottom: 1px solid #c1bbbb;
     color: red;
+    height: 80px;
+    display: flex;
+    align-items: center;
 }
 
 .header-title{
     margin: 0;
-    padding: 0;
+    padding: 0 20px;
 }
