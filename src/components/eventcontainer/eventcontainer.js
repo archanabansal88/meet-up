@@ -10,7 +10,7 @@ const EventContainer = () => {
       <Carousel>
         {data.map((event, index) => {
           return (
-            <div key={index} className='eventlist' id={index}>
+            <div key={index} className='eventlist'>
               <EventCard event={event} />
             </div>
           )

@@ -33,7 +33,7 @@ class Carousel extends Component {
 
   render () {
     const {selectedIndex} = this.state
-    const translatex = -(selectedIndex * 310)
+    const translatex = -(selectedIndex * 330)
     return (
       <div className='carousel'>
         <a className='carousel__arrow carousel__arrow--left' onClick={this.handleLeftButtonClick}>&lt;</a>

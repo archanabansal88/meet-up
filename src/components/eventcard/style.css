@@ -1,12 +1,21 @@
 .event-card__image{
     height: 250px;
-	width: 300px;
+	width: 100%;
 	border: 1px solid black;
-	margin:5px;
     box-sizing: border-box;
     border-radius: 4px;
 }
 
 .event-card__content{
     text-align: center;
+    margin-top: 10px;
+}
+
+.event-card{
+    height: 356px;
+    width: 330px;
+    margin: 8px;
+    border-radius: 8px;
+    box-shadow: 0 0 2px 0 rgba(46,62,72,.12), 0 2px 4px 0 rgba(46,62,72,.12);
+    box-sizing: border-box;
 }
