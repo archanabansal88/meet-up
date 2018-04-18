@@ -1,6 +1,6 @@
 import React from 'react'
-import GoogleOauth from '../googleOauth'
-import EventCard from '../eventcontainer/eventcard'
+import GoogleOauth from '../googleOauth/googleOauth'
+import EventContainer from '../eventcontainer/eventcontainer'
 import './style.css'
 
 const Content = () => {
@@ -9,7 +9,7 @@ const Content = () => {
       <div className='content'>
         <GoogleOauth />
       </div>
-      <EventCard />
+      <EventContainer />
     </div>
   )
 }

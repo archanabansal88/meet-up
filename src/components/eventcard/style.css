@@ -1,0 +1,12 @@
+.event-card__image{
+    height: 250px;
+	width: 300px;
+	border: 1px solid black;
+	margin:5px;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.event-card__content{
+    text-align: center;
+}

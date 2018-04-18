@@ -1,4 +1,16 @@
 .event{
-    min-height: 250px;
-    border-bottom: 1px solid #c1bbbb;
+    width: 930px;
+    margin: auto;
+}
+
+.eventlist-container{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.eventlist{
+    display: inline-block;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
 }
