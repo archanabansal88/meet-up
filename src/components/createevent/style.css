@@ -1,0 +1,26 @@
+.event-form{
+	display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+	background: #f6f6f6;
+	padding-top: 30px;
+}
+
+.event-form__container {
+	padding: 3em 6em;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.event-form__button {
+	float: left;
+	background-color: #dd403a;
+	border: 0;
+	color: white;
+	cursor: pointer;
+}
+
+.event-form__title{
+	font-size: 1.5em;
+}
