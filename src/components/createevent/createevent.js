@@ -14,8 +14,7 @@ class CreateEvent extends React.Component {
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
   }
 
-  validateInput (type, e) {
-    const input = this.state[type]
+  handleInputChange (type, e) {
     this.setState({
       [type]: e.target.value
     })
@@ -37,7 +36,7 @@ class CreateEvent extends React.Component {
             <Input
               type='text'
               label='Event Name'
-              onChange={this.validateInput.bind(this, 'name')}
+              onChange={this.handleInputChange.bind(this, 'name')}
               isValid
               value={this.state.name}
             />
@@ -45,18 +44,18 @@ class CreateEvent extends React.Component {
               type='text'
               label='Event Venue'
               isValid
-              onChange={this.validateInput.bind(this, 'venue')}
+              onChange={this.handleInputChange.bind(this, 'venue')}
               value={this.state.venue}
             />
             <Input
               type='url'
               label='Event Url'
               isValid
-              onChange={this.validateInput.bind(this, 'url')}
+              onChange={this.handleInputChange.bind(this, 'url')}
               value={this.state.url}
             />
             <textarea name='textarea' rows='10' cols='40' placeholder='Enter description here' />
-            <Button label='create' onClick={this.handleSubmitClick} className='event-form__button' />
+            <Button label='Create' onClick={this.handleSubmitClick} className='event-form__button' />
           </form>
         </div>
       </div>

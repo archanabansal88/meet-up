@@ -1,13 +1,13 @@
 import React from 'react'
-import GoogleOauth from '../googleOauth/googleOauth'
-import EventContainer from '../eventcontainer/eventcontainer'
+import GoogleOauth from '../googleOauth'
+import EventContainer from '../eventcontainer'
 import './style.css'
 
 const Content = () => {
   return (
     <div>
       <div className='content'>
-        <GoogleOauth />
+        <GoogleOauth onLoginSuccess={() => {}} />
       </div>
       <EventContainer />
     </div>

@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 
 class GoogleOauth extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.onFailure = this.onFailure.bind(this)
     this.handleSigninSuccess = this.handleSigninSuccess.bind(this)
     this.init = this.init.bind(this)
@@ -56,7 +56,8 @@ class GoogleOauth extends Component {
   }
 
   handleSigninSuccess (googleUser) {
-    var profile = googleUser.getBasicProfile()
+    const profile = googleUser.getBasicProfile()
+    this.props.onLoginSuccess(profile)
     console.log('ID: ' + profile.getId())
     console.log('Name: ' + profile.getName())
     console.log('Image URL: ' + profile.getImageUrl())

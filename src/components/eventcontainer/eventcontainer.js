@@ -1,6 +1,6 @@
 import React from 'react'
-import Carousel from '../carousel/carousel'
-import EventCard from '../eventcard/eventcard'
+import Carousel from '../carousel'
+import EventCard from '../eventcard'
 import data from '../../../data/sample'
 import './style.css'
 
