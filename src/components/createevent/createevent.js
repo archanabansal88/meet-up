@@ -8,8 +8,9 @@ class CreateEvent extends React.Component {
     super(props)
     this.state = {
       name: '',
-      venue: '',
-      url: ''
+      location: '',
+      url: '',
+      description: ''
     }
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
   }
@@ -23,8 +24,20 @@ class CreateEvent extends React.Component {
   handleSubmitClick (e) {
     e.preventDefault()
     console.log('Event Name:', this.state.name)
-    console.log('Event venue:', this.state.venue)
+    console.log('Event location:', this.state.location)
     console.log('Event url:', this.state.url)
+    console.log('Event description:', this.state.description)
+
+    this.handleReset()
+  }
+
+  handleReset () {
+    this.setState({
+      name: '',
+      location: '',
+      url: '',
+      description: ''
+    })
   }
 
   render () {
@@ -42,10 +55,10 @@ class CreateEvent extends React.Component {
             />
             <Input
               type='text'
-              label='Event Venue'
+              label='Event Location'
               isValid
-              onChange={this.handleInputChange.bind(this, 'venue')}
-              value={this.state.venue}
+              onChange={this.handleInputChange.bind(this, 'location')}
+              value={this.state.location}
             />
             <Input
               type='url'
@@ -54,7 +67,7 @@ class CreateEvent extends React.Component {
               onChange={this.handleInputChange.bind(this, 'url')}
               value={this.state.url}
             />
-            <textarea name='textarea' rows='10' cols='40' placeholder='Enter description here' />
+            <textarea name='textarea' rows='10' cols='40' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={this.state.description} />
             <Button label='Create' onClick={this.handleSubmitClick} className='event-form__button' />
           </form>
         </div>
