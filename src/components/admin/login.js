@@ -17,6 +17,7 @@ class Login extends React.Component {
     fetch(`${config.url}login`, {
       body: JSON.stringify(data),
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
         'content-type': 'application/json'
       }

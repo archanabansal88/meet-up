@@ -9,6 +9,7 @@ function login (req, res) {
     })
     console.log('set the req session', req.session)
   } else {
+    req.session.email = false
     res.status(401).send('Invalid User')
   }
 }

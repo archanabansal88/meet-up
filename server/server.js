@@ -10,6 +10,7 @@ const PORT = 3000
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('build'))
+
 app.use(session({
   resave: true,
   saveUninitialized: false,
@@ -25,14 +26,6 @@ app.get('/create', (req, res, next) => {
   }
   next()
 })
-
-// app.get('/admin', (req, res, next) => {
-//   if (req.session.email) {
-//     res.setHeader('content-type', 'text/html')
-//     res.redirect('/create')
-//   }
-//   next()
-// })
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../build/index.html`))
