@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from '../../shared/button'
 import Input from '../../shared/input'
+import config from '../../config/index'
 import './style.css'
 
 class CreateEvent extends React.Component {
@@ -10,7 +11,8 @@ class CreateEvent extends React.Component {
       name: '',
       location: '',
       url: '',
-      description: ''
+      description: '',
+      showErrorMsg: false
     }
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
   }
@@ -23,12 +25,29 @@ class CreateEvent extends React.Component {
 
   handleSubmitClick (e) {
     e.preventDefault()
+    this.setState({showErrorMsg: false})
+    const {name, location, url, description} = this.state
+    const obj = {title: name, location, url, description, dateTime: new Date()}
+
+    fetch(`${config.url}api/event/create`, {
+      body: JSON.stringify(obj),
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          this.handleReset()
+        }
+      }).catch((reject) => {
+        this.setState({showErrorMsg: true})
+      })
     console.log('Event Name:', this.state.name)
     console.log('Event location:', this.state.location)
     console.log('Event url:', this.state.url)
     console.log('Event description:', this.state.description)
-
-    this.handleReset()
   }
 
   handleReset () {
@@ -45,6 +64,7 @@ class CreateEvent extends React.Component {
       <div className='event-form'>
         <div>
           <h1 className='event-form__title'>Create a new Event</h1>
+          {this.state.showErrorMsg && <div>Sorry, We are unable to create an event due to a technical glitch</div>}
           <form className='event-form__container'>
             <Input
               type='text'

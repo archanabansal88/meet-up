@@ -3,6 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const path = require('path')
+const fs = require('fs')
 
 const app = express()
 const PORT = 3000
@@ -17,16 +18,45 @@ app.use(session({
   secret: 'abc'
 }))
 
-app.post('/login', Login)
+app.post('/api/login', Login)
+
+app.get('/api/event', (req, res) => {
+  fs.readFile(path.resolve(`${__dirname}/data/data.json`), (err, data) => {
+    if (err) {
+      console.log(err)
+      res.status(500).send('Not able to read file')
+    }
+    res.json(JSON.parse(data))
+  })
+})
+
+app.post('/api/event/create', (req, res) => {
+  fs.readFile(path.resolve(`${__dirname}/data/data.json`), (err, data) => {
+    if (err) {
+      res.status(500).send('Not able to read file')
+    }
+    const obj = data ? JSON.parse(data) : []
+    obj.push(req.body)
+    const updatedData = JSON.stringify(obj, null, 2)
+    fs.writeFile(path.resolve(`${__dirname}/data/data.json`), updatedData, err => {
+      if (err) {
+        res.status(500).send('Not able to save file')
+      }
+      res.end()
+    })
+  })
+})
 
 app.get('/create', (req, res, next) => {
   if (!req.session.email) {
     res.setHeader('content-type', 'text/html')
     res.redirect('/')
+  } else {
+    next()
   }
-  next()
 })
 
+// to render UI...always place it at the bottom
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../build/index.html`))
 })
