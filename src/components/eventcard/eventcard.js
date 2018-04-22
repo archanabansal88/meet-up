@@ -2,7 +2,7 @@ import React from 'react'
 import './style.css'
 
 const EventCard = ({event}) => {
-  const {url, dateTime, location, title} = event
+  const {url, dateTime, location, title, description} = event
   return (
     <div className='event-card'>
       <div>
@@ -12,6 +12,7 @@ const EventCard = ({event}) => {
         <div>{dateTime}</div>
         <div>{location}</div>
         <div>{title}</div>
+        <div>{description}</div>
       </div>
     </div>
   )

@@ -12,5 +12,26 @@
     "url": "https://secure.meetupstatic.com/photo_api/event/rx1100x800/dtff005axffae00/sg9cd610ff5a/466892518.jpeg",
     "description": " React is a js library used to build UI interfaces",
     "dateTime": "2018-04-22T17:57:16.377Z"
+  },
+  {
+    "title": "Critical Rendering path",
+    "location": "Hotel Grand",
+    "url": "https://secure.meetupstatic.com/photo_api/event/rx1100x800/dt002fffx36c200/sg67ca4ccb50/451113946.jpeg",
+    "description": "Understanding of steps in critical rendering path",
+    "dateTime": "2018-04-22T18:05:28.103Z"
+  },
+  {
+    "title": "Working with React",
+    "location": "Hotel Taj",
+    "url": "https://secure.meetupstatic.com/photo_api/event/rx1100x800/dtff005axffae00/sg9cd610ff5a/466892518.jpeg",
+    "description": "React is a js library used to build UI interfaces",
+    "dateTime": "2018-04-22T18:06:48.197Z"
+  },
+  {
+    "title": "Performance and Rendering",
+    "location": "Hotel Marriot",
+    "url": "https://secure.meetupstatic.com/photo_api/event/rx1100x800/dtff005axffae00/sg9cd610ff5a/466892518.jpeg",
+    "description": "How performance and rendering matters for a page and how should we optimize the performance",
+    "dateTime": "2018-04-22T18:07:45.924Z"
   }
 ]
