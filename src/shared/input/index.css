@@ -1,5 +1,4 @@
 .ui-component__input {
-	position: relative;
     margin-bottom: 20px;
 }
 
@@ -12,6 +11,7 @@
     height: 40px;
     transition: all 0.3s ease-in;
     font-size: 1em;
+    width: 100%;
 }
 
 .ui-component__input-field:focus {

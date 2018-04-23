@@ -1,10 +1,10 @@
 import React from 'react'
 import {render} from 'react-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import Content from './components/content'
 import Header from './components/header'
-import CreateEvent from './components/createevent'
-import EventDetails from './components/eventdetails'
-import { BrowserRouter, Route } from 'react-router-dom'
+import CreateEvent from './components/createEvent'
+import EventDetails from './components/eventDetails'
 import Login from './components/admin'
 import '../css/style.css'
 

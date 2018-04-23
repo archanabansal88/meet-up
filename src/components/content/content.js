@@ -1,5 +1,5 @@
 import React from 'react'
-import EventContainer from '../eventcontainer'
+import EventContainer from '../eventContainer'
 import './style.css'
 
 const Content = () => {

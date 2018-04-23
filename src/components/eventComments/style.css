@@ -1,0 +1,32 @@
+.event-comments{
+    padding: 10px;
+    border-bottom: 1px solid #c1bbbb;
+}
+
+.event-comments__list{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap; 
+}
+
+.event-comments__item{
+    width: 100%;
+    background: white;
+    padding: 1em 2em;
+    border-radius: 8px;
+    margin-bottom: 1em;
+}
+
+.event-comments__name{
+    margin: 8px 0;
+    font-size: .8em;
+}
+
+.event-comments__message{
+    color: #2e3e48;
+    margin: 0 0 5px;
+    font-size: 1.1em;
+}

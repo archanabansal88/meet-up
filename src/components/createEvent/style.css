@@ -24,3 +24,7 @@
 .event-form__title{
 	font-size: 1.3em;
 }
+
+.event-form__text-area{
+	border: 1px solid #ccc;
+}

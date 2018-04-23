@@ -87,7 +87,7 @@ class CreateEvent extends React.Component {
               onChange={this.handleInputChange.bind(this, 'url')}
               value={this.state.url}
             />
-            <textarea name='textarea' rows='10' cols='40' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={this.state.description} />
+            <textarea name='textarea' rows='10' cols='40' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={this.state.description} className='event-form__text-area' />
             <Button label='Create' onClick={this.handleSubmitClick} className='event-form__button' />
           </form>
         </div>
