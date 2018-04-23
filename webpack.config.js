@@ -5,7 +5,7 @@ module.exports = {
     filename: './build/main.js'
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.css']
   },
   module: {
     rules: [
