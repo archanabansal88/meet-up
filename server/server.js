@@ -4,14 +4,18 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const path = require('path')
 const fs = require('fs')
-
+const redis = require('redis')
+const client = redis.createClient()
 const app = express()
 const PORT = 3000
+
+client.on('connect', function () {
+  console.log('connected')
+})
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('build'))
-
 app.use(session({
   resave: true,
   saveUninitialized: false,
@@ -54,6 +58,11 @@ app.get('/create', (req, res, next) => {
   } else {
     next()
   }
+})
+
+// TODO: Save user info in redis
+app.post('/api/user/login', (req, res) => {
+
 })
 
 // to render UI...always place it at the bottom
