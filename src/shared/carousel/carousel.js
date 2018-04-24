@@ -23,7 +23,7 @@ class Carousel extends Component {
 
   handleRightButtonClick () {
     let {selectedIndex} = this.state
-    if (selectedIndex < this.props.children.length - 1) {
+    if (selectedIndex < this.props.children.length - 3) {
       selectedIndex++
     }
     this.setState({

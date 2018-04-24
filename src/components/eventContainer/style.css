@@ -1,16 +1,16 @@
-.event{
-    width: 990px;
-    margin: auto;
+.event {
+	width: 1033px;
+	margin: auto;
 }
 
-.eventlist-container{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.eventlist-container {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }
 
-.eventlist{
-    display: inline-block;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
+.eventlist {
+	display: inline-block;
+	justify-content: flex-start;
+	flex-wrap: nowrap;
 }
