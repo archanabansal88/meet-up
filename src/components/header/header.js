@@ -41,7 +41,9 @@ class Header extends React.Component {
     const {isLoggedin, profile} = this.state
     return (
       <div className='header-container'>
-        <h2 className='header-title'>Meet Up</h2>
+        <div>
+          <h2 className='header-title'>Bangalore <div>JS</div></h2>
+        </div>
         {!isLoggedin && <GoogleOauth onLoginSuccess={this.handleLoginSuccess} />}
         {isLoggedin &&
           <div className='header__user-info'>

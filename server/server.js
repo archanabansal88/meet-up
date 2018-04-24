@@ -3,15 +3,19 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const path = require('path')
-const fs = require('fs')
 const redis = require('redis')
 const client = redis.createClient()
+const {promisify} = require('util')
 const app = express()
 const PORT = 3000
 
 client.on('connect', function () {
   console.log('connected')
 })
+
+const clientHmset = promisify(client.hmset).bind(client)
+const clientLpush = promisify(client.lpush).bind(client)
+const clientLrange = promisify(client.lrange).bind(client)
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -25,49 +29,48 @@ app.use(session({
 app.post('/api/login', Login)
 
 app.get('/api/event', (req, res) => {
-  fs.readFile(path.resolve(`${__dirname}/data/data.json`), (err, data) => {
-    if (err) {
-      console.log(err)
-      res.status(500).send('Not able to read file')
-    }
-    res.json(JSON.parse(data))
+  clientLrange('events', 0, -1).then((events) => {
+    const obj = events.map((event) => {
+      return JSON.parse(event)
+    })
+    res.json(obj)
   })
 })
 
 app.post('/api/event/create', (req, res) => {
-  fs.readFile(path.resolve(`${__dirname}/data/data.json`), (err, data) => {
-    if (err) {
-      res.status(500).send('Not able to read file')
-    }
-    const obj = data ? JSON.parse(data) : []
-    obj.push(req.body)
-    const updatedData = JSON.stringify(obj, null, 2)
-    fs.writeFile(path.resolve(`${__dirname}/data/data.json`), updatedData, err => {
-      if (err) {
-        res.status(500).send('Not able to save file')
-      }
-      res.end()
-    })
+  clientLpush('events', JSON.stringify(req.body)).then(() => {
+    res.end()
   })
 })
 
 app.get('/create', (req, res, next) => {
   if (!req.session.email) {
-    res.setHeader('content-type', 'text/html')
     res.redirect('/')
   } else {
     next()
   }
 })
 
-// TODO: Save user info in redis
-app.post('/api/user/login', (req, res) => {
+app.post('/api/user/get', (req, res) => {
+  const { emailid } = req.body
+  client.hgetall(emailid, function (err, object) {
+    if (err) res.status(500).send('unable to save data')
+    res.json(object)
+  })
+})
 
+app.post('/api/user/login', (req, res) => {
+  const {emailid, name, id, image} = req.body
+  clientHmset(emailid, {
+    name, id, emailid, image
+  }).then(() => {
+    res.status(200).send('success')
+  })
 })
 
 // to render UI...always place it at the bottom
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(`${__dirname}/../build/index.html`))
+  res.sendFile(path.join(`${__dirname}/../build/index.html`))
 })
 
 app.listen(PORT, function () {
