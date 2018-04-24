@@ -6,10 +6,15 @@ import './style.css'
 class Header extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {
+      isLoggedin: false
+    }
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
   }
 
   handleLoginSuccess (profile) {
+    this.setState({isLoggedin: true, profile})
+
     const data = {
       emailid: profile.getEmail(),
       name: profile.getName(),
@@ -33,10 +38,16 @@ class Header extends React.Component {
   }
 
   render () {
+    const {isLoggedin, profile} = this.state
     return (
       <div className='header-container'>
         <h2 className='header-title'>Meet Up</h2>
-        <GoogleOauth onLoginSuccess={this.handleLoginSuccess} />
+        {!isLoggedin && <GoogleOauth onLoginSuccess={this.handleLoginSuccess} />}
+        {isLoggedin &&
+          <div className='header__user-info'>
+            <img className='header__user-image' src={profile.getImageUrl()} />{profile.getName()}
+          </div>
+        }
       </div>
     )
   }

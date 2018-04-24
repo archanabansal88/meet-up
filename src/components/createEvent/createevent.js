@@ -44,10 +44,6 @@ class CreateEvent extends React.Component {
       }).catch((reject) => {
         this.setState({showErrorMsg: true})
       })
-    console.log('Event Name:', this.state.name)
-    console.log('Event location:', this.state.location)
-    console.log('Event url:', this.state.url)
-    console.log('Event description:', this.state.description)
   }
 
   handleReset () {

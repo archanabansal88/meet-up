@@ -25,10 +25,10 @@
     font-size: 1.1em;
 }
 
-.event-card_content .event-title_header {
+.event-card__content .event-title__header {
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    font-size: 1.2em;
+    font-size: 1.4em;
 }

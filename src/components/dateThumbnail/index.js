@@ -1,9 +1,7 @@
 import React from 'react'
 import './style.css'
 
-console.log('test')
 export const DateTimeLong = ({date}) => {
-  console.log(date)
   const dateObj = new Date(date)
   const formattedDate = dateObj.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
   return (
