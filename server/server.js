@@ -67,7 +67,6 @@ app.get('/create', (req, res, next) => {
 app.post('/api/user/get', (req, res) => {
   const { emailid } = req.body
   clientHgetall(emailid).then((obj) => {
-    // console.log(obj)
     res.json(obj)
   })
 })

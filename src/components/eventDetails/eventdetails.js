@@ -31,7 +31,12 @@ class EventDetails extends React.Component {
   }
 
   handleYesButtonClick () {
-    console.log('yes')
+    const {isLoggedin, profile} = this.props
+    if (isLoggedin) {
+      // send user profile to attendee list
+    } else {
+      // pop up to sign in
+    }
   }
 
   handleNoButtonClick () {
