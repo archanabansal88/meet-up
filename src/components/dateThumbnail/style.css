@@ -6,7 +6,7 @@
     height: 62px;
     width: 62px;
     text-align: center;
-    margin: 12px;
+    margin: 12px 12px 12px 0;
 }
 
 .event-date__day{

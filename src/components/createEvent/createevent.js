@@ -22,28 +22,41 @@ class CreateEvent extends React.Component {
       [type]: e.target.value
     })
   }
+  handleValidation () {
+    const {name, location, url, description} = this.state
+    let hasError = false
 
+    if (!name || !location || !url || !description) {
+      hasError = true
+    }
+    if (!hasError) {
+      return true
+    }
+  }
   handleSubmitClick (e) {
     e.preventDefault()
     this.setState({showErrorMsg: false})
-    const {name, location, url, description} = this.state
-    const obj = {title: name, location, url, description, dateTime: new Date()}
 
-    fetch(`${config.url}api/event/create`, {
-      body: JSON.stringify(obj),
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          this.handleReset()
+    if (this.handleValidation()) {
+      const {name, location, url, description} = this.state
+      const obj = {title: name, location, url, description, dateTime: new Date()}
+
+      fetch(`${config.url}api/event/create`, {
+        body: JSON.stringify(obj),
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'content-type': 'application/json'
         }
-      }).catch((reject) => {
-        this.setState({showErrorMsg: true})
       })
+        .then((response) => {
+          if (response.status === 200) {
+            this.handleReset()
+          }
+        }).catch((reject) => {
+          this.setState({showErrorMsg: true})
+        })
+    }
   }
 
   handleReset () {
