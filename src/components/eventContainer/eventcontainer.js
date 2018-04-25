@@ -11,6 +11,11 @@ class EventContainer extends React.Component {
       events: false,
       showErrorMsg: false
     }
+    this.handleEventClick = this.handleEventClick.bind(this)
+  }
+
+  handleEventClick (event) {
+    this.props.history.push('/details')
   }
 
   componentDidMount () {
@@ -33,7 +38,7 @@ class EventContainer extends React.Component {
           {events.map((event, index) => {
             return (
               <div key={index} className='eventlist'>
-                <EventCard event={event} />
+                <EventCard event={event} onEventClick={this.handleEventClick} />
               </div>
             )
           })}

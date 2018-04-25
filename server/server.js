@@ -14,6 +14,7 @@ client.on('connect', function () {
 })
 
 const clientHmset = promisify(client.hmset).bind(client)
+const clientHgetall = promisify(client.hgetall).bind(client)
 const clientLpush = promisify(client.lpush).bind(client)
 const clientLrange = promisify(client.lrange).bind(client)
 
@@ -53,9 +54,9 @@ app.get('/create', (req, res, next) => {
 
 app.post('/api/user/get', (req, res) => {
   const { emailid } = req.body
-  client.hgetall(emailid, function (err, object) {
-    if (err) res.status(500).send('unable to save data')
-    res.json(object)
+  clientHgetall(emailid).then((obj) => {
+    // console.log(obj)
+    res.json(obj)
   })
 })
 
