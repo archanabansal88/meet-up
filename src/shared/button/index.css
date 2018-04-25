@@ -9,6 +9,7 @@
     font-size: 0.8em;
     display: flex;
     margin-top: 10px;
+    cursor: pointer;
 }
 .ui-component-button:focus{
 	box-shadow: 0px 0px 0px 4px rgba(0, 141, 200, 0.4);
