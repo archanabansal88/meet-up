@@ -12,7 +12,6 @@ export const DateTimeLong = ({date}) => {
 }
 
 export const DateTimeShort = ({date}) => {
-  console.log(date)
   const dateObj = new Date(date)
   const month = dateObj.toLocaleString('en-US', {month: 'short'})
   const newDate = dateObj.getDate()
