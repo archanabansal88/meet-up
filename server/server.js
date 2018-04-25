@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const path = require('path')
 const redis = require('redis')
+const uuid = require('uuid/v1')
 const client = redis.createClient()
 const {promisify} = require('util')
 const app = express()
@@ -38,8 +39,19 @@ app.get('/api/event', (req, res) => {
   })
 })
 
+app.get('/api/event/:id', (req, res) => {
+  clientLrange('events', 0, -1).then((events) => {
+    const obj = events.filter((event) => {
+      const eventObj = JSON.parse(event)
+      return eventObj.id === req.params.id
+    }).map((value) => JSON.parse(value))
+    res.json(obj)
+  })
+})
+
 app.post('/api/event/create', (req, res) => {
-  clientLpush('events', JSON.stringify(req.body)).then(() => {
+  const obj = Object.assign({}, req.body, {id: uuid()})
+  clientLpush('events', JSON.stringify(obj)).then(() => {
     res.end()
   })
 })

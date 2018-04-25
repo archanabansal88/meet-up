@@ -15,7 +15,7 @@ class EventContainer extends React.Component {
   }
 
   handleEventClick (event) {
-    this.props.history.push('/details')
+    this.props.history.push(`/${event.id}`)
   }
 
   componentDidMount () {

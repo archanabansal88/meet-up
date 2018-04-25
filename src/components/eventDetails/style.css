@@ -18,17 +18,9 @@
     padding: 30px 0 24px 0;
 }
 
-.event-button__container{
+.event-details__button{
     display: flex;
     
-}
-.yes__button{
-    margin-right: 50px;
-    cursor: pointer;
-}
-
-.no__button{
-    cursor: pointer;
 }
 
 .event-details__content, .event-details__header{
@@ -38,6 +30,7 @@
 }
 .event-details__content{
     background: #f6f7f8;
+    min-height: calc(100vh - 232px);
 }
 
 .event-details__container, .event-details__heading{
@@ -52,4 +45,8 @@
     border-radius: 8px;
     padding: 20px;
     height: 600px;
+}
+
+.event-details__button .ui-component__button {
+    margin-right: 10px;
 }
