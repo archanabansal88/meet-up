@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import GoogleOauth from '../googleOauth'
 import config from '../../config/index'
 import './style.css'
@@ -40,9 +41,11 @@ class Header extends React.Component {
   render () {
     const {isLoggedin, profile} = this.state
     return (
-      <div className='header-container'>
+      <div className='header'>
         <div>
-          <h2 className='header-title'>Bangalore <div>JS</div></h2>
+          <Link to='/' className='header__link'>
+            <h2 className='header__title'>Bangalore <div>JS</div></h2>
+          </Link>
         </div>
         {!isLoggedin && <GoogleOauth onLoginSuccess={this.handleLoginSuccess} />}
         {isLoggedin &&

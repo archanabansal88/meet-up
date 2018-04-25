@@ -1,6 +1,5 @@
-.header-container{
+.header{
     border-bottom: 1px solid #c1bbbb;
-    color: red;
     height: 80px;
     display: flex;
     align-items: center;
@@ -8,9 +7,14 @@
     padding: 0 20px;
 }
 
-.header-title{
+.header__link{
+    text-decoration: none;
+}
+
+.header__title{
     margin: 0;
     padding: 0 20px;
+    color: red;
 }
 
 .header__user-info{
