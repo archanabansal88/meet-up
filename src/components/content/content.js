@@ -5,7 +5,11 @@ import './style.css'
 const Content = ({history}) => {
   return (
     <div>
-      <div className='content' />
+      <div className='content'>
+        <video autoPlay loop className='content__video'>
+          <source src='video.mp4' type='video/mp4' />
+        </video>
+      </div>
       <EventContainer history={history} />
     </div>
   )
