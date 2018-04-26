@@ -42,7 +42,7 @@ app.get('/api/event', (req, res) => {
   })
 })
 
-// API call to display details of selected event
+//  API call to get details of a particular event
 app.get('/api/event/:id', (req, res) => {
   clientLrange('events', 0, -1).then((events) => {
     const obj = events.filter((event) => {
@@ -53,7 +53,7 @@ app.get('/api/event/:id', (req, res) => {
   })
 })
 
-// API call to display the list of attendees
+//  API call to save an attendee for a particular event
 app.post('/api/event/attendee', (req, res) => {
   let selectedIndex = -1
   let selectedEvent
