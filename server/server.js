@@ -29,8 +29,10 @@ app.use(session({
   secret: 'abc'
 }))
 
-app.post('/api/login', Login)
+// API call for admin login
+app.post('/api/admin/login', Login)
 
+// API call to get list of events
 app.get('/api/event', (req, res) => {
   clientLrange('events', 0, -1).then((events) => {
     const obj = events.map((event) => {
@@ -40,6 +42,7 @@ app.get('/api/event', (req, res) => {
   })
 })
 
+// API call to display details of selected event
 app.get('/api/event/:id', (req, res) => {
   clientLrange('events', 0, -1).then((events) => {
     const obj = events.filter((event) => {
@@ -50,6 +53,7 @@ app.get('/api/event/:id', (req, res) => {
   })
 })
 
+// API call to display the list of attendees
 app.post('/api/event/attendee', (req, res) => {
   let selectedIndex = -1
   let selectedEvent
@@ -75,6 +79,7 @@ app.post('/api/event/attendee', (req, res) => {
   })
 })
 
+// API call to create an event
 app.post('/api/event/create', (req, res) => {
   const obj = Object.assign({}, req.body, {id: uuid()})
   clientLpush('events', JSON.stringify(obj)).then(() => {
@@ -97,6 +102,7 @@ app.post('/api/user/get', (req, res) => {
   })
 })
 
+// API call for user login
 app.post('/api/user/login', (req, res) => {
   const {email, name, id, image} = req.body
   clientHmset(email, {

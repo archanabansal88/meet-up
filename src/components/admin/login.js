@@ -14,7 +14,7 @@ class Login extends React.Component {
       emailid: profile.getEmail()
     }
 
-    fetch(`${config.url}api/login`, {
+    fetch(`${config.url}api/admin/login`, {
       body: JSON.stringify(data),
       method: 'POST',
       credentials: 'same-origin',
