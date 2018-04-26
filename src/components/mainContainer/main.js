@@ -20,7 +20,7 @@ class Main extends React.Component {
     this.setState({isLoggedin: true, profile})
 
     const data = {
-      emailid: profile.getEmail(),
+      email: profile.getEmail(),
       name: profile.getName(),
       id: profile.getId(),
       image: profile.getImageUrl()
@@ -51,7 +51,7 @@ class Main extends React.Component {
             <Route exact path='/' component={Content} />
             <Route path='/admin' component={Login} />
             <Route path='/create' component={CreateEvent} />
-            <Route path='/:id' render={() => <EventDetails isLoggedin={isLoggedin} profile={profile} />} />
+            <Route path='/:id' render={(props) => <EventDetails {...props} isLoggedin={isLoggedin} profile={profile} />} />
           </Switch>
         </div>
       </BrowserRouter>

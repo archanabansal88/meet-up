@@ -19,7 +19,7 @@ class EventDetails extends React.Component {
     this.handleNoButtonClick = this.handleNoButtonClick.bind(this)
   }
 
-  componentDidMount () {
+  getEventDetails () {
     fetch(`${config.url}api/event/${this.props.match.params.id}`)
       .then(response => response.json())
       .then((event) => {
@@ -30,13 +30,32 @@ class EventDetails extends React.Component {
       })
   }
 
+  componentDidMount () {
+    this.getEventDetails()
+  }
+
   handleYesButtonClick () {
     const {isLoggedin, profile} = this.props
     if (isLoggedin) {
-      // send user profile to attendee list
+      this.saveAttendee(profile.getEmail(), this.state.event.id)
     } else {
       // pop up to sign in
     }
+  }
+
+  saveAttendee (email, eventId) {
+    fetch(`${config.url}api/event/attendee`, {
+      body: JSON.stringify({email, eventId}),
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).then((response) => {
+      if (response.status === 200) {
+        this.getEventDetails()
+      }
+    })
   }
 
   handleNoButtonClick () {
@@ -44,7 +63,10 @@ class EventDetails extends React.Component {
   }
 
   render () {
-    const {event, showErrorMsg} = this.state
+    const {event} = this.state
+    const isUserAttending = event && this.props.profile && event.attendees && event.attendees.filter((attendee) =>
+      attendee.email === this.props.profile.getEmail()
+    )
     return (
       <main className='event-details'>
         <div className='event-details__header-wrapper'>
@@ -53,6 +75,7 @@ class EventDetails extends React.Component {
               <DateTimeShort date={event.dateTime} />
               <Title {...event} />
             </article>
+            {!isUserAttending &&
             <article className='event-details__user'>
               <div className='event-details__title'>Are you attending the event</div>
               <div className='event-details__button'>
@@ -60,6 +83,7 @@ class EventDetails extends React.Component {
                 <Button label='No' onClick={this.handleNoButtonClick} />
               </div>
             </article>
+            }
           </section>
         </div>
         <section className='event-details__content'>

@@ -32,6 +32,7 @@ class EventContainer extends React.Component {
     const {events, showErrorMsg} = this.state
     return (
       <div className='event'>
+        <h2 className='event__header'>Events</h2>
         {showErrorMsg && <div>There is a problem getting list of events.Please try after some time</div>}
         {events &&
         <Carousel>

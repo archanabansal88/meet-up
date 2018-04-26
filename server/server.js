@@ -18,6 +18,7 @@ const clientHmset = promisify(client.hmset).bind(client)
 const clientHgetall = promisify(client.hgetall).bind(client)
 const clientLpush = promisify(client.lpush).bind(client)
 const clientLrange = promisify(client.lrange).bind(client)
+const clientLset = promisify(client.lset).bind(client)
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -49,6 +50,31 @@ app.get('/api/event/:id', (req, res) => {
   })
 })
 
+app.post('/api/event/attendee', (req, res) => {
+  let selectedIndex = -1
+  let selectedEvent
+  clientLrange('events', 0, -1).then((events) => {
+    events.forEach((event, index) => {
+      const eventObj = JSON.parse(event)
+      if (eventObj.id === req.body.eventId) {
+        selectedEvent = eventObj
+        selectedIndex = index
+      }
+    })
+    return clientHgetall(req.body.email)
+  }).then((obj) => {
+    if (!selectedEvent.attendees) {
+      selectedEvent.attendees = []
+    }
+    selectedEvent.attendees.push(obj)
+    return clientLset('events', selectedIndex, JSON.stringify(selectedEvent))
+  }).then(() => {
+    res.end()
+  }).catch(() => {
+    res.status(500).send()
+  })
+})
+
 app.post('/api/event/create', (req, res) => {
   const obj = Object.assign({}, req.body, {id: uuid()})
   clientLpush('events', JSON.stringify(obj)).then(() => {
@@ -65,16 +91,16 @@ app.get('/create', (req, res, next) => {
 })
 
 app.post('/api/user/get', (req, res) => {
-  const { emailid } = req.body
-  clientHgetall(emailid).then((obj) => {
+  const { email } = req.body
+  clientHgetall(email).then((obj) => {
     res.json(obj)
   })
 })
 
 app.post('/api/user/login', (req, res) => {
-  const {emailid, name, id, image} = req.body
-  clientHmset(emailid, {
-    name, id, emailid, image
+  const {email, name, id, image} = req.body
+  clientHmset(email, {
+    name, id, email, image
   }).then(() => {
     res.status(200).send('success')
   })

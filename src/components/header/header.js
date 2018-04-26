@@ -3,8 +3,7 @@ import {Link} from 'react-router-dom'
 import GoogleOauth from '../googleOauth'
 import './style.css'
 
-const Header = () => {
-  const {isLoggedin, profile, onLoginSuccess} = this.props
+const Header = ({isLoggedin, profile, onLoginSuccess}) => {
   return (
     <div className='header'>
       <div>

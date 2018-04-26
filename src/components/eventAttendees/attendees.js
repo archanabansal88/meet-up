@@ -3,7 +3,10 @@ import './style.css'
 
 const Attendee = ({value, index}) => {
   return (
-    <li key={index} className='event-attendees__item'> {value} </li>
+    <li key={index} className='event-attendees__item'>
+      <img className='event-attendees__image' src={value.image} />
+      <div className='event-attendees__name'>{value.name}</div>
+    </li>
   )
 }
 
