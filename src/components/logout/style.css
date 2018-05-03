@@ -1,9 +1,11 @@
 button {
     background-color: white;
-    border-radius: 20%;
+    border-radius: 2px;
     border-style: solid;
     padding: 2%;
     size: 150%;
     border-color: darkgray;
     border-width: 0.5px;
+    margin: 1%;
+    float: right;
 }
