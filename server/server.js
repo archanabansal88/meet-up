@@ -112,8 +112,13 @@ app.post('/api/user/login', (req, res) => {
   })
 })
 
+app.get('/logout', (req, res) => {
+  req.session.destroy()
+  res.redirect('/home')
+})
+
 // to render UI...always place it at the bottom
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../build/index.html`))
 })
 

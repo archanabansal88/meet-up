@@ -49,9 +49,9 @@ class Main extends React.Component {
           <Header isLoggedin={isLoggedin} onLoginSuccess={this.handleLoginSuccess} profile={profile} />
           <Switch>
             <Route exact path='/' component={Content} />
-            <Route path='/admin' component={Login} />
-            <Route path='/create' component={CreateEvent} />
-            <Route path='/:id' render={(props) => <EventDetails {...props} isLoggedin={isLoggedin} profile={profile} />} />
+            <Route exact path='/admin' component={Login} />
+            <Route exact path='/create' component={CreateEvent} />
+            <Route exact path='/:id' render={(props) => <EventDetails {...props} isLoggedin={isLoggedin} profile={profile} />} />
           </Switch>
         </div>
       </BrowserRouter>

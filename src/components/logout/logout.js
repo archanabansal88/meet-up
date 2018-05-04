@@ -1,10 +1,19 @@
 import React, {Component} from 'react'
+// import {Link} from 'react-router-dom'
+
+import config from '../../config/index'
 
 import './style.css'
 class Logout extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      redirect: `${config.url}` + 'logout'
+    }
+  }
   render () {
     return (
-      <button className='logout'>logout</button>
+      <a className='logout' href={this.state.redirect} target='_self'>logout</a>
     )
   }
 }

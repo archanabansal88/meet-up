@@ -5,10 +5,14 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-client": "webpack && webpack-dev-server",
-    "dev-server": "webpack && nodemon ./server/server"
+    "dev-client": "webpack -d && webpack-dev-server",
+    "dev-server": "nodemon ./server/server",
+    "webpack": "webpack -w"
   },
   "author": "Archana Bansal",
+  "contributors": [
+    "Abhishek Shingane <shinganeabhishek@gmail.com>"
+  ],
   "license": "ISC",
   "devDependencies": {
     "babel-core": "6.26.0",
