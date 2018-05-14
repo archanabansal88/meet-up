@@ -1,8 +1,12 @@
+const webpack = require('webpack')
+
 module.exports = {
   entry: './src/app.js',
   output: {
     path: __dirname,
-    filename: './build/main.js'
+    filename: './build/main.js',
+    hotUpdateChunkFilename: 'hot/hot-update.js',
+    hotUpdateMainFilename: 'hot/hot-update.json'
   },
   resolve: {
     extensions: ['.js', '.jsx', '.css']
@@ -26,10 +30,15 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
+  ],
   devServer: {
     inline: true,
     port: 3000,
-    historyApiFallback: true
+    historyApiFallback: true,
+    hot: true
   },
   devtool: 'source-map'
 }
