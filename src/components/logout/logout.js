@@ -1,19 +1,31 @@
 import React, {Component} from 'react'
-// import {Link} from 'react-router-dom'
-
 import config from '../../config/index'
 
 import './style.css'
 class Logout extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      redirect: `${config.url}` + 'logout'
-    }
+    this.onClick = this.onClick.bind(this)
   }
+
+  signOut () {
+    const auth2 = window.gapi.auth2.getAuthInstance()
+    auth2.disconnect()
+      .then(function () {
+        console.log('User signed out.')
+      })
+  }
+
+  onClick () {
+    this.signOut()
+    this.props.onLogoutSuccess()
+  }
+
   render () {
     return (
-      <a className='logout' href={this.state.redirect} target='_self'>logout</a>
+      <div className='logout'>
+        <a href={'/logout'} onClick={this.onClick}>logout</a>
+      </div>
     )
   }
 }

@@ -11,12 +11,15 @@ class Main extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isLoggedin: false
+      isLoggedin: false,
+      profile: null
     }
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
+    this.handleLogoutSuccess = this.handleLogoutSuccess.bind(this)
   }
 
   handleLoginSuccess (profile) {
+    console.log(profile, 'handle login')
     this.setState({isLoggedin: true, profile})
 
     const data = {
@@ -36,9 +39,13 @@ class Main extends React.Component {
     })
       .then((response) => {
         if (response.status === 200) {
-          console.log('success')
+          console.log('success', response)
         }
       })
+  }
+
+  handleLogoutSuccess () {
+    this.setState({isLoggedin: false, profile: null})
   }
 
   render () {
@@ -46,7 +53,7 @@ class Main extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <Header isLoggedin={isLoggedin} onLoginSuccess={this.handleLoginSuccess} profile={profile} />
+          <Header isLoggedin={isLoggedin} onLoginSuccess={this.handleLoginSuccess} onLogoutSuccess={this.handleLogoutSuccess} profile={profile} />
           <Switch>
             <Route exact path='/' component={Content} />
             <Route exact path='/admin' component={Login} />

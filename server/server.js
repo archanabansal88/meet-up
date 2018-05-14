@@ -105,6 +105,7 @@ app.post('/api/user/get', (req, res) => {
 // API call for user login
 app.post('/api/user/login', (req, res) => {
   const {email, name, id, image} = req.body
+  req.session.email = req.body.email
   clientHmset(email, {
     name, id, email, image
   }).then(() => {
@@ -114,7 +115,9 @@ app.post('/api/user/login', (req, res) => {
 
 app.get('/logout', (req, res) => {
   req.session.destroy()
-  res.redirect('/home')
+  res.clearCookie()
+  // res.send('logout successful')
+  res.redirect('/')
 })
 
 // to render UI...always place it at the bottom

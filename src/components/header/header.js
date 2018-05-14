@@ -4,8 +4,8 @@ import GoogleOauth from '../googleOauth'
 import Logout from '../logout'
 import './style.css'
 
-const Header = ({isLoggedin, profile, onLoginSuccess}) => {
-  console.log(isLoggedin)
+const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
+  console.log(isLoggedin, 'from header')
   return (
     <div className='header'>
       <div>
@@ -13,17 +13,17 @@ const Header = ({isLoggedin, profile, onLoginSuccess}) => {
           <h2 className='header__title'>Bangalore <div>JS</div></h2>
         </Link>
       </div>
-      {!isLoggedin && <GoogleOauth onLoginSuccess={onLoginSuccess} />}
-      {isLoggedin &&
-      <div>
-        <div className='header__user-info'>
-          <img className='header__user-image' src={profile.getImageUrl()} />{profile.getName()}
+      {!isLoggedin ? <GoogleOauth onLoginSuccess={onLoginSuccess} />
+        : <div>
+          <div className='header__user-info'>
+            <img className='header__user-image' src={profile ? profile.getImageUrl() : null} />{profile ? profile.getName() : null}
+          </div>
+          <Logout onLogoutSuccess={onLogoutSuccess} />
         </div>
-        <Logout />
-      </div>
       }
     </div>
   )
+
 }
 
 export default Header

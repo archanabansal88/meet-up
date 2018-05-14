@@ -1,5 +1,21 @@
-button {
-    background-color: yellow;
+.logout a {
+    text-decoration: none;
+    color: black;
+    background-color:white;
+    border-radius: 2px;
+    border-style: solid;
+    padding: 2%;
+    size: 150%;
+    border-color: darkgray;
+    border-width: 0.5px;
+    margin: 1%;
+    float: right;
+}
+
+.logout a:hover {
+    text-decoration: none;
+    color: black;
+    background-color: lightgrey;
     border-radius: 2px;
     border-style: solid;
     padding: 2%;
