@@ -2,7 +2,7 @@ import React from 'react'
 import {DateTimeLong} from '../dateThumbnail'
 import './style.css'
 
-const Message = ({comment}) => {
+const Comment = ({comment}) => {
   return (
     <li className='event-comments__item'>
       <h6 className='event-comments__name'>{comment.name}</h6>
@@ -12,15 +12,15 @@ const Message = ({comment}) => {
   )
 }
 
-const Comment = ({comments}) => {
+const Comments = ({comments}) => {
   return (
     <section className='event-comments'>
       <h2 className='event-comments__title'>Comments</h2>
       <ul className='event-comments__list'>
-        {comments.map((comment, index) => <Message key={index} comment={comment} />)}
+        {comments.map((comment, index) => <Comment key={index} comment={comment} />)}
       </ul>
     </section>
   )
 }
 
-export default Comment
+export default Comments

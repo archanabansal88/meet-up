@@ -56,6 +56,8 @@ class CreateEvent extends React.Component {
         }).catch((reject) => {
           this.setState({showErrorMsg: true})
         })
+    } else {
+      this.setState({showErrorMsg: true})
     }
   }
 

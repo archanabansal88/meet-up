@@ -6,7 +6,7 @@ import './style.css'
 
 class EventContainer extends React.Component {
   constructor (props) {
-    super(props)
+    super()
     this.state = {
       events: false,
       showErrorMsg: false

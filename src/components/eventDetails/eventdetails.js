@@ -3,7 +3,7 @@ import {DateTimeShort} from '../dateThumbnail'
 import Title from '../eventTitle/title'
 import Description from '../eventDescription/description'
 import Attendees from '../eventAttendees/attendees'
-import Comment from '../eventComments/comments'
+import Comments from '../eventComments/comments'
 import Button from '../../shared/button'
 import config from '../../config/index'
 import './style.css'
@@ -90,7 +90,7 @@ class EventDetails extends React.Component {
           <article className='event-details__container'>
             <Description description={event.description} />
             {event.attendees && <Attendees attendees={event.attendees} />}
-            {event.comments && <Comment comments={event.comments} />}
+            {event.comments && <Comments comments={event.comments} />}
           </article>
           <article className='event-details__location'>
           Location
