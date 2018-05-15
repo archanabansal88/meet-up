@@ -1,27 +1,32 @@
-.logout a {
+.logout Button {
+    box-sizing: border-box;
     text-decoration: none;
     color: black;
     background-color:white;
     border-radius: 2px;
     border-style: solid;
     padding: 2%;
-    size: 150%;
     border-color: darkgray;
     border-width: 0.5px;
     margin: 1%;
     float: right;
+    font-weight: normal;
+    height: 2rem;
+    width: 50px;
 }
 
-.logout a:hover {
+.logout Button:hover {
+    box-sizing: border-box;
     text-decoration: none;
     color: black;
-    background-color: lightgrey;
+    background-color: #F0F0F0;
     border-radius: 2px;
     border-style: solid;
     padding: 2%;
-    size: 150%;
-    border-color: darkgray;
+    border-color: orange;
     border-width: 0.5px;
     margin: 1%;
     float: right;
+    height: 2rem;
+    width: 50px;
 }

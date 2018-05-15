@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import config from '../../config/index'
+import Button from '../../shared/button'
 
 import './style.css'
 class Logout extends Component {
@@ -24,7 +24,7 @@ class Logout extends Component {
   render () {
     return (
       <div className='logout'>
-        <a href={'/logout'} onClick={this.onClick}>logout</a>
+        <Button href={'/logout'} onClick={this.onClick} label={'Logout'} />
       </div>
     )
   }

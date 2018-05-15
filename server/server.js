@@ -1,7 +1,7 @@
 const Login = require('./handler/login')
 const express = require('express')
 const bodyParser = require('body-parser')
-const session = require('express-session')
+// const session = require('express-session')
 const path = require('path')
 const redis = require('redis')
 const uuid = require('uuid/v1')
@@ -23,11 +23,11 @@ const clientLset = promisify(client.lset).bind(client)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('build'))
-app.use(session({
-  resave: true,
-  saveUninitialized: false,
-  secret: 'abc'
-}))
+// app.use(session({
+//   resave: true,
+//   saveUninitialized: false,
+//   secret: 'abc'
+// }))
 
 // API call for admin login
 app.post('/api/admin/login', Login)
@@ -105,19 +105,11 @@ app.post('/api/user/get', (req, res) => {
 // API call for user login
 app.post('/api/user/login', (req, res) => {
   const {email, name, id, image} = req.body
-  req.session.email = req.body.email
   clientHmset(email, {
     name, id, email, image
   }).then(() => {
     res.status(200).send('success')
   })
-})
-
-app.get('/logout', (req, res) => {
-  req.session.destroy()
-  res.clearCookie()
-  // res.send('logout successful')
-  res.redirect('/')
 })
 
 // to render UI...always place it at the bottom

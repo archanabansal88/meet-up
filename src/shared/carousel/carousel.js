@@ -39,8 +39,8 @@ class Carousel extends Component {
         <a className='carousel__arrow carousel__arrow--left' onClick={this.handleLeftButtonClick}>&lt;</a>
         <div className='carousel__wrapper'>
           <div className='carousel__content' style={{transform: `translateX(${translatex}px)`}}>
-            {this.props.children.map(item =>
-              <div>{item}</div>
+            {this.props.children.map((item, i) =>
+              <div key={i}>{item}</div>
             )}
           </div>
         </div>
