@@ -14,7 +14,7 @@ const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
       </div>
       {!isLoggedin ? <GoogleOauth onLoginSuccess={onLoginSuccess} />
         : <div>
-          <Link to='profile' className='profile_link'>
+          <Link to='/profile' className='profile_link'>
             <div className='header__user-info'>
               <img className='header__user-image' src={profile ? profile.getImageUrl() : null} />{profile ? profile.getName() : null}
             </div>

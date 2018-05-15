@@ -62,7 +62,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "da3ac8537a06778166cb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "66b4dbb2ba0b7726695b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1079,6 +1079,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, ".logout Button {\n    box-sizing: border-box;\n    text-decoration: none;\n    color: black;\n    background-color:white;\n    border-radius: 2px;\n    border-style: solid;\n    padding: 2%;\n    border-color: darkgray;\n    border-width: 0.5px;\n    margin: 1%;\n    float: right;\n    font-weight: normal;\n    height: 2rem;\n    width: 50px;\n}\n\n.logout Button:hover {\n    box-sizing: border-box;\n    text-decoration: none;\n    color: black;\n    background-color: #F0F0F0;\n    border-radius: 2px;\n    border-style: solid;\n    padding: 2%;\n    border-color: orange;\n    border-width: 0.5px;\n    margin: 1%;\n    float: right;\n    height: 2rem;\n    width: 50px;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./src/components/profile/style.css":
+/*!********************************************************************!*\
+  !*** ./node_modules/css-loader!./src/components/profile/style.css ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -27945,7 +27964,7 @@ var Header = function Header(_ref) {
       null,
       _react2.default.createElement(
         _reactRouterDom.Link,
-        { to: 'profile', className: 'profile_link' },
+        { to: '/profile', className: 'profile_link' },
         _react2.default.createElement(
           'div',
           { className: 'header__user-info' },
@@ -28236,8 +28255,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -28245,6 +28262,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _history = __webpack_require__(/*! history */ "./node_modules/history/es/index.js");
 
 var _content = __webpack_require__(/*! ../content */ "./src/components/content/index.js");
 
@@ -28269,6 +28288,10 @@ var _index2 = _interopRequireDefault(_index);
 var _admin = __webpack_require__(/*! ../admin */ "./src/components/admin/index.js");
 
 var _admin2 = _interopRequireDefault(_admin);
+
+var _profile = __webpack_require__(/*! ../profile */ "./src/components/profile/index.js");
+
+var _profile2 = _interopRequireDefault(_profile);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28339,16 +28362,18 @@ var Main = function (_React$Component) {
           'div',
           null,
           _react2.default.createElement(_header2.default, { isLoggedin: isLoggedin, onLoginSuccess: this.handleLoginSuccess, onLogoutSuccess: this.handleLogoutSuccess, profile: profile }),
-          _react2.default.createElement(
-            _reactRouterDom.Switch,
-            null,
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _content2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/admin', component: _admin2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/create', component: _createEvent2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:id', render: function render(props) {
-                return _react2.default.createElement(_eventDetails2.default, _extends({}, props, { isLoggedin: isLoggedin, profile: profile }));
-              } })
-          )
+          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _content2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/profile', render: function render() {
+              return _react2.default.createElement(
+                'div',
+                { className: 'jumbotron' },
+                _react2.default.createElement(
+                  'h1',
+                  { className: 'display-3' },
+                  'Hello, world!'
+                )
+              );
+            } })
         )
       );
     }
@@ -28358,6 +28383,119 @@ var Main = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Main;
+
+/***/ }),
+
+/***/ "./src/components/profile/index.js":
+/*!*****************************************!*\
+  !*** ./src/components/profile/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _profile = __webpack_require__(/*! ./profile */ "./src/components/profile/profile.js");
+
+var _profile2 = _interopRequireDefault(_profile);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _profile2.default;
+
+/***/ }),
+
+/***/ "./src/components/profile/profile.js":
+/*!*******************************************!*\
+  !*** ./src/components/profile/profile.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(/*! ./style.css */ "./src/components/profile/style.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Profile = function Profile() {
+  return _react2.default.createElement(
+    'div',
+    null,
+    ' Welcome to Profile Page '
+  );
+};
+
+exports.default = Profile;
+
+/***/ }),
+
+/***/ "./src/components/profile/style.css":
+/*!******************************************!*\
+  !*** ./src/components/profile/style.css ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!./style.css */ "./node_modules/css-loader/index.js!./src/components/profile/style.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(true) {
+	module.hot.accept(/*! !../../../node_modules/css-loader!./style.css */ "./node_modules/css-loader/index.js!./src/components/profile/style.css", function(__WEBPACK_OUTDATED_DEPENDENCIES__) { (function() {
+		var newContent = __webpack_require__(/*! !../../../node_modules/css-loader!./style.css */ "./node_modules/css-loader/index.js!./src/components/profile/style.css");
+
+		if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	})(__WEBPACK_OUTDATED_DEPENDENCIES__); });
+
+	module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 
