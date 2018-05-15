@@ -62,7 +62,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9bc90acecce123aae0ea"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "da3ac8537a06778166cb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1059,7 +1059,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".header{\n    border-bottom: 1px solid #c1bbbb;\n    height: 80px;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 20px;\n}\n\n.header__link{\n    text-decoration: none;\n}\n\n.header__title{\n    margin: 0;\n    padding: 0 20px;\n    color: red;\n}\n\n.header__user-info{\n    display: flex;\n    align-items: center;\n    color: #333;\n}\n\n.header__user-image{\n    width: 40px;\n    height: 40px;\n    border-radius: 20px;\n    margin-right: 10px;\n}\n\n", ""]);
+exports.push([module.i, ".header{\n    border-bottom: 1px solid #c1bbbb;\n    height: 80px;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    padding: 0 20px;\n}\n\n.header__link{\n    text-decoration: none;\n}\n\n.header__title{\n    margin: 0;\n    padding: 0 20px;\n    color: red;\n}\n\n.header__user-info{\n    display: flex;\n    align-items: center;\n    color: #333;\n}\n\n.header__user-image{\n    width: 40px;\n    height: 40px;\n    border-radius: 20px;\n    margin-right: 10px;\n}\n\n.profile_link a {\n    text-decoration: none;\n   }", ""]);
 
 // exports
 
@@ -27944,10 +27944,14 @@ var Header = function Header(_ref) {
       'div',
       null,
       _react2.default.createElement(
-        'div',
-        { className: 'header__user-info' },
-        _react2.default.createElement('img', { className: 'header__user-image', src: profile ? profile.getImageUrl() : null }),
-        profile ? profile.getName() : null
+        _reactRouterDom.Link,
+        { to: 'profile', className: 'profile_link' },
+        _react2.default.createElement(
+          'div',
+          { className: 'header__user-info' },
+          _react2.default.createElement('img', { className: 'header__user-image', src: profile ? profile.getImageUrl() : null }),
+          profile ? profile.getName() : null
+        )
       ),
       _react2.default.createElement(_logout2.default, { onLogoutSuccess: onLogoutSuccess })
     )

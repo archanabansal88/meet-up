@@ -30,3 +30,6 @@
     margin-right: 10px;
 }
 
+.profile_link a {
+    text-decoration: none;
+   }
