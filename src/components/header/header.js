@@ -5,7 +5,6 @@ import Logout from '../logout'
 import './style.css'
 
 const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
-  console.log(isLoggedin, 'from header')
   return (
     <div className='header'>
       <div>
@@ -23,7 +22,6 @@ const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
       }
     </div>
   )
-
 }
 
 export default Header

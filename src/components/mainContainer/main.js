@@ -19,7 +19,6 @@ class Main extends React.Component {
   }
 
   handleLoginSuccess (profile) {
-    console.log(profile, 'handle login')
     this.setState({isLoggedin: true, profile})
 
     const data = {
