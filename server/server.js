@@ -79,6 +79,28 @@ app.post('/api/event/attendee', (req, res) => {
   })
 })
 
+//  API call to remove an attendee for a particular event
+app.post('/api/event/attendee/cancel', (req, res) => {
+  let selectedIndex = -1
+  let selectedEvent
+  clientLrange('events', 0, -1).then((events) => {
+    events.forEach((event, index) => {
+      const eventObj = JSON.parse(event)
+      if (eventObj.id === req.body.eventId) {
+        selectedEvent = eventObj
+        selectedIndex = index
+      }
+    })
+  }).then(() => {
+    selectedEvent.attendees = selectedEvent.attendees.filter((attendee) => attendee.email !== req.body.email)
+    return clientLset('events', selectedIndex, JSON.stringify(selectedEvent))
+  }).then(() => {
+    res.end()
+  }).catch(() => {
+    res.status(500).send()
+  })
+})
+
 // API call to create an event
 app.post('/api/event/create', (req, res) => {
   const obj = Object.assign({}, req.body, {id: uuid()})
