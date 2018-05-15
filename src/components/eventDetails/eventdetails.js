@@ -6,6 +6,8 @@ import Attendees from '../eventAttendees/attendees'
 import Comments from '../eventComments/comments'
 import Button from '../../shared/button'
 import config from '../../config/index'
+import PopUp from '../../shared/popup'
+import GoogleOauth from '../googleOauth'
 import './style.css'
 
 class EventDetails extends React.Component {
@@ -13,10 +15,12 @@ class EventDetails extends React.Component {
     super(props)
     this.state = {
       event: false,
-      showErrorMsg: false
+      showErrorMsg: false,
+      showPopUp: false
     }
     this.handleYesButtonClick = this.handleYesButtonClick.bind(this)
     this.handleNoButtonClick = this.handleNoButtonClick.bind(this)
+    this.handleCloseClick = this.handleCloseClick.bind(this)
   }
 
   getEventDetails () {
@@ -36,11 +40,13 @@ class EventDetails extends React.Component {
 
   handleYesButtonClick () {
     const {isLoggedin, profile} = this.props
-    if (isLoggedin) {
-      this.saveAttendee(profile.getEmail(), this.state.event.id)
+    if (!isLoggedin) {
+      this.setState({showPopUp: true})
     } else {
-      // pop up to sign in
+      this.setState({showPopUp: false})
     }
+    // pop up to sign in
+    this.saveAttendee(profile.getEmail(), this.state.event.id)
   }
 
   saveAttendee (email, eventId) {
@@ -62,13 +68,20 @@ class EventDetails extends React.Component {
     console.log('no')
   }
 
+  handleCloseClick () {
+    this.setState({showPopUp: false})
+    console.log('close')
+  }
+
   render () {
-    const {event} = this.state
+    const {event, showPopUp} = this.state
+    const {onLoginSuccess} = this.props
     const isUserAttending = event && this.props.profile && event.attendees && event.attendees.filter((attendee) =>
       attendee.email === this.props.profile.getEmail()
     )
     return (
       <main className='event-details'>
+        {showPopUp && <PopUp onClose={this.handleCloseClick}><GoogleOauth onLoginSuccess={onLoginSuccess} /></PopUp>}
         <div className='event-details__header-wrapper'>
           <section className='event-details__header'>
             <article className='event-details__heading'>
