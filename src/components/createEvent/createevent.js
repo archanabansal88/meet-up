@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Button from '../../shared/button'
 import Input from '../../shared/input'
 import config from '../../config/index'
 import './style.css'
 
-class CreateEvent extends React.Component {
+class CreateEvent extends Component {
   constructor (props) {
     super(props)
     this.state = {

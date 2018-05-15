@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Carousel from '../../shared/carousel'
 import EventCard from '../eventCard'
 import config from '../../config/index'
+import HttpClient from '../../helper/httpClient'
 import './style.css'
 
-class EventContainer extends React.Component {
+class EventContainer extends Component {
   constructor (props) {
     super()
     this.state = {
@@ -19,7 +20,7 @@ class EventContainer extends React.Component {
   }
 
   componentDidMount () {
-    fetch(`${config.url}api/event`)
+    HttpClient.get(`${config.url}api/event`)
       .then(response => response.json())
       .then((events) => {
         this.setState({events})

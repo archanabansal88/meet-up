@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Content from '../content'
 import Header from '../header'
@@ -7,7 +7,7 @@ import EventDetails from '../eventDetails'
 import config from '../../config/index'
 import Login from '../admin'
 
-class Main extends React.Component {
+class Main extends Component {
   constructor (props) {
     super(props)
     this.state = {

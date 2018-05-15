@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {Component} from 'react'
 import GoogleOauth from '../googleOauth'
 import config from '../../config/index'
 import './style.css'
 
-class Login extends React.Component {
+class Login extends Component {
   constructor (props) {
     super(props)
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
