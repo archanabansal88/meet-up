@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Button from '../../shared/button'
 import Input from '../../shared/input'
+import TextArea from '../../shared/textarea'
 import config from '../../config/index'
 import './style.css'
 
@@ -98,7 +99,7 @@ class CreateEvent extends Component {
               onChange={this.handleInputChange.bind(this, 'url')}
               value={this.state.url}
             />
-            <textarea name='textarea' rows='10' cols='40' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={this.state.description} className='event-form__text-area' />
+            <TextArea name='textarea' rows='10' cols='40' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={this.state.description} />
             <Button label='Create' onClick={this.handleSubmitClick} className='event-form__button' />
           </form>
         </div>
