@@ -1,11 +1,17 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 import './style.css'
 
-const Profile = () => {
-  return (
-    <div> Welcome to Profile Page </div>
-  )
+class Profile extends Component {
+  constructor (props) {
+    super()
+  }
+
+  render () {
+    return (
+      <div> Welcome to Profile Page </div>
+    )
+  }
 }
 
 export default Profile

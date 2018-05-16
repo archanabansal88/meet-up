@@ -113,7 +113,7 @@ app.post('/api/user/login', (req, res) => {
 })
 
 // to render UI...always place it at the bottom
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../build/index.html`))
 })
 
