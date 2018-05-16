@@ -69,14 +69,18 @@ class EventDetails extends Component {
 
   handleLoginSuccess (profile) {
     this.setState({showPopUp: false})
-    this.handleAttendee(profile.getEmail(), this.state.event.id, `${config.url}api/event/attendee`)
+    const a = this.state.event.attendees.filter((attendee) => attendee.email === profile.getEmail())
+    if (!a.length) {
+      this.handleAttendee(profile.getEmail(), this.state.event.id, `${config.url}api/event/attendee`)
+    }
   }
 
   render () {
     const {event, showPopUp} = this.state
     const isUserAttending = event && this.props.profile && event.attendees && event.attendees.filter((attendee) =>
       attendee.email === this.props.profile.getEmail()
-    )
+    )[0]
+
     return (
       <main className='event-details'>
         {showPopUp && <PopUp onClose={this.handleCloseClick} title='Sign in'><GoogleOauth onLoginSuccess={this.handleLoginSuccess} /></PopUp>}
@@ -95,7 +99,7 @@ class EventDetails extends Component {
         <section className='event-details__content'>
           <article className='event-details__container'>
             <Description description={event.description} />
-            {event.attendees && <Attendees attendees={event.attendees} />}
+            <Attendees attendees={event.attendees} />
             {event.comments && <Comments comments={event.comments} />}
           </article>
           <article className='event-details__location'>

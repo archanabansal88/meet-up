@@ -70,6 +70,11 @@ app.post('/api/event/attendee', (req, res) => {
     if (!selectedEvent.attendees) {
       selectedEvent.attendees = []
     }
+
+    const attendee = selectedEvent.attendees.filter((attendee) => attendee.email === req.body.email)[0]
+    if (attendee) {
+      return
+    }
     selectedEvent.attendees.push(obj)
     return clientLset('events', selectedIndex, JSON.stringify(selectedEvent))
   }).then(() => {
