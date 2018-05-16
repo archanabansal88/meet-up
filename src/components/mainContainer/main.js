@@ -5,6 +5,7 @@ import Header from '../header'
 import CreateEvent from '../createEvent'
 import EventDetails from '../eventDetails'
 import config from '../../config/index'
+import HttpClient from '../../helper/httpClient'
 import Login from '../admin'
 
 class Main extends Component {
@@ -28,14 +29,7 @@ class Main extends Component {
       image: profile.getImageUrl()
     }
 
-    fetch(`${config.url}api/user/login`, {
-      body: JSON.stringify(data),
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
+    HttpClient.post(`${config.url}api/user/login`, data)
       .then((response) => {
         if (response.status === 200) {
           console.log('success', response)

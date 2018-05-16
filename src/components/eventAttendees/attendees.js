@@ -10,13 +10,13 @@ const Attendee = ({value, index}) => {
   )
 }
 
-const Attendees = (props) => {
+const Attendees = ({attendees}) => {
   return (
     <section className='event-attendees'>
       <h2 className='event-attendees__title'>Attendees</h2>
-      {props.attendees && props.attendees.length
+      {attendees && attendees.length
         ? <ul className='event-attendees__list'>
-          {props.attendees.map((value, index) => <Attendee value={value} index={index} />)}
+          {attendees.map((value, index) => <Attendee value={value} index={index} />)}
         </ul>
         : <div>No attendees</div>
       }

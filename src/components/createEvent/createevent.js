@@ -3,6 +3,7 @@ import Button from '../../shared/button'
 import Input from '../../shared/input'
 import TextArea from '../../shared/textarea'
 import config from '../../config/index'
+import HttpClient from '../../helper/httpClient'
 import './style.css'
 
 class CreateEvent extends Component {
@@ -42,14 +43,7 @@ class CreateEvent extends Component {
       const {name, location, url, description} = this.state
       const obj = {title: name, location, url, description, dateTime: new Date()}
 
-      fetch(`${config.url}api/event/create`, {
-        body: JSON.stringify(obj),
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'content-type': 'application/json'
-        }
-      })
+      HttpClient.post(`${config.url}api/event/create`, obj)
         .then((response) => {
           if (response.status === 200) {
             this.handleReset()
@@ -72,6 +66,7 @@ class CreateEvent extends Component {
   }
 
   render () {
+    const {name, location, url, description} = this.state
     return (
       <div className='event-form'>
         <div>
@@ -83,23 +78,23 @@ class CreateEvent extends Component {
               label='Event Name'
               onChange={this.handleInputChange.bind(this, 'name')}
               isValid
-              value={this.state.name}
+              value={name}
             />
             <Input
               type='text'
               label='Event Location'
               isValid
               onChange={this.handleInputChange.bind(this, 'location')}
-              value={this.state.location}
+              value={location}
             />
             <Input
               type='url'
               label='Event Url'
               isValid
               onChange={this.handleInputChange.bind(this, 'url')}
-              value={this.state.url}
+              value={url}
             />
-            <TextArea name='textarea' rows='10' cols='40' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={this.state.description} />
+            <TextArea name='textarea' rows='10' cols='40' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
             <Button label='Create' onClick={this.handleSubmitClick} className='event-form__button' />
           </form>
         </div>
