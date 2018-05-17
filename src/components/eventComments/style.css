@@ -20,9 +20,16 @@
     margin-bottom: 1em;
 }
 
-.event-comments__name{
+.event-comments__user-name{
     margin: 8px 0;
     font-size: .8em;
+}
+
+.event-comments__user-image{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin-right: 10px;
 }
 
 .event-comments__message{

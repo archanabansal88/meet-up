@@ -23,6 +23,7 @@ class EventDetails extends Component {
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this)
     this.handleCloseClick = this.handleCloseClick.bind(this)
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
+    this.getEventDetails = this.getEventDetails.bind(this)
   }
 
   getEventDetails () {
@@ -77,8 +78,9 @@ class EventDetails extends Component {
 
   render () {
     const {event, showPopUp} = this.state
-    const isUserAttending = event && this.props.profile && event.attendees && event.attendees.filter((attendee) =>
-      attendee.email === this.props.profile.getEmail()
+    const {isLoggedin, profile} = this.props
+    const isUserAttending = event && profile && event.attendees && event.attendees.filter((attendee) =>
+      attendee.email === profile.getEmail()
     )[0]
 
     return (
@@ -100,7 +102,7 @@ class EventDetails extends Component {
           <article className='event-details__container'>
             <Description description={event.description} />
             <Attendees attendees={event.attendees} />
-            {event.comments && <Comments comments={event.comments} />}
+            <Comments comments={event.comments} isLoggedin={isLoggedin} eventId={event.id} email={profile} eventDetails={this.getEventDetails} />
           </article>
           <article className='event-details__location'>
           Location
