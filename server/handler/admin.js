@@ -1,6 +1,6 @@
 function login (req, res) {
   const {emailid} = req.body
-  const email = 'shinganeabhishek@gmail.com'
+  const email = 'archanamittal0388@gmail.com'
   if (emailid === email) {
     req.session.email = emailid
     res.status(200).send('User Authentified')
