@@ -15,6 +15,7 @@ client.on('connect', function () {
 })
 
 const clientHmset = promisify(client.hmset).bind(client)
+const clientHget = promisify(client.hget).bind(client)
 const clientHgetall = promisify(client.hgetall).bind(client)
 const clientLpush = promisify(client.lpush).bind(client)
 const clientLrange = promisify(client.lrange).bind(client)
@@ -23,11 +24,6 @@ const clientLset = promisify(client.lset).bind(client)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('build'))
-// app.use(session({
-//   resave: true,
-//   saveUninitialized: false,
-//   secret: 'abc'
-// }))
 
 // API call for admin login
 app.post('/api/admin/login', Login)
@@ -97,17 +93,17 @@ app.get('/create', (req, res, next) => {
 
 app.post('/api/user/get', (req, res) => {
   const { email } = req.body
-  clientHgetall(email).then((obj) => {
-    res.json(obj)
+  clientHget('users', email).then((obj) => {
+    res.json(JSON.parse(obj))
   })
 })
 
 // API call for user login
 app.post('/api/user/login', (req, res) => {
   const {email, name, id, image} = req.body
-  clientHmset(email, {
+  clientHmset('users', email, JSON.stringify({
     name, id, email, image
-  }).then(() => {
+  })).then(() => {
     res.status(200).send('success')
   })
 })

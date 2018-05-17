@@ -62,7 +62,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "88e533f67ac98896930d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5c7cc38d9166ad13f426"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -27968,8 +27968,8 @@ var Header = function Header(_ref) {
         _react2.default.createElement(
           'div',
           { className: 'header__user-info' },
-          _react2.default.createElement('img', { className: 'header__user-image', src: profile ? profile.getImageUrl() : null }),
-          profile ? profile.getName() : null
+          _react2.default.createElement('img', { className: 'header__user-image', src: profile ? profile.image : null }),
+          profile ? profile.name : null
         )
       ),
       _react2.default.createElement(_logout2.default, { onLogoutSuccess: onLogoutSuccess })
@@ -28321,7 +28321,7 @@ var Main = function (_React$Component) {
   _createClass(Main, [{
     key: 'handleLoginSuccess',
     value: function handleLoginSuccess(profile) {
-      this.setState({ isLoggedin: true, profile: profile });
+      var _this2 = this;
 
       var data = {
         email: profile.getEmail(),
@@ -28330,7 +28330,7 @@ var Main = function (_React$Component) {
         image: profile.getImageUrl()
       };
 
-      fetch(_index2.default.url + 'api/user/login', {
+      fetch(_index2.default.url + 'api/user/get', {
         body: JSON.stringify(data),
         method: 'POST',
         credentials: 'same-origin',
@@ -28338,9 +28338,27 @@ var Main = function (_React$Component) {
           'content-type': 'application/json'
         }
       }).then(function (response) {
-        if (response.status === 200) {
-          console.log('success', response);
-        }
+        response.json().then(function (profileinfo) {
+          if (profileinfo !== null && window.location.pathname !== '/profile') {
+            _this2.setState({ isLoggedin: true, profile: profileinfo });
+            console.log();
+            window.location = '/profile';
+          } else {
+            fetch(_index2.default.url + 'api/user/login', {
+              body: JSON.stringify(data),
+              method: 'POST',
+              credentials: 'same-origin',
+              headers: {
+                'content-type': 'application/json'
+              }
+            }).then(function (response) {
+              if (response.status === 200) {
+                console.log('success', response);
+              }
+            });
+            _this2.setState({ isLoggedin: true, profile: profile });
+          }
+        });
       });
     }
   }, {
@@ -28361,12 +28379,13 @@ var Main = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(_header2.default, { isLoggedin: isLoggedin, onLoginSuccess: this.handleLoginSuccess, onLogoutSuccess: this.handleLogoutSuccess, profile: profile }),
+          _react2.default.createElement(_header2.default, { isLoggedin: isLoggedin, onLoginSuccess: this.handleLoginSuccess,
+            onLogoutSuccess: this.handleLogoutSuccess, profile: profile }),
           _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _content2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/profile', component: _profile2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/profile', component: _profile2.default, profile: profile }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/admin', component: _admin2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/create', component: _createEvent2.default, profile: profile }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:id', render: function render(props) {
@@ -28451,6 +28470,7 @@ var Profile = function (_Component) {
   _createClass(Profile, [{
     key: 'render',
     value: function render() {
+      console.log(this.props);
       return _react2.default.createElement(
         'div',
         null,

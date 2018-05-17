@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Content from '../content'
 import Header from '../header'
 import CreateEvent from '../createEvent'
@@ -20,8 +20,6 @@ class Main extends React.Component {
   }
 
   handleLoginSuccess (profile) {
-    this.setState({isLoggedin: true, profile})
-
     const data = {
       email: profile.getEmail(),
       name: profile.getName(),
@@ -29,7 +27,7 @@ class Main extends React.Component {
       image: profile.getImageUrl()
     }
 
-    fetch(`${config.url}api/user/login`, {
+    fetch(`${config.url}api/user/get`, {
       body: JSON.stringify(data),
       method: 'POST',
       credentials: 'same-origin',
@@ -37,10 +35,29 @@ class Main extends React.Component {
         'content-type': 'application/json'
       }
     })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log('success', response)
-        }
+      .then(response => {
+        response.json().then(profileinfo => {
+          if (profileinfo !== null && window.location.pathname !== '/profile') {
+            this.setState({isLoggedin: true, profile: profileinfo})
+            console.log()
+            window.location = '/profile'
+          } else {
+            fetch(`${config.url}api/user/login`, {
+              body: JSON.stringify(data),
+              method: 'POST',
+              credentials: 'same-origin',
+              headers: {
+                'content-type': 'application/json'
+              }
+            })
+              .then((response) => {
+                if (response.status === 200) {
+                  console.log('success', response)
+                }
+              })
+            this.setState({isLoggedin: true, profile})
+          }
+        })
       })
   }
 
@@ -53,12 +70,13 @@ class Main extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <Header isLoggedin={isLoggedin} onLoginSuccess={this.handleLoginSuccess} onLogoutSuccess={this.handleLogoutSuccess} profile={profile} />
+          <Header isLoggedin={isLoggedin} onLoginSuccess={this.handleLoginSuccess}
+            onLogoutSuccess={this.handleLogoutSuccess} profile={profile} />
           <Switch>
             <Route exact path='/' component={Content} />
-            <Route exact path='/profile' component={Profile} />
+            <Route exact path='/profile' component={Profile} profile={profile} />
             <Route exact path='/admin' component={Login} />
-            <Route exact path='/create' component={CreateEvent} profile={profile}/>
+            <Route exact path='/create' component={CreateEvent} profile={profile} />
             <Route exact path='/:id' render={(props) => <EventDetails {...props} isLoggedin={isLoggedin} profile={profile} />} />
           </Switch>
         </div>

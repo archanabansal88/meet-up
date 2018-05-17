@@ -16,7 +16,7 @@ const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
         : <div>
           <Link to='/profile' className='profile_link'>
             <div className='header__user-info'>
-              <img className='header__user-image' src={profile ? profile.getImageUrl() : null} />{profile ? profile.getName() : null}
+              <img className='header__user-image' src={profile ? profile.image : null} />{profile ? profile.name : null}
             </div>
           </Link>
           <Logout onLogoutSuccess={onLogoutSuccess} />
