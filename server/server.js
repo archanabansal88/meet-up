@@ -84,11 +84,11 @@ app.post('/api/event/create', (req, res) => {
 })
 
 app.get('/create', (req, res, next) => {
-  if (!req.session.email) {
-    res.redirect('/')
-  } else {
-    next()
-  }
+  // if (!req.session.email) {
+  res.redirect('/')
+  // } else {
+  //   next()
+  // }
 })
 
 app.post('/api/user/get', (req, res) => {

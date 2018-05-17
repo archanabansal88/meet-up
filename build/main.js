@@ -62,7 +62,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5c7cc38d9166ad13f426"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "30d1ef72b235dc508ad1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1097,7 +1097,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".userform {\n    width: 80%;\n    margin:auto;\n    margin-top: 5%;\n}", ""]);
 
 // exports
 
@@ -26217,6 +26217,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
 var _eventContainer = __webpack_require__(/*! ../eventContainer */ "./src/components/eventContainer/index.js");
 
 var _eventContainer2 = _interopRequireDefault(_eventContainer);
@@ -26226,8 +26228,15 @@ __webpack_require__(/*! ./style.css */ "./src/components/content/style.css");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Content = function Content(_ref) {
-  var history = _ref.history;
+  var history = _ref.history,
+      first = _ref.first,
+      handleRedirect = _ref.handleRedirect;
 
+  if (first) {
+    console.log('Ever here?');
+    handleRedirect();
+    return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/profile' });
+  }
   return _react2.default.createElement(
     'div',
     null,
@@ -26239,8 +26248,7 @@ var Content = function Content(_ref) {
         { autoPlay: true, loop: true, className: 'content__video' },
         _react2.default.createElement('source', { src: 'video.mp4', type: 'video/mp4' })
       )
-    ),
-    _react2.default.createElement(_eventContainer2.default, { history: history })
+    )
   );
 };
 
@@ -28311,10 +28319,12 @@ var Main = function (_React$Component) {
 
     _this.state = {
       isLoggedin: false,
-      profile: null
+      profile: null,
+      first: false
     };
     _this.handleLoginSuccess = _this.handleLoginSuccess.bind(_this);
     _this.handleLogoutSuccess = _this.handleLogoutSuccess.bind(_this);
+    _this.handleRedirect = _this.handleRedirect.bind(_this);
     return _this;
   }
 
@@ -28340,9 +28350,7 @@ var Main = function (_React$Component) {
       }).then(function (response) {
         response.json().then(function (profileinfo) {
           if (profileinfo !== null && window.location.pathname !== '/profile') {
-            _this2.setState({ isLoggedin: true, profile: profileinfo });
-            console.log();
-            window.location = '/profile';
+            _this2.setState({ isLoggedin: true, profile: profileinfo, first: true });
           } else {
             fetch(_index2.default.url + 'api/user/login', {
               body: JSON.stringify(data),
@@ -28367,11 +28375,19 @@ var Main = function (_React$Component) {
       this.setState({ isLoggedin: false, profile: null });
     }
   }, {
+    key: 'handleRedirect',
+    value: function handleRedirect() {
+      this.setState({ first: false });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       var _state = this.state,
           isLoggedin = _state.isLoggedin,
-          profile = _state.profile;
+          profile = _state.profile,
+          first = _state.first;
 
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
@@ -28384,7 +28400,9 @@ var Main = function (_React$Component) {
           _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _content2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', render: function render(props) {
+                return _react2.default.createElement(_content2.default, _extends({}, props, { first: first, handleRedirect: _this3.handleRedirect }));
+              } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/profile', component: _profile2.default, profile: profile }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/admin', component: _admin2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/create', component: _createEvent2.default, profile: profile }),
@@ -28464,17 +28482,122 @@ var Profile = function (_Component) {
   function Profile(props) {
     _classCallCheck(this, Profile);
 
-    return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this));
+    var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this, props));
+
+    console.log(_this.props, 'there are the props');
+    return _this;
   }
 
   _createClass(Profile, [{
     key: 'render',
     value: function render() {
-      console.log(this.props);
       return _react2.default.createElement(
         'div',
-        null,
-        ' Welcome to Profile Page '
+        { className: 'userform' },
+        _react2.default.createElement(
+          'div',
+          { className: 'field' },
+          _react2.default.createElement(
+            'label',
+            { className: 'label' },
+            'Name'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'control' },
+            _react2.default.createElement('input', { className: 'input', type: 'text', placeholder: 'Text input' })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'field' },
+          _react2.default.createElement(
+            'label',
+            { className: 'label' },
+            'Email'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'control has-icons-left has-icons-right' },
+            _react2.default.createElement('input', { className: 'input is-danger', type: 'email', placeholder: 'Email input', defaultValue: 'hello@' }),
+            _react2.default.createElement(
+              'span',
+              { className: 'icon is-small is-left' },
+              _react2.default.createElement('i', { className: 'fas fa-envelope' })
+            ),
+            _react2.default.createElement(
+              'span',
+              { className: 'icon is-small is-right' },
+              _react2.default.createElement('i', { className: 'fas fa-exclamation-triangle' })
+            )
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'help is-danger' },
+            'This email is invalid'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'field' },
+          _react2.default.createElement(
+            'label',
+            { className: 'label' },
+            'About Me'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'control' },
+            _react2.default.createElement('textarea', { className: 'textarea', placeholder: 'Textarea' })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'field' },
+          _react2.default.createElement(
+            'label',
+            { className: 'label' },
+            'Display profile picture'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'control' },
+            _react2.default.createElement(
+              'label',
+              { className: 'radio' },
+              _react2.default.createElement('input', { type: 'radio', name: 'question' }),
+              'Yes'
+            ),
+            _react2.default.createElement(
+              'label',
+              { className: 'radio' },
+              _react2.default.createElement('input', { type: 'radio', name: 'question' }),
+              'No'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'field is-grouped' },
+          _react2.default.createElement(
+            'div',
+            { className: 'control' },
+            _react2.default.createElement(
+              'button',
+              { className: 'button is-link' },
+              'Submit'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'control' },
+            _react2.default.createElement(
+              'button',
+              { className: 'button is-text' },
+              'Cancel'
+            )
+          )
+        )
       );
     }
   }]);

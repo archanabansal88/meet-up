@@ -13,10 +13,12 @@ class Main extends React.Component {
     super(props)
     this.state = {
       isLoggedin: false,
-      profile: null
+      profile: null,
+      first: false
     }
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
     this.handleLogoutSuccess = this.handleLogoutSuccess.bind(this)
+    this.handleRedirect = this.handleRedirect.bind(this)
   }
 
   handleLoginSuccess (profile) {
@@ -38,9 +40,7 @@ class Main extends React.Component {
       .then(response => {
         response.json().then(profileinfo => {
           if (profileinfo !== null && window.location.pathname !== '/profile') {
-            this.setState({isLoggedin: true, profile: profileinfo})
-            console.log()
-            window.location = '/profile'
+            this.setState({isLoggedin: true, profile: profileinfo, first: true})
           } else {
             fetch(`${config.url}api/user/login`, {
               body: JSON.stringify(data),
@@ -65,15 +65,19 @@ class Main extends React.Component {
     this.setState({isLoggedin: false, profile: null})
   }
 
+  handleRedirect () {
+    this.setState({first: false})
+  }
+
   render () {
-    const {isLoggedin, profile} = this.state
+    const {isLoggedin, profile, first} = this.state
     return (
       <BrowserRouter>
         <div>
           <Header isLoggedin={isLoggedin} onLoginSuccess={this.handleLoginSuccess}
             onLogoutSuccess={this.handleLogoutSuccess} profile={profile} />
           <Switch>
-            <Route exact path='/' component={Content} />
+            <Route exact path='/' render={(props) => <Content {...props} first={first} handleRedirect={this.handleRedirect} />}  />
             <Route exact path='/profile' component={Profile} profile={profile} />
             <Route exact path='/admin' component={Login} />
             <Route exact path='/create' component={CreateEvent} profile={profile} />
