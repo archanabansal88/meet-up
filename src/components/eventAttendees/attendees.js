@@ -18,7 +18,7 @@ const Attendees = ({attendees}) => {
         ? <ul className='event-attendees__list'>
           {attendees.map((value, index) => <Attendee value={value} index={index} />)}
         </ul>
-        : <div>No attendees</div>
+        : <div className='event-attendees__none'>No Attendees</div>
       }
     </section>
   )

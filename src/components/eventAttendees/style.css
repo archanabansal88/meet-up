@@ -25,3 +25,13 @@
     width: 21%;
     text-align: center;
 }
+
+.event-attendees__none{
+    border: 1px solid #ccc;
+    background: white;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 4px;
+    text-align: center;
+    color: #2e3e48;
+}
