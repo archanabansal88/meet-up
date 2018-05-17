@@ -40,4 +40,15 @@
     color: #2e3e48;
     padding-bottom: 10px;
     font-size: 1.1em;
+    word-break: break-word;
+}
+
+.event-comments__none{
+    border: 1px solid #ccc;
+    background: white;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 4px;
+    text-align: center;
+    color: #2e3e48;
 }

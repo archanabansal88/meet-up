@@ -74,7 +74,7 @@ class Comments extends Component {
               </li>
             )
           })}
-        </ul> : <div>No Comments</div>}
+        </ul> : <div className='event-comments__none'>No Comments</div>}
       </section>
     )
   }

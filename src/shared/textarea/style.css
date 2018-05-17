@@ -6,7 +6,7 @@
     box-sizing: border-box;
     transition: all 0.3s ease-in;
     font-size: 1em;
-    height: 60px;
+    min-height: 60px;
     width: 100%;
 }
 
