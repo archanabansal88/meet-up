@@ -24,7 +24,6 @@ class Comments extends Component {
 
   handleSubmitClick (e) {
     e.preventDefault()
-    this.setState({showErrorMsg: false})
     const {email, eventId, eventDetails} = this.props
     const {message} = this.state
     if (message) {
@@ -67,9 +66,11 @@ class Comments extends Component {
             return (
               <li className='event-comments__item'>
                 <img className='event-comments__user-image' src={comment.image} />
-                <h6 className='event-comments__user-name'>{comment.name}</h6>
-                <div>{comment.message}</div>
-                <DateTimeLong date={comment.dateTime} />
+                <div className='event-comments__user-details'>
+                  <h6 className='event-comments__user-name'>{comment.name}</h6>
+                  <div className='event-comments__user-message'>{comment.message}</div>
+                  <DateTimeLong date={comment.dateTime} />
+                </div>
               </li>
             )
           })}
