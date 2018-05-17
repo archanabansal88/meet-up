@@ -66,16 +66,15 @@ app.post('/api/event/attendee', (req, res) => {
       }
     })
     return clientHgetall(req.body.email)
-  }).then((obj) => {
+  }).then((userInfo) => {
     if (!selectedEvent.attendees) {
       selectedEvent.attendees = []
     }
-
     const attendee = selectedEvent.attendees.filter((attendee) => attendee.email === req.body.email)[0]
     if (attendee) {
       return
     }
-    selectedEvent.attendees.push(obj)
+    selectedEvent.attendees.push(userInfo)
     return clientLset('events', selectedIndex, JSON.stringify(selectedEvent))
   }).then(() => {
     res.end()
@@ -98,6 +97,38 @@ app.post('/api/event/attendee/cancel', (req, res) => {
     })
   }).then(() => {
     selectedEvent.attendees = selectedEvent.attendees.filter((attendee) => attendee.email !== req.body.email)
+    return clientLset('events', selectedIndex, JSON.stringify(selectedEvent))
+  }).then(() => {
+    res.end()
+  }).catch(() => {
+    res.status(500).send()
+  })
+})
+
+//  API call to save a comment for a particular event
+app.post('/api/event/comment', (req, res) => {
+  let selectedIndex = -1
+  let selectedEvent
+  clientLrange('events', 0, -1).then((events) => {
+    events.forEach((event, index) => {
+      const eventObj = JSON.parse(event)
+      if (eventObj.id === req.body.eventId) {
+        selectedEvent = eventObj
+        selectedIndex = index
+      }
+    })
+    return clientHgetall(req.body.email)
+  }).then((userInfo) => {
+    if (!selectedEvent.comments) {
+      selectedEvent.comments = []
+    }
+    const obj = {
+      message: req.body.message,
+      dateTime: Date.now(),
+      ...userInfo
+    }
+    selectedEvent.comments.unshift(obj)
+
     return clientLset('events', selectedIndex, JSON.stringify(selectedEvent))
   }).then(() => {
     res.end()
