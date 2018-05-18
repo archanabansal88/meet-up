@@ -1,3 +1,4 @@
 node_modules
 /hot
 build/main.js.map
+build/main.js

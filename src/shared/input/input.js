@@ -1,6 +1,6 @@
 import React from 'react'
-import './index.css'
-
+// import './index.css'
+/*
 const Input = props => {
   const { className, label, isValid, errorMsg, ...others } = props
   const validCls = !isValid ? 'ui-component__input--isInvalid' : ''
@@ -13,5 +13,17 @@ const Input = props => {
     </div>
   )
 }
+*/
 
+const Input = props => {
+  const {label, ...attributes} = props
+  return (
+    <div className='field'>
+      <label className='label'>{props.label}</label>
+      <div className='control'>
+        <input className='input' {...attributes} />
+      </div>
+    </div>
+  )
+}
 export default Input

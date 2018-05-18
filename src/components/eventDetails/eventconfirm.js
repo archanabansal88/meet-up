@@ -6,7 +6,7 @@ const EventConfirm = ({title, label, onClick}) => {
     <article className='event-details__user'>
       <div className='event-details__title'>{title}</div>
       <div className='event-details__button'>
-        <Button label={label} onClick={onClick} />
+        <Button label={label} onClick={onClick} className='button is-link' />
       </div>
     </article>
   )

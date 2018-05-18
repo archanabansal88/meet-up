@@ -1,11 +1,6 @@
 .event-description{
-    
+    padding: 10px;
 }
-
-.event-description__title{
-    
-}
-
 .event-description__content{
     font-size: 1.1em;
     line-height: 1.6em;

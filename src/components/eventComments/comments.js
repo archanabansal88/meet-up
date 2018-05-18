@@ -54,11 +54,11 @@ class Comments extends Component {
     const {isLoggedin, comments} = this.props
     return (
       <section className='event-comments'>
-        <h2 className='event-comments__title'>Comments</h2>
+        <h2 className='subtitle'>Comments</h2>
         {isLoggedin &&
           <div>
-            <TextArea name='textarea' rows='7' cols='40' placeholder='Enter comment' onChange={this.handleInputChange} value={message} />
-            <Button label='Add Comment' onClick={this.handleSubmitClick} className='event-comments__button' />
+            <TextArea name='textarea' placeholder='Enter comment' onChange={this.handleInputChange} value={message} />
+            <Button label='Add Comment' onClick={this.handleSubmitClick} className='button is-link' />
           </div>
         }
         {comments && comments.length ? <ul className='event-comments__list'>

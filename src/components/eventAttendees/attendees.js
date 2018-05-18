@@ -13,7 +13,7 @@ const Attendee = ({value, index}) => {
 const Attendees = ({attendees}) => {
   return (
     <section className='event-attendees'>
-      <h2 className='event-attendees__title'>Attendees</h2>
+      <h2 className='subtitle'>Attendees</h2>
       {attendees && attendees.length
         ? <ul className='event-attendees__list'>
           {attendees.map((value, index) => <Attendee value={value} index={index} />)}

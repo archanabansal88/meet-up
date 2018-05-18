@@ -90,8 +90,8 @@ class CreateEvent extends Component {
               onChange={this.handleInputChange.bind(this, 'url')}
               value={url}
             />
-            <TextArea name='textarea' rows='10' cols='40' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
-            <Button label='Create' onClick={this.handleSubmitClick} className='event-form__button' />
+            <TextArea name='textarea' label='Event Description' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
+            <Button className='button is-link' label='Create' onClick={this.handleSubmitClick} />
           </form>
         </div>
       </div>
