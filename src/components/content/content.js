@@ -3,10 +3,8 @@ import {Redirect} from 'react-router-dom'
 import EventContainer from '../eventContainer'
 import './style.css'
 
-const Content = ({history, first, handleRedirect}) => {
+const Content = ({history, first}) => {
   if (first) {
-    console.log('Ever here?')
-    handleRedirect()
     return (
       <Redirect to='/profile' />
     )
@@ -18,7 +16,7 @@ const Content = ({history, first, handleRedirect}) => {
           <source src='video.mp4' type='video/mp4' />
         </video>
       </div>
-      {/* <EventContainer history={history} /> */}
+      <EventContainer history={history} />
     </div>
   )
 }

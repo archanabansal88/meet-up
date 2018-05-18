@@ -100,12 +100,14 @@ app.post('/api/user/get', (req, res) => {
 
 // API call for user login
 app.post('/api/user/login', (req, res) => {
+  console.log(req.body)
   const {email, name, id, image} = req.body
   clientHmset('users', email, JSON.stringify({
     name, id, email, image
   })).then(() => {
     res.status(200).send('success')
   })
+  res.status(200).send('success')
 })
 
 // to render UI...always place it at the bottom

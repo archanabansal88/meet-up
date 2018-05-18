@@ -39,23 +39,11 @@ class Main extends React.Component {
     })
       .then(response => {
         response.json().then(profileinfo => {
-          if (profileinfo !== null && window.location.pathname !== '/profile') {
-            this.setState({isLoggedin: true, profile: profileinfo, first: true})
+          console.log(profileinfo === null, window.location.pathname !== '/profile')
+          if (profileinfo === null && window.location.pathname !== '/profile') {
+            this.setState({isLoggedin: true, profile: data, first: true})
           } else {
-            fetch(`${config.url}api/user/login`, {
-              body: JSON.stringify(data),
-              method: 'POST',
-              credentials: 'same-origin',
-              headers: {
-                'content-type': 'application/json'
-              }
-            })
-              .then((response) => {
-                if (response.status === 200) {
-                  console.log('success', response)
-                }
-              })
-            this.setState({isLoggedin: true, profile})
+            this.setState({isLoggedin: true, profile: profileinfo, first: false})
           }
         })
       })
@@ -77,8 +65,9 @@ class Main extends React.Component {
           <Header isLoggedin={isLoggedin} onLoginSuccess={this.handleLoginSuccess}
             onLogoutSuccess={this.handleLogoutSuccess} profile={profile} />
           <Switch>
-            <Route exact path='/' render={(props) => <Content {...props} first={first} handleRedirect={this.handleRedirect} />}  />
-            <Route exact path='/profile' component={Profile} profile={profile} />
+            <Route exact path='/' render={(props) => <Content {...props} first={first} />} />
+            <Route exact path='/profile' render={(props) => <Profile {...props} profile={profile}
+              first={first} handleRedirect={this.handleRedirect} />} />
             <Route exact path='/admin' component={Login} />
             <Route exact path='/create' component={CreateEvent} profile={profile} />
             <Route exact path='/:id' render={(props) => <EventDetails {...props} isLoggedin={isLoggedin} profile={profile} />} />

@@ -62,7 +62,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "30d1ef72b235dc508ad1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "421af03ddf02bb4167b7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -26229,12 +26229,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Content = function Content(_ref) {
   var history = _ref.history,
-      first = _ref.first,
-      handleRedirect = _ref.handleRedirect;
+      first = _ref.first;
 
   if (first) {
-    console.log('Ever here?');
-    handleRedirect();
     return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/profile' });
   }
   return _react2.default.createElement(
@@ -26248,7 +26245,8 @@ var Content = function Content(_ref) {
         { autoPlay: true, loop: true, className: 'content__video' },
         _react2.default.createElement('source', { src: 'video.mp4', type: 'video/mp4' })
       )
-    )
+    ),
+    _react2.default.createElement(_eventContainer2.default, { history: history })
   );
 };
 
@@ -28349,22 +28347,11 @@ var Main = function (_React$Component) {
         }
       }).then(function (response) {
         response.json().then(function (profileinfo) {
-          if (profileinfo !== null && window.location.pathname !== '/profile') {
-            _this2.setState({ isLoggedin: true, profile: profileinfo, first: true });
+          console.log(profileinfo === null, window.location.pathname !== '/profile');
+          if (profileinfo === null && window.location.pathname !== '/profile') {
+            _this2.setState({ isLoggedin: true, profile: data, first: true });
           } else {
-            fetch(_index2.default.url + 'api/user/login', {
-              body: JSON.stringify(data),
-              method: 'POST',
-              credentials: 'same-origin',
-              headers: {
-                'content-type': 'application/json'
-              }
-            }).then(function (response) {
-              if (response.status === 200) {
-                console.log('success', response);
-              }
-            });
-            _this2.setState({ isLoggedin: true, profile: profile });
+            _this2.setState({ isLoggedin: true, profile: profileinfo, first: false });
           }
         });
       });
@@ -28401,9 +28388,12 @@ var Main = function (_React$Component) {
             _reactRouterDom.Switch,
             null,
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', render: function render(props) {
-                return _react2.default.createElement(_content2.default, _extends({}, props, { first: first, handleRedirect: _this3.handleRedirect }));
+                return _react2.default.createElement(_content2.default, _extends({}, props, { first: first }));
               } }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/profile', component: _profile2.default, profile: profile }),
+            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/profile', render: function render(props) {
+                return _react2.default.createElement(_profile2.default, _extends({}, props, { profile: profile,
+                  first: first, handleRedirect: _this3.handleRedirect }));
+              } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/admin', component: _admin2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/create', component: _createEvent2.default, profile: profile }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/:id', render: function render(props) {
@@ -28466,6 +28456,12 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _index = __webpack_require__(/*! ../../config/index */ "./src/config/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
 __webpack_require__(/*! ./style.css */ "./src/components/profile/style.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -28482,18 +28478,68 @@ var Profile = function (_Component) {
   function Profile(props) {
     _classCallCheck(this, Profile);
 
-    var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this));
 
-    console.log(_this.props, 'there are the props');
+    _this.state = {
+      profile: props.profile,
+      checkbox: true,
+      submit: false
+    };
     return _this;
   }
 
   _createClass(Profile, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var data = Object.assign(this.state.profile, {
+        name: e.target.name.value,
+        email: e.target.email.value,
+        aboutme: e.target.aboutme.value,
+        display: this.state.checkbox
+      });
+      fetch(_index2.default.url + 'api/user/login', {
+        body: JSON.stringify(data),
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (response) {
+        if (response.status === 200) {
+          console.log(_this2.props.history);
+          _this2.props.handleRedirect();
+          _this2.props.history.push('/');
+          _this2.setState({
+            submit: true
+          });
+        }
+      });
+    }
+  }, {
+    key: 'handleUncheck',
+    value: function handleUncheck() {
+      this.setState({
+        checkbox: !this.state.checkbox
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _state$profile = this.state.profile,
+          name = _state$profile.name,
+          email = _state$profile.email;
+      var first = this.props.first.first;
+
+      console.log(this.props, first);
+      if (this.state.submit) {
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
+      }
       return _react2.default.createElement(
-        'div',
-        { className: 'userform' },
+        'form',
+        { className: 'userform', onSubmit: this.handleSubmit.bind(this) },
         _react2.default.createElement(
           'div',
           { className: 'field' },
@@ -28505,7 +28551,7 @@ var Profile = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'control' },
-            _react2.default.createElement('input', { className: 'input', type: 'text', placeholder: 'Text input' })
+            _react2.default.createElement('input', { className: 'input', type: 'text', defaultValue: name, name: 'name' })
           )
         ),
         _react2.default.createElement(
@@ -28519,22 +28565,7 @@ var Profile = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'control has-icons-left has-icons-right' },
-            _react2.default.createElement('input', { className: 'input is-danger', type: 'email', placeholder: 'Email input', defaultValue: 'hello@' }),
-            _react2.default.createElement(
-              'span',
-              { className: 'icon is-small is-left' },
-              _react2.default.createElement('i', { className: 'fas fa-envelope' })
-            ),
-            _react2.default.createElement(
-              'span',
-              { className: 'icon is-small is-right' },
-              _react2.default.createElement('i', { className: 'fas fa-exclamation-triangle' })
-            )
-          ),
-          _react2.default.createElement(
-            'p',
-            { className: 'help is-danger' },
-            'This email is invalid'
+            _react2.default.createElement('input', { className: 'input', type: 'email', placeholder: 'Email input', defaultValue: email, name: 'email' })
           )
         ),
         _react2.default.createElement(
@@ -28543,12 +28574,12 @@ var Profile = function (_Component) {
           _react2.default.createElement(
             'label',
             { className: 'label' },
-            'About Me'
+            'Tell us about yourself'
           ),
           _react2.default.createElement(
             'div',
             { className: 'control' },
-            _react2.default.createElement('textarea', { className: 'textarea', placeholder: 'Textarea' })
+            _react2.default.createElement('textarea', { className: 'textarea', placeholder: 'Textarea', name: 'aboutme' })
           )
         ),
         _react2.default.createElement(
@@ -28564,15 +28595,9 @@ var Profile = function (_Component) {
             { className: 'control' },
             _react2.default.createElement(
               'label',
-              { className: 'radio' },
-              _react2.default.createElement('input', { type: 'radio', name: 'question' }),
+              { className: 'checkbox' },
+              _react2.default.createElement('input', { type: 'checkbox', name: 'display', defaultChecked: true, onChange: this.handleUncheck.bind(this) }),
               'Yes'
-            ),
-            _react2.default.createElement(
-              'label',
-              { className: 'radio' },
-              _react2.default.createElement('input', { type: 'radio', name: 'question' }),
-              'No'
             )
           )
         ),
@@ -28582,13 +28607,9 @@ var Profile = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'control' },
-            _react2.default.createElement(
-              'button',
-              { className: 'button is-link' },
-              'Submit'
-            )
+            _react2.default.createElement('input', { className: 'button is-link', type: 'submit', value: 'Submit' })
           ),
-          _react2.default.createElement(
+          !first ? _react2.default.createElement(
             'div',
             { className: 'control' },
             _react2.default.createElement(
@@ -28596,7 +28617,7 @@ var Profile = function (_Component) {
               { className: 'button is-text' },
               'Cancel'
             )
-          )
+          ) : null
         )
       );
     }
