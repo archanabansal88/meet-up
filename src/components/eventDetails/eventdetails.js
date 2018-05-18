@@ -70,9 +70,10 @@ class EventDetails extends Component {
 
   handleLoginSuccess (profile) {
     this.setState({showPopUp: false})
-    const a = this.state.event.attendees.filter((attendee) => attendee.email === profile.getEmail())
-    if (!a.length) {
-      this.handleAttendee(profile.getEmail(), this.state.event.id, `${config.url}api/event/attendee`)
+    const {event} = this.state
+    const list = event.attendees.filter((attendee) => attendee.email === profile.getEmail())
+    if (!list.length) {
+      this.handleAttendee(profile.getEmail(), event.id, `${config.url}api/event/attendee`)
     }
   }
 

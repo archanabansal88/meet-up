@@ -26,14 +26,10 @@ class CreateEvent extends Component {
   }
   handleValidation () {
     const {name, location, url, description} = this.state
-    let hasError = false
-
     if (!name || !location || !url || !description) {
-      hasError = true
+      return false
     }
-    if (!hasError) {
-      return true
-    }
+    return true
   }
   handleSubmitClick (e) {
     e.preventDefault()
