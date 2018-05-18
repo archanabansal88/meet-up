@@ -62,7 +62,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "421af03ddf02bb4167b7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "06a072bc9aed265f0d76"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -27974,7 +27974,7 @@ var Header = function Header(_ref) {
         _react2.default.createElement(
           'div',
           { className: 'header__user-info' },
-          _react2.default.createElement('img', { className: 'header__user-image', src: profile ? profile.image : null }),
+          _react2.default.createElement('img', { className: 'header__user-image', src: profile.display ? profile.image : 'https://ui-avatars.com/api/?name=' + profile.name.replace(' ', '+') }),
           profile ? profile.name : null
         )
       ),
@@ -28482,7 +28482,7 @@ var Profile = function (_Component) {
 
     _this.state = {
       profile: props.profile,
-      checkbox: true,
+      checkbox: props.profile.display,
       submit: false
     };
     return _this;
@@ -28511,7 +28511,6 @@ var Profile = function (_Component) {
         if (response.status === 200) {
           console.log(_this2.props.history);
           _this2.props.handleRedirect();
-          _this2.props.history.push('/');
           _this2.setState({
             submit: true
           });
@@ -28530,7 +28529,8 @@ var Profile = function (_Component) {
     value: function render() {
       var _state$profile = this.state.profile,
           name = _state$profile.name,
-          email = _state$profile.email;
+          email = _state$profile.email,
+          aboutme = _state$profile.aboutme;
       var first = this.props.first.first;
 
       console.log(this.props, first);
@@ -28551,7 +28551,7 @@ var Profile = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'control' },
-            _react2.default.createElement('input', { className: 'input', type: 'text', defaultValue: name, name: 'name' })
+            _react2.default.createElement('input', { className: 'input', type: 'text', placeholder: 'My name is', defaultValue: name, name: 'name' })
           )
         ),
         _react2.default.createElement(
@@ -28565,7 +28565,7 @@ var Profile = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'control has-icons-left has-icons-right' },
-            _react2.default.createElement('input', { className: 'input', type: 'email', placeholder: 'Email input', defaultValue: email, name: 'email' })
+            _react2.default.createElement('input', { className: 'input', type: 'email', placeholder: 'My Email ID is...', defaultValue: email, name: 'email' })
           )
         ),
         _react2.default.createElement(
@@ -28579,7 +28579,7 @@ var Profile = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'control' },
-            _react2.default.createElement('textarea', { className: 'textarea', placeholder: 'Textarea', name: 'aboutme' })
+            _react2.default.createElement('textarea', { className: 'textarea', placeholder: 'I like BangaloreJS', name: 'aboutme', defaultValue: aboutme || null })
           )
         ),
         _react2.default.createElement(
@@ -28596,7 +28596,7 @@ var Profile = function (_Component) {
             _react2.default.createElement(
               'label',
               { className: 'checkbox' },
-              _react2.default.createElement('input', { type: 'checkbox', name: 'display', defaultChecked: true, onChange: this.handleUncheck.bind(this) }),
+              _react2.default.createElement('input', { type: 'checkbox', name: 'display', defaultChecked: this.state.checkbox, onChange: this.handleUncheck.bind(this) }),
               'Yes'
             )
           )

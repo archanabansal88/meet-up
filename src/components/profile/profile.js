@@ -9,7 +9,7 @@ class Profile extends Component {
     super()
     this.state = {
       profile: props.profile,
-      checkbox: true,
+      checkbox: props.profile.display,
       submit: false
     }
   }
@@ -34,7 +34,6 @@ class Profile extends Component {
         if (response.status === 200) {
           console.log(this.props.history)
           this.props.handleRedirect()
-          this.props.history.push('/')
           this.setState({
             submit: true
           })
@@ -49,7 +48,7 @@ class Profile extends Component {
   }
 
   render () {
-    const {name, email} = this.state.profile
+    const {name, email, aboutme} = this.state.profile
     const {first} = this.props.first
     console.log(this.props, first)
     if (this.state.submit) {
@@ -62,26 +61,26 @@ class Profile extends Component {
         <div className='field'>
           <label className='label'>Name</label>
           <div className='control'>
-            <input className='input' type='text' defaultValue={name} name='name' />
+            <input className='input' type='text' placeholder='My name is' defaultValue={name} name='name' />
           </div>
         </div>
         <div className='field'>
           <label className='label'>Email</label>
           <div className='control has-icons-left has-icons-right'>
-            <input className='input' type='email' placeholder='Email input' defaultValue={email} name='email' />
+            <input className='input' type='email' placeholder='My Email ID is...' defaultValue={email} name='email' />
           </div>
         </div>
         <div className='field'>
           <label className='label'>Tell us about yourself</label>
           <div className='control'>
-            <textarea className='textarea' placeholder='Textarea' name='aboutme' />
+            <textarea className='textarea' placeholder='I like BangaloreJS' name='aboutme' defaultValue={aboutme || null} />
           </div>
         </div>
         <div className='field'>
           <label className='label'>Display profile picture</label>
           <div className='control'>
             <label className='checkbox'>
-              <input type='checkbox' name='display' defaultChecked onChange={this.handleUncheck.bind(this)} />
+              <input type='checkbox' name='display' defaultChecked={this.state.checkbox} onChange={this.handleUncheck.bind(this)} />
       Yes
             </label>
           </div>
