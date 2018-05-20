@@ -9,14 +9,12 @@ const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
     <div className='header'>
       <div>
         <Link to='/' className='header__link'>
-          <h2 className='header__title'>Bangalore <div>JS</div></h2>
+          <h2 className='title'>Bangalore <div>JS</div></h2>
         </Link>
       </div>
       {!isLoggedin ? <GoogleOauth onLoginSuccess={onLoginSuccess} />
-        : <div>
-          <div className='header__user-info'>
-            <img className='header__user-image' src={profile ? profile.getImageUrl() : null} />{profile ? profile.getName() : null}
-          </div>
+        : <div className='header__user-info'>
+          <img className='header__user-image' src={profile ? profile.getImageUrl() : null} />{profile && profile.getName()}
           <Logout onLogoutSuccess={onLogoutSuccess} />
         </div>
       }
