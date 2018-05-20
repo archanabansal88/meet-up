@@ -5,7 +5,7 @@ import Header from '../header'
 import CreateEvent from '../createEvent'
 import EventDetails from '../eventDetails'
 import config from '../../config/index'
-import HttpClient from '../../helper/httpClient'
+import http from '../../helper/http'
 import Login from '../admin'
 
 class Main extends Component {
@@ -29,7 +29,7 @@ class Main extends Component {
       image: profile.getImageUrl()
     }
 
-    HttpClient.post(`${config.url}api/user/login`, data)
+    http.post(`${config.url}api/user/login`, data)
       .then((response) => {
         if (response.status === 200) {
           console.log('success', response)

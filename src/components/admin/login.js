@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import GoogleOauth from '../googleOauth'
 import config from '../../config/index'
-import HttpClient from '../../helper/httpClient'
+import http from '../../helper/http'
 import './style.css'
 
 class Login extends Component {
@@ -14,7 +14,7 @@ class Login extends Component {
     const data = {
       emailid: profile.getEmail()
     }
-    HttpClient.post(`${config.url}api/admin/login`, data)
+    http.post(`${config.url}api/admin/login`, data)
       .then((response) => {
         if (response.status === 200) {
           this.props.history.push('/create')

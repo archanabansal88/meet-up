@@ -1,12 +1,12 @@
-const Util = require('./utils')
+const util = require('./utils')
 
-class Comment {
-  saveComment (req, res) {
+const comment = {
+  saveComment: (req, res) => {
     let event, index
-    Util.getEvent(req.body.eventId).then(({selectedEvent, selectedIndex}) => {
+    util.getEvent(req.body.eventId).then(({selectedEvent, selectedIndex}) => {
       event = selectedEvent
       index = selectedIndex
-      return Util.getUserProfile(req.body.email)
+      return util.getUserProfile(req.body.email)
     }).then((userInfo) => {
       if (!event.comments) {
         event.comments = []
@@ -17,7 +17,7 @@ class Comment {
         ...userInfo
       }
       event.comments.unshift(obj)
-      return Util.addEventToIndex(index, event)
+      return util.addEventToIndex(index, event)
     }).then(() => {
       res.end()
     }).catch(() => {
@@ -26,4 +26,4 @@ class Comment {
   }
 }
 
-module.exports = new Comment()
+module.exports = comment

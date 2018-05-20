@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {DateTimeLong} from '../dateThumbnail'
 import TextArea from '../../shared/textarea'
 import Button from '../../shared/button'
-import HttpClient from '../../helper/httpClient'
+import http from '../../helper/http'
 import config from '../../config/index'
 import './style.css'
 
@@ -29,7 +29,7 @@ class Comments extends Component {
     if (message) {
       const obj = {message, email: email.getEmail(), eventId}
 
-      HttpClient.post(`${config.url}api/event/comment`, obj)
+      http.post(`${config.url}api/event/comment`, obj)
         .then((response) => {
           if (response.status === 200) {
             this.handleReset()

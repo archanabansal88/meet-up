@@ -1,7 +1,7 @@
 const Redis = require('../redis')
 
-class Util {
-  getEvent (eventId) {
+const util = {
+  getEvent: (eventId) => {
     let selectedIndex = -1
     let selectedEvent
     return Redis.lrange('events', 0, -1).then((events) => {
@@ -14,29 +14,29 @@ class Util {
       })
       return {selectedEvent, selectedIndex}
     })
-  }
+  },
 
-  addEventToIndex (index, event) {
+  addEventToIndex: (index, event) => {
     return Redis.lset('events', index, JSON.stringify(event))
-  }
+  },
 
-  getUserProfile (email) {
+  getUserProfile: (email) => {
     return Redis.hgetall(email)
-  }
+  },
 
-  createEvent (obj) {
+  createEvent: (obj) => {
     return Redis.lpush('events', JSON.stringify(obj))
-  }
+  },
 
-  getAllEvent () {
+  getAllEvent: () => {
     return Redis.lrange('events', 0, -1)
-  }
+  },
 
-  saveUserInfo ({name, id, email, image}) {
+  saveUserInfo: ({name, id, email, image}) => {
     return Redis.hmset(email, {
       name, id, email, image
     })
   }
 }
 
-module.exports = new Util()
+module.exports = util

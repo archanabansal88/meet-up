@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Carousel from '../../shared/carousel'
 import EventCard from '../eventCard'
 import config from '../../config/index'
-import HttpClient from '../../helper/httpClient'
+import http from '../../helper/http'
 import './style.css'
 
 class EventContainer extends Component {
@@ -20,7 +20,7 @@ class EventContainer extends Component {
   }
 
   componentDidMount () {
-    HttpClient.get(`${config.url}api/event`)
+    http.get(`${config.url}api/event`)
       .then(response => response.json())
       .then((events) => {
         this.setState({events})

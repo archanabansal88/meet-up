@@ -4,7 +4,7 @@ import Title from '../eventTitle/title'
 import Description from '../eventDescription/description'
 import Attendees from '../eventAttendees/attendees'
 import Comments from '../eventComments/comments'
-import HttpClient from '../../helper/httpClient'
+import http from '../../helper/http'
 import config from '../../config/index'
 import PopUp from '../../shared/popup'
 import GoogleOauth from '../googleOauth'
@@ -27,7 +27,7 @@ class EventDetails extends Component {
   }
 
   getEventDetails () {
-    HttpClient.get(`${config.url}api/event/${this.props.match.params.id}`)
+    http.get(`${config.url}api/event/${this.props.match.params.id}`)
       .then(response => response.json())
       .then((event) => {
         this.setState({event: event[0]})
@@ -51,7 +51,7 @@ class EventDetails extends Component {
   }
 
   handleAttendee (email, eventId, url) {
-    HttpClient.post(url, {email, eventId})
+    http.post(url, {email, eventId})
       .then((response) => {
         if (response.status === 200) {
           this.getEventDetails()

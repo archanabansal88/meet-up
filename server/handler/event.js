@@ -1,23 +1,23 @@
 const uuid = require('uuid/v1')
-const Util = require('./utils')
+const util = require('./utils')
 
-class Event {
-  create (req, res) {
+const event = {
+  create: (req, res) => {
     const obj = Object.assign({}, req.body, {id: uuid()})
-    Util.createEvent(obj).then(() => {
+    util.createEvent(obj).then(() => {
       res.end()
     })
-  }
-  eventList (req, res) {
-    Util.getAllEvent().then((events) => {
+  },
+  eventList: (req, res) => {
+    util.getAllEvent().then((events) => {
       const obj = events.map((event) => {
         return JSON.parse(event)
       })
       res.json(obj)
     })
-  }
-  eventDetails (req, res) {
-    Util.getAllEvent().then((events) => {
+  },
+  eventDetails: (req, res) => {
+    util.getAllEvent().then((events) => {
       const obj = events.filter((event) => {
         const eventObj = JSON.parse(event)
         return eventObj.id === req.params.id
@@ -27,4 +27,4 @@ class Event {
   }
 }
 
-module.exports = new Event()
+module.exports = event

@@ -3,7 +3,7 @@ import Button from '../../shared/button'
 import Input from '../../shared/input'
 import TextArea from '../../shared/textarea'
 import config from '../../config/index'
-import HttpClient from '../../helper/httpClient'
+import http from '../../helper/http'
 import './style.css'
 
 class CreateEvent extends Component {
@@ -39,7 +39,7 @@ class CreateEvent extends Component {
       const {name, location, url, description} = this.state
       const obj = {title: name, location, url, description, dateTime: new Date()}
 
-      HttpClient.post(`${config.url}api/event/create`, obj)
+      http.post(`${config.url}api/event/create`, obj)
         .then((response) => {
           if (response.status === 200) {
             this.handleReset()

@@ -1,9 +1,9 @@
-class HttpClient {
-  get (url) {
+const Http = {
+  get: (url) => {
     return fetch(url)
-  }
+  },
 
-  post (url, body) {
+  post: (url, body) => {
     return fetch(url, {
       body: JSON.stringify(body),
       method: 'POST',
@@ -15,4 +15,4 @@ class HttpClient {
   }
 }
 
-export default new HttpClient()
+export default Http
