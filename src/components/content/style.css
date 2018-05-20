@@ -1,12 +1,13 @@
 .content {
 	border-bottom: 1px solid #c1bbbb;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: #e9ebee;
+	position: relative;
+	height: 460px;
+	overflow: hidden;
 }
 
 .content__video {
+	position: absolute;
+	left: 0;
+	right: 0;
 	width: 100%;
-	height: 460px;
 }
