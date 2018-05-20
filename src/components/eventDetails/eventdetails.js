@@ -103,7 +103,7 @@ class EventDetails extends Component {
           <article className='event-details__container'>
             <Description description={event.description} />
             <Attendees attendees={event.attendees} />
-            <Comments comments={event.comments} isLoggedin={isLoggedin} eventId={event.id} email={profile} eventDetails={this.getEventDetails} />
+            <Comments comments={event.comments} isLoggedin={isLoggedin} eventId={event.id} profile={profile} eventDetails={this.getEventDetails} />
           </article>
           <article className='event-details__location'>
           Location

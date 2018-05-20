@@ -14,6 +14,7 @@ class Comments extends Component {
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
+    this.handleDeleteComment = this.handleDeleteComment.bind(this)
   }
 
   handleInputChange (e) {
@@ -24,10 +25,10 @@ class Comments extends Component {
 
   handleSubmitClick (e) {
     e.preventDefault()
-    const {email, eventId, eventDetails} = this.props
+    const {profile, eventId, eventDetails} = this.props
     const {message} = this.state
     if (message) {
-      const obj = {message, email: email.getEmail(), eventId}
+      const obj = {message, email: profile.getEmail(), eventId}
 
       http.post(`${config.url}api/event/comment`, obj)
         .then((response) => {
@@ -49,9 +50,13 @@ class Comments extends Component {
     })
   }
 
+  handleDeleteComment () {
+    console.log('delete')
+  }
+
   render () {
     const {message} = this.state
-    const {isLoggedin, comments} = this.props
+    const {isLoggedin, comments, profile} = this.props
     return (
       <section className='event-comments'>
         <h2 className='subtitle'>Comments</h2>
@@ -70,6 +75,9 @@ class Comments extends Component {
                   <h6 className='event-comments__user-name'>{comment.name}</h6>
                   <div className='event-comments__user-message'>{comment.message}</div>
                   <DateTimeLong date={comment.dateTime} />
+                  {isLoggedin && comment.email === profile.getEmail() &&
+                  <Button label='Delete' onClick={this.handleDeleteComment} className='button is-danger' />
+                  }
                 </div>
               </li>
             )
