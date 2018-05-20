@@ -27,21 +27,18 @@ class Comments extends Component {
     e.preventDefault()
     const {profile, eventId, eventDetails} = this.props
     const {message} = this.state
-    if (message) {
-      const obj = {message, email: profile.getEmail(), eventId}
 
-      http.post(`${config.url}api/event/comment`, obj)
-        .then((response) => {
-          if (response.status === 200) {
-            this.handleReset()
-            eventDetails()
-          }
-        }).catch((reject) => {
-          this.setState({showErrorMsg: true})
-        })
-    } else {
-      this.setState({showErrorMsg: true})
-    }
+    const obj = {message, email: profile.getEmail(), eventId}
+
+    http.post(`${config.url}api/event/comment`, obj)
+      .then((response) => {
+        if (response.status === 200) {
+          this.handleReset()
+          eventDetails()
+        }
+      }).catch((reject) => {
+        this.setState({showErrorMsg: true})
+      })
   }
 
   handleReset () {
@@ -50,8 +47,14 @@ class Comments extends Component {
     })
   }
 
-  handleDeleteComment () {
-    console.log('delete')
+  handleDeleteComment (comment) {
+    const {eventId, eventDetails} = this.props
+    const obj = {commentId: comment.commentId, eventId}
+
+    http.delete(`${config.url}api/event/comment`, obj)
+      .then((response) => {
+        eventDetails()
+      })
   }
 
   render () {
@@ -63,7 +66,7 @@ class Comments extends Component {
         {isLoggedin &&
           <div>
             <TextArea name='textarea' placeholder='Enter comment' onChange={this.handleInputChange} value={message} />
-            <Button label='Add Comment' onClick={this.handleSubmitClick} className='button is-link' />
+            <Button label='Add Comment' onClick={this.handleSubmitClick} className='button is-link' disabled={message.length === 0} />
           </div>
         }
         {comments && comments.length ? <ul className='event-comments__list'>
@@ -76,7 +79,7 @@ class Comments extends Component {
                   <div className='event-comments__user-message'>{comment.message}</div>
                   <DateTimeLong date={comment.dateTime} />
                   {isLoggedin && comment.email === profile.getEmail() &&
-                  <Button label='Delete' onClick={this.handleDeleteComment} className='button is-danger' />
+                  <Button label='Delete' onClick={this.handleDeleteComment.bind(null, comment)} className='button is-danger' />
                   }
                 </div>
               </li>

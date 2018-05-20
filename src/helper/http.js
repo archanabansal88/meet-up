@@ -12,6 +12,16 @@ const Http = {
         'content-type': 'application/json'
       }
     })
+  },
+  delete: (url, body) => {
+    return fetch(url, {
+      body: JSON.stringify(body),
+      method: 'DELETE',
+      credentials: 'same-origin',
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
   }
 }
 
