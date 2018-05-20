@@ -38,6 +38,9 @@ app.post('/api/event/attendee/cancel', attendee.deleteAttendee)
 //  API call to save a comment for a particular event
 app.post('/api/event/comment', comment.saveComment)
 
+//  API call to delete a comment for a particular event
+app.delete('/api/event/comment', comment.deleteComment)
+
 // API call to create an event
 app.post('/api/event/create', event.create)
 
