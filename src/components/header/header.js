@@ -6,18 +6,20 @@ import './style.css'
 
 const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
   return (
-    <div className='header'>
-      <div>
-        <Link to='/' className='header__link'>
-          <h2 className='title'>Bangalore <div>JS</div></h2>
-        </Link>
-      </div>
-      {!isLoggedin ? <GoogleOauth onLoginSuccess={onLoginSuccess} />
-        : <div className='header__user-info'>
-          <img className='header__user-image' src={profile ? profile.getImageUrl() : null} />{profile && profile.getName()}
-          <Logout onLogoutSuccess={onLogoutSuccess} />
+    <div className='hero is-light'>
+      <div className='hero-head level'>
+        <div>
+          <Link to='/'>
+            <h2 className='title'>Bangalore JS</h2>
+          </Link>
         </div>
-      }
+        {!isLoggedin ? <GoogleOauth onLoginSuccess={onLoginSuccess} />
+          : <div className='level-right'>
+            <img className='header__user-image' src={profile ? profile.getImageUrl() : null} />{profile && profile.getName()}
+            <Logout onLogoutSuccess={onLogoutSuccess} />
+          </div>
+        }
+      </div>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 .content {
-	border-bottom: 1px solid #c1bbbb;
 	position: relative;
-	height: 460px;
+	height: 450px;
 	overflow: hidden;
 }
 
@@ -10,4 +9,5 @@
 	left: 0;
 	right: 0;
 	width: 100%;
+	top: -130px;
 }
