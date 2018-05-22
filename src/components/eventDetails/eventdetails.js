@@ -31,9 +31,21 @@ class EventDetails extends Component {
       .then(response => response.json())
       .then((event) => {
         this.setState({event: event[0]})
+        this.getLatLng()
       })
       .catch((reject) => {
         this.setState({showErrorMsg: true})
+      })
+  }
+
+  getLatLng () {
+    const {address1, address2, address3, pinCode} = this.state.event
+    http.get(`https://maps.googleapis.com/maps/api/geocode/json?&address=${address1},${address2},${address3},${pinCode}`)
+      .then(response => response.json())
+      .then(response => {
+        if (response.status === 'OK') {
+          console.log(response.results[0].geometry.location)
+        }
       })
   }
 
