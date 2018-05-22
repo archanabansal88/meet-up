@@ -9,6 +9,7 @@ import config from '../../config/index'
 import PopUp from '../../shared/popup'
 import GoogleOauth from '../googleOauth'
 import EventConfirm from './eventconfirm'
+import renderMap from './map'
 import './style.css'
 
 class EventDetails extends Component {
@@ -40,11 +41,11 @@ class EventDetails extends Component {
 
   getLatLng () {
     const {address1, address2, address3, pinCode} = this.state.event
-    http.get(`https://maps.googleapis.com/maps/api/geocode/json?&address=${address1},${address2},${address3},${pinCode}`)
+    http.get(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDbqG1PMoPH2Zit5sAFsF5c28prKGH-wSg&address=${address1},${address2},${address3},${pinCode}`)
       .then(response => response.json())
       .then(response => {
         if (response.status === 'OK') {
-          console.log(response.results[0].geometry.location)
+          renderMap(response.results[0].geometry.location)
         }
       })
   }
@@ -118,7 +119,15 @@ class EventDetails extends Component {
             <Comments comments={event.comments} isLoggedin={isLoggedin} eventId={event.id} profile={profile} eventDetails={this.getEventDetails} />
           </article>
           <article className='event-details__location'>
-          Location
+            <div className='message is-info'>
+              <h2 className='message-header'>Location</h2>
+              <section className='message-body' id='map'>
+                <div>{event.address1}</div>
+                <div>{event.address2}</div>
+                <div>{event.address3}</div>
+                <div>{event.pinCode}</div>
+              </section>
+            </div>
           </article>
         </section>
       </main>
