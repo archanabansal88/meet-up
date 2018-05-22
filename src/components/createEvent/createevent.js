@@ -11,7 +11,10 @@ class CreateEvent extends Component {
     super(props)
     this.state = {
       name: '',
-      location: '',
+      address1: '',
+      address2: '',
+      address3: '',
+      pinCode: '',
       url: '',
       description: '',
       showErrorMsg: false
@@ -25,8 +28,8 @@ class CreateEvent extends Component {
     })
   }
   handleValidation () {
-    const {name, location, url, description} = this.state
-    if (!name || !location || !url || !description) {
+    const {name, address1, pinCode, url, description} = this.state
+    if (!name || !address1 || !pinCode || !url || !description) {
       return false
     }
     return true
@@ -36,8 +39,8 @@ class CreateEvent extends Component {
     this.setState({showErrorMsg: false})
 
     if (this.handleValidation()) {
-      const {name, location, url, description} = this.state
-      const obj = {title: name, location, url, description, dateTime: new Date()}
+      const {name, address1, address2, address3, pinCode, url, description} = this.state
+      const obj = {title: name, address1, address2, address3, pinCode, url, description, dateTime: new Date()}
 
       http.post(`${config.url}api/event/create`, obj)
         .then((response) => {
@@ -64,11 +67,11 @@ class CreateEvent extends Component {
   render () {
     const {name, location, url, description} = this.state
     return (
-      <div className='event-form'>
+      <div className='hero-body container'>
         <div>
-          <h1 className='event-form__title'>Create a new Event</h1>
+          <h1 className='title'>Create a new Event</h1>
           {this.state.showErrorMsg && <div>Sorry, We are unable to create an event due to a technical glitch</div>}
-          <form className='event-form__container'>
+          <form className='notification'>
             <Input
               type='text'
               label='Event Name'
@@ -78,9 +81,32 @@ class CreateEvent extends Component {
             />
             <Input
               type='text'
-              label='Event Location'
+              label='Address line 1'
               isValid
-              onChange={this.handleInputChange.bind(this, 'location')}
+              onChange={this.handleInputChange.bind(this, 'address1')}
+              value={location}
+            />
+            <Input
+              type='text'
+              label='Address line 2'
+              isValid
+              onChange={this.handleInputChange.bind(this, 'address2')}
+              value={location}
+            />
+
+            <Input
+              type='text'
+              label='Address line 3'
+              isValid
+              onChange={this.handleInputChange.bind(this, 'address3')}
+              value={location}
+            />
+
+            <Input
+              type='number'
+              label='Pin Code'
+              isValid
+              onChange={this.handleInputChange.bind(this, 'pinCode')}
               value={location}
             />
             <Input
@@ -91,7 +117,14 @@ class CreateEvent extends Component {
               value={url}
             />
             <TextArea name='textarea' label='Event Description' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
-            <Button className='button is-link' label='Create' onClick={this.handleSubmitClick} />
+            <div className='field is-horizontal'>
+              <div className='field-label' />
+              <div className='field-body'>
+                <div className='field'>
+                  <Button className='button is-primary' label='Create' onClick={this.handleSubmitClick} />
+                </div>
+              </div>
+            </div>
           </form>
         </div>
       </div>
