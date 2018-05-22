@@ -4,7 +4,6 @@ import Input from '../../shared/input'
 import TextArea from '../../shared/textarea'
 import config from '../../config/index'
 import http from '../../helper/http'
-import './style.css'
 
 class CreateEvent extends Component {
   constructor (props) {
@@ -127,7 +126,7 @@ class CreateEvent extends Component {
               <div className='field-label' />
               <div className='field-body'>
                 <div className='field'>
-                  <Button className='button is-primary' label='Create' onClick={this.handleSubmitClick} />
+                  <Button className='button is-primary' label='Create Event' onClick={this.handleSubmitClick} />
                 </div>
               </div>
             </div>

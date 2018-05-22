@@ -10,7 +10,6 @@ import PopUp from '../../shared/popup'
 import GoogleOauth from '../googleOauth'
 import EventConfirm from './eventconfirm'
 import renderMap from './map'
-import './style.css'
 
 class EventDetails extends Component {
   constructor (props) {
@@ -18,7 +17,8 @@ class EventDetails extends Component {
     this.state = {
       event: false,
       showErrorMsg: false,
-      showPopUp: false
+      showPopUp: false,
+      isLocationLoaded: false
     }
     this.handleYesButtonClick = this.handleYesButtonClick.bind(this)
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this)
@@ -31,8 +31,9 @@ class EventDetails extends Component {
     http.get(`${config.url}api/event/${this.props.match.params.id}`)
       .then(response => response.json())
       .then((event) => {
-        this.setState({event: event[0]})
-        this.getLatLng()
+        const {isLocationLoaded} = this.state
+        this.setState({event: event[0], isLocationLoaded: true})
+        if (!isLocationLoaded) { this.getLatLng() }
       })
       .catch((reject) => {
         this.setState({showErrorMsg: true})
@@ -98,11 +99,11 @@ class EventDetails extends Component {
     )[0]
 
     return (
-      <main className='event-details'>
+      <main>
         {showPopUp && <PopUp onClose={this.handleCloseClick} title='Sign in'><GoogleOauth onLoginSuccess={this.handleLoginSuccess} /></PopUp>}
-        <div className='event-details__header-wrapper'>
-          <section className='event-details__header'>
-            <article className='event-details__heading'>
+        <div className='card'>
+          <section className='level container card-content'>
+            <article className='level-left'>
               <DateTimeShort date={event.dateTime} />
               <Title {...event} />
             </article>
@@ -112,23 +113,27 @@ class EventDetails extends Component {
             }
           </section>
         </div>
-        <section className='event-details__content'>
-          <article className='event-details__container'>
-            <Description description={event.description} />
-            <Attendees attendees={event.attendees} />
-            <Comments comments={event.comments} isLoggedin={isLoggedin} eventId={event.id} profile={profile} eventDetails={this.getEventDetails} />
-          </article>
-          <article className='event-details__location'>
-            <div className='message is-info'>
-              <h2 className='message-header'>Location</h2>
-              <section className='message-body' id='map'>
-                <div>{event.address1}</div>
-                <div>{event.address2}</div>
-                <div>{event.address3}</div>
-                <div>{event.pinCode}</div>
-              </section>
+        <section className='hero-body has-background-light'>
+          <div className='container'>
+            <div className='columns'>
+              <article className='column is-two-thirds'>
+                <Description description={event.description} />
+                <Attendees attendees={event.attendees} />
+                <Comments comments={event.comments} isLoggedin={isLoggedin} eventId={event.id} profile={profile} eventDetails={this.getEventDetails} />
+              </article>
+              <article className='column'>
+                <div className='message is-info'>
+                  <h2 className='message-header'>Location</h2>
+                  <section className='message-body' id='map' style={{height: '550px'}}>
+                    <div>{event.address1}</div>
+                    <div>{event.address2}</div>
+                    <div>{event.address3}</div>
+                    <div>{event.pinCode}</div>
+                  </section>
+                </div>
+              </article>
             </div>
-          </article>
+          </div>
         </section>
       </main>
     )

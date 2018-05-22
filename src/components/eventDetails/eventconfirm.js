@@ -3,10 +3,10 @@ import Button from '../../shared/button'
 
 const EventConfirm = ({title, label, onClick}) => {
   return (
-    <article className='event-details__user'>
-      <div className='event-details__title'>{title}</div>
-      <div className='event-details__button'>
-        <Button label={label} onClick={onClick} className='button is-link' />
+    <article className='level-right'>
+      <div className='has-text-centered'>
+        <div className='is-size-5 has-text-info'>{title}</div>
+        <Button label={label} onClick={onClick} className='button is-primary' />
       </div>
     </article>
   )

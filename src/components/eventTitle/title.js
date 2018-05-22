@@ -1,12 +1,11 @@
 import React from 'react'
 import {DateTimeLong} from '../dateThumbnail'
-import './style.css'
 
 const Title = ({title, dateTime}) => {
   return (
-    <div className='event-title'>
+    <div >
       <DateTimeLong date={dateTime} />
-      <h1 className='event-title__header'>{title}</h1>
+      <h1 className='title'>{title}</h1>
     </div>
   )
 }

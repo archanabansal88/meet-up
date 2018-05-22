@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import GoogleOauth from '../googleOauth'
 import config from '../../config/index'
 import http from '../../helper/http'
-import './style.css'
 
 class Login extends Component {
   constructor (props) {
