@@ -1,8 +1,10 @@
 import React from 'react'
 const Input = props => {
-  const {label, ...attributes} = props
+  const {label, isHorizontal, ...attributes} = props
+  const clsName = isHorizontal ? 'field is-horizontal' : 'field'
+
   return (
-    <div className='field is-horizontal'>
+    <div className={clsName}>
       <div className='field-label is-normal'>
         <label className='label'>{props.label}</label>
       </div>

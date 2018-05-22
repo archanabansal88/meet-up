@@ -65,7 +65,7 @@ class Comments extends Component {
         <h2 className='subtitle'>Comments</h2>
         {isLoggedin &&
           <div>
-            <TextArea name='textarea' placeholder='Enter comment' onChange={this.handleInputChange} value={message} />
+            <TextArea placeholder='Enter comment' onChange={this.handleInputChange} value={message} />
             <Button label='Add Comment' onClick={this.handleSubmitClick} className='button is-link' disabled={message.length === 0} />
           </div>
         }

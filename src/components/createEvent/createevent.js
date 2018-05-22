@@ -78,6 +78,7 @@ class CreateEvent extends Component {
               onChange={this.handleInputChange.bind(this, 'name')}
               isValid
               value={name}
+              isHorizontal
             />
             <Input
               type='text'
@@ -85,6 +86,7 @@ class CreateEvent extends Component {
               isValid
               onChange={this.handleInputChange.bind(this, 'address1')}
               value={location}
+              isHorizontal
             />
             <Input
               type='text'
@@ -92,6 +94,7 @@ class CreateEvent extends Component {
               isValid
               onChange={this.handleInputChange.bind(this, 'address2')}
               value={location}
+              isHorizontal
             />
 
             <Input
@@ -100,6 +103,7 @@ class CreateEvent extends Component {
               isValid
               onChange={this.handleInputChange.bind(this, 'address3')}
               value={location}
+              isHorizontal
             />
 
             <Input
@@ -108,6 +112,7 @@ class CreateEvent extends Component {
               isValid
               onChange={this.handleInputChange.bind(this, 'pinCode')}
               value={location}
+              isHorizontal
             />
             <Input
               type='url'
@@ -115,8 +120,9 @@ class CreateEvent extends Component {
               isValid
               onChange={this.handleInputChange.bind(this, 'url')}
               value={url}
+              isHorizontal
             />
-            <TextArea name='textarea' label='Event Description' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
+            <TextArea isHorizontal name='textarea' label='Event Description' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
             <div className='field is-horizontal'>
               <div className='field-label' />
               <div className='field-body'>

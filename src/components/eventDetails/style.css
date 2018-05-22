@@ -5,7 +5,6 @@
 .event-details__header-wrapper{
     width: 100%;
     background: white;
-    border-bottom: 1px solid #ccc;
 }
 
 .event-details__heading{
@@ -43,10 +42,8 @@
     width: 30%;
     margin-top: 30px;
     border-radius: 8px;
-    padding: 20px;
-    height: 600px;
 }
 
-.event-details__button .ui-component__button {
-    margin-right: 10px;
+.message-body{
+    height: 550px;
 }
