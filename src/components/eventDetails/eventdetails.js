@@ -42,7 +42,7 @@ class EventDetails extends Component {
 
   getLatLng () {
     const {address1, address2, address3, pinCode} = this.state.event
-    http.get(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDbqG1PMoPH2Zit5sAFsF5c28prKGH-wSg&address=${address1},${address2},${address3},${pinCode}`)
+    http.get(`https://maps.googleapis.com/maps/api/geocode/json?&address=${address1},${address2},${address3},${pinCode}`)
       .then(response => response.json())
       .then(response => {
         if (response.status === 'OK') {
