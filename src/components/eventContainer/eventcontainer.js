@@ -33,7 +33,7 @@ class EventContainer extends Component {
     const {events, showErrorMsg} = this.state
     return (
       <div className='event'>
-        <h2 className='subtitle'>Events</h2>
+        <h2 className='title is-size-4'>Events</h2>
         {showErrorMsg && <div>There is a problem getting list of events.Please try after some time</div>}
         {events &&
         <Carousel>

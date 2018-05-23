@@ -124,7 +124,7 @@ class EventDetails extends Component {
               <article className='column'>
                 <div className='message is-info'>
                   <h2 className='message-header'>Location</h2>
-                  <section className='message-body' id='map' style={{height: '550px'}}>
+                  <section className='message-body' id='map' style={{height: '600px'}}>
                     <div>{event.address1}</div>
                     <div>{event.address2}</div>
                     <div>{event.address3}</div>

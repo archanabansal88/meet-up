@@ -32,7 +32,7 @@ class Main extends Component {
     http.post(`${config.url}api/user/login`, data)
       .then((response) => {
         if (response.status === 200) {
-          console.log('success', response)
+          console.log('success')
         }
       })
   }

@@ -14,7 +14,9 @@ const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
           {!isLoggedin ? <GoogleOauth onLoginSuccess={onLoginSuccess} />
             : <div className='level-right'>
               <div className='columns level-item'>
-                <img className=' image is-48x48' style={{'border-radius': '20px'}} src={profile ? profile.getImageUrl() : null} />
+                <figure className='image is-48x48'>
+                  <img className='is-rounded' src={profile ? profile.getImageUrl() : null} />
+                </figure>
                 <div className='column'>
                   {profile && profile.getName()}
                 </div>
