@@ -3,7 +3,9 @@ import React from 'react'
 const Attendee = ({value, index}) => {
   return (
     <li key={index} className='box media-left'>
-      <img className=' image is-80x80' style={{'border-radius': '50px'}} src={value.image} />
+      <figure className='image is-64x64'>
+        <img className='is-rounded' src={value.image} />
+      </figure>
       <div className='is-size-6'>{value.name}</div>
     </li>
   )
@@ -17,7 +19,9 @@ const Attendees = ({attendees}) => {
         ? <ul className='media'>
           {attendees.map((value, index) => <Attendee value={value} index={index} />)}
         </ul>
-        : <div className='card section has-text-centered'>No Attendees</div>
+        : <article class='message is-dark has-background-white'>
+          <div class='message-body'>No Attendees</div>
+        </article>
       }
     </section>
   )
