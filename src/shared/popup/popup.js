@@ -1,16 +1,18 @@
 import React from 'react'
 import Button from '../button'
-import './style.css'
 
 const PopUp = props => {
   return (
-    <section className='ui-component__popup'>
-      <div className='ui-component__popup-content'>
-        <Button label={String.fromCharCode(215)} onClick={props.onClose} className='button is-light' />
-        <h2 className='ui-component__popup-title'>{props.title}</h2>
-        {props.children}
+    <div class='modal is-active'>
+      <div class='modal-background' />
+      <div class='modal-content'>
+        <div className='box'>
+          <h2 className='subtitle'>{props.title}</h2>
+          {props.children}
+        </div>
       </div>
-    </section>
+      <Button onClick={props.onClose} className='modal-close is-large' aria-label='close' />
+    </div>
   )
 }
 

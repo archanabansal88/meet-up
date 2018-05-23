@@ -13,16 +13,12 @@ const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
           </Link>
           {!isLoggedin ? <GoogleOauth onLoginSuccess={onLoginSuccess} />
             : <div className='level-right'>
-              <div className='columns'>
-                <div className='column is-narrow'>
-                  <img className=' image is-48x48' style={{'border-radius': '20px'}} src={profile ? profile.getImageUrl() : null} />
-                </div>
+              <div className='columns level-item'>
+                <img className=' image is-48x48' style={{'border-radius': '20px'}} src={profile ? profile.getImageUrl() : null} />
                 <div className='column'>
                   {profile && profile.getName()}
                 </div>
-                <div className='column is-narrow'>
-                  <Logout onLogoutSuccess={onLogoutSuccess} />
-                </div>
+                <Logout onLogoutSuccess={onLogoutSuccess} />
               </div>
             </div>
           }
