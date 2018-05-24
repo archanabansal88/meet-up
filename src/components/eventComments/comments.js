@@ -27,7 +27,7 @@ class Comments extends Component {
     const {profile, eventId, eventDetails} = this.props
     const {message} = this.state
 
-    const obj = {message, email: profile.getEmail(), eventId}
+    const obj = {message, email: profile.email, eventId}
 
     http.post(`${config.url}api/event/comment`, obj)
       .then((response) => {
@@ -68,7 +68,7 @@ class Comments extends Component {
             <Button label='Add Comment' onClick={this.handleSubmitClick} className='button is-link' disabled={message.length === 0} />
           </div>
         }
-        {comments && comments.length ? <ul>
+        {comments.length > 0 ? <ul>
           {comments.map((comment, index) => {
             return (
               <li className='box'>
@@ -84,7 +84,7 @@ class Comments extends Component {
                     <DateTimeLong date={comment.dateTime} />
                   </div>
                   <div className='media-right'>
-                    {isLoggedin && comment.email === profile.getEmail() &&
+                    {isLoggedin && comment.email === profile.email &&
                     <Button onClick={this.handleDeleteComment.bind(null, comment)} className='delete is-large' />
                     }
                   </div>

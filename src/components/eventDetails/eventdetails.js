@@ -60,7 +60,7 @@ class EventDetails extends Component {
     if (!isLoggedin) {
       this.setState({showPopUp: true})
     } else {
-      this.handleAttendee(profile.getEmail(), this.state.event.id, `${config.url}api/event/attendee`)
+      this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee`)
     }
   }
 
@@ -75,7 +75,7 @@ class EventDetails extends Component {
 
   handleCancelButtonClick () {
     const {profile} = this.props
-    this.handleAttendee(profile.getEmail(), this.state.event.id, `${config.url}api/event/attendee/cancel`)
+    this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee/cancel`)
   }
 
   handleCloseClick () {
@@ -85,8 +85,8 @@ class EventDetails extends Component {
   handleLoginSuccess (profile) {
     this.setState({showPopUp: false})
     const {event} = this.state
-    const list = event.attendees.filter((attendee) => attendee.email === profile.getEmail())
-    if (!list.length) {
+    const list = event.attendees.filter((attendee) => attendee.email === profile.getEmail())[0]
+    if (!list) {
       this.handleAttendee(profile.getEmail(), event.id, `${config.url}api/event/attendee`)
     }
   }
@@ -94,10 +94,12 @@ class EventDetails extends Component {
   render () {
     const {event, showPopUp} = this.state
     const {isLoggedin, profile} = this.props
-    const isUserAttending = event && profile && event.attendees && event.attendees.filter((attendee) =>
-      attendee.email === profile.getEmail()
+    if (!event) {
+      return null
+    }
+    const isUserAttending = isLoggedin && event.attendees.filter((attendee) =>
+      attendee && attendee.email === profile.email
     )[0]
-
     return (
       <main>
         {showPopUp && <PopUp onClose={this.handleCloseClick} title='Sign in'><GoogleOauth onLoginSuccess={this.handleLoginSuccess} /></PopUp>}

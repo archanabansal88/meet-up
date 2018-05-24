@@ -34,7 +34,7 @@ class EventContainer extends Component {
       <div className='container section'>
         <h2 className='title is-4 is-marginless'>Events</h2>
         {showErrorMsg && <div>There is a problem getting list of events.Please try after some time</div>}
-        {events &&
+        {events && events.length > 0 &&
         <Carousel>
           {events.map((event, index) => {
             return (
