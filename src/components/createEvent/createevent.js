@@ -67,7 +67,7 @@ class CreateEvent extends Component {
   }
 
   render () {
-    const {name, location, url, description} = this.state
+    const {name, address1, address2, address3, pinCode, url, description} = this.state
     return (
       <div className='hero-body container'>
         <div>
@@ -85,14 +85,14 @@ class CreateEvent extends Component {
               type='text'
               label='Address line 1'
               onChange={this.handleInputChange.bind(this, 'address1')}
-              value={location}
+              value={address1}
               isHorizontal
             />
             <Input
               type='text'
               label='Address line 2'
               onChange={this.handleInputChange.bind(this, 'address2')}
-              value={location}
+              value={address2}
               isHorizontal
             />
 
@@ -100,7 +100,7 @@ class CreateEvent extends Component {
               type='text'
               label='Address line 3'
               onChange={this.handleInputChange.bind(this, 'address3')}
-              value={location}
+              value={address3}
               isHorizontal
             />
 
@@ -108,7 +108,7 @@ class CreateEvent extends Component {
               type='number'
               label='Pin Code'
               onChange={this.handleInputChange.bind(this, 'pinCode')}
-              value={location}
+              value={pinCode}
               isHorizontal
             />
             <Input
