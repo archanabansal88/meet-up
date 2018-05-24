@@ -52,8 +52,8 @@ class Carousel extends Component {
         </div>
         <div className='is-clipped'>
           <div ref={(input) => { this.carouselContainer = input }} className='is-flex' style={{transform: `translateX(${translatex}px)`, 'transition': 'transform 0.25s cubic-bezier(.4, 0,.2, 1)'}}>
-            {this.props.children.map(item =>
-              <div>{item}</div>
+            {this.props.children.map((item, index) =>
+              <div key={index}>{item}</div>
             )}
           </div>
         </div>
