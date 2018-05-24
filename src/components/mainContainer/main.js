@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Content from '../content'
 import Header from '../header'
 import CreateEvent from '../createEvent'
@@ -13,7 +13,14 @@ class Main extends React.Component {
     super(props)
     this.state = {
       isLoggedin: false,
-      profile: null,
+      profile: {
+        email: null,
+        name: null,
+        id: null,
+        image: null,
+        display: true,
+        aboutme: null
+      },
       first: false
     }
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
@@ -26,7 +33,9 @@ class Main extends React.Component {
       email: profile.getEmail(),
       name: profile.getName(),
       id: profile.getId(),
-      image: profile.getImageUrl()
+      image: profile.getImageUrl(),
+      display: true,
+      aboutme: ''
     }
 
     fetch(`${config.url}api/user/get`, {
@@ -39,9 +48,8 @@ class Main extends React.Component {
     })
       .then(response => {
         response.json().then(profileinfo => {
-          console.log(profileinfo === null, window.location.pathname !== '/profile')
           if (profileinfo === null && window.location.pathname !== '/profile') {
-            this.setState({isLoggedin: true, profile: data, first: true})
+            this.setState({isLoggedin: true, profile: data, first: true}, )
           } else {
             this.setState({isLoggedin: true, profile: profileinfo, first: false})
           }
@@ -50,7 +58,16 @@ class Main extends React.Component {
   }
 
   handleLogoutSuccess () {
-    this.setState({isLoggedin: false, profile: null})
+    this.setState({isLoggedin: false,
+      profile: {
+        email: null,
+        name: null,
+        id: null,
+        image: null,
+        display: null,
+        aboutme: null
+      }
+    })
   }
 
   handleRedirect () {
@@ -59,6 +76,7 @@ class Main extends React.Component {
 
   render () {
     const {isLoggedin, profile, first} = this.state
+    console.log(profile, 'in Main')
     return (
       <BrowserRouter>
         <div>
@@ -67,7 +85,7 @@ class Main extends React.Component {
           <Switch>
             <Route exact path='/' render={(props) => <Content {...props} first={first} />} />
             <Route exact path='/profile' render={(props) => <Profile {...props} profile={profile}
-              first={first} handleRedirect={this.handleRedirect} />} />
+              first={first} handleRedirect={this.handleRedirect} isLoggedin={isLoggedin} />} />
             <Route exact path='/admin' component={Login} />
             <Route exact path='/create' component={CreateEvent} profile={profile} />
             <Route exact path='/:id' render={(props) => <EventDetails {...props} isLoggedin={isLoggedin} profile={profile} />} />

@@ -85,9 +85,9 @@ app.post('/api/event/create', (req, res) => {
 
 app.get('/create', (req, res, next) => {
   // if (!req.session.email) {
-  res.redirect('/')
+  //   res.redirect('/')
   // } else {
-  //   next()
+  next()
   // }
 })
 
@@ -100,7 +100,6 @@ app.post('/api/user/get', (req, res) => {
 
 // API call for user login
 app.post('/api/user/login', (req, res) => {
-  console.log(req.body)
   const {email, name, id, image} = req.body
   clientHmset('users', email, JSON.stringify({
     name, id, email, image

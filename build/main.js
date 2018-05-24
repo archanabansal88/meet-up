@@ -62,7 +62,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "06a072bc9aed265f0d76"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7e73f780cd83594b7d5e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -27940,10 +27940,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Header = function Header(_ref) {
   var isLoggedin = _ref.isLoggedin,
-      profile = _ref.profile,
       onLoginSuccess = _ref.onLoginSuccess,
-      onLogoutSuccess = _ref.onLogoutSuccess;
+      onLogoutSuccess = _ref.onLogoutSuccess,
+      profile = _ref.profile;
 
+  console.log(profile);
   return _react2.default.createElement(
     'div',
     { className: 'header' },
@@ -27965,7 +27966,7 @@ var Header = function Header(_ref) {
         )
       )
     ),
-    !isLoggedin ? _react2.default.createElement(_googleOauth2.default, { onLoginSuccess: onLoginSuccess }) : _react2.default.createElement(
+    !isLoggedin && !profile.name ? _react2.default.createElement(_googleOauth2.default, { onLoginSuccess: onLoginSuccess.bind(undefined) }) : _react2.default.createElement(
       'div',
       null,
       _react2.default.createElement(
@@ -27974,11 +27975,11 @@ var Header = function Header(_ref) {
         _react2.default.createElement(
           'div',
           { className: 'header__user-info' },
-          _react2.default.createElement('img', { className: 'header__user-image', src: profile.display ? profile.image : 'https://ui-avatars.com/api/?name=' + profile.name.replace(' ', '+') }),
+          _react2.default.createElement('img', { className: 'header__user-image', src: profile ? profile.display ? profile.image : 'https://ui-avatars.com/api/?name=' + profile.name.replace(' ', '+') : null }),
           profile ? profile.name : null
         )
       ),
-      _react2.default.createElement(_logout2.default, { onLogoutSuccess: onLogoutSuccess })
+      _react2.default.createElement(_logout2.default, { onLogoutSuccess: onLogoutSuccess.bind(undefined) })
     )
   );
 };
@@ -28317,7 +28318,14 @@ var Main = function (_React$Component) {
 
     _this.state = {
       isLoggedin: false,
-      profile: null,
+      profile: {
+        email: null,
+        name: null,
+        id: null,
+        image: null,
+        display: true,
+        aboutme: null
+      },
       first: false
     };
     _this.handleLoginSuccess = _this.handleLoginSuccess.bind(_this);
@@ -28335,7 +28343,9 @@ var Main = function (_React$Component) {
         email: profile.getEmail(),
         name: profile.getName(),
         id: profile.getId(),
-        image: profile.getImageUrl()
+        image: profile.getImageUrl(),
+        display: true,
+        aboutme: ''
       };
 
       fetch(_index2.default.url + 'api/user/get', {
@@ -28347,7 +28357,6 @@ var Main = function (_React$Component) {
         }
       }).then(function (response) {
         response.json().then(function (profileinfo) {
-          console.log(profileinfo === null, window.location.pathname !== '/profile');
           if (profileinfo === null && window.location.pathname !== '/profile') {
             _this2.setState({ isLoggedin: true, profile: data, first: true });
           } else {
@@ -28359,7 +28368,16 @@ var Main = function (_React$Component) {
   }, {
     key: 'handleLogoutSuccess',
     value: function handleLogoutSuccess() {
-      this.setState({ isLoggedin: false, profile: null });
+      this.setState({ isLoggedin: false,
+        profile: {
+          email: null,
+          name: null,
+          id: null,
+          image: null,
+          display: null,
+          aboutme: null
+        }
+      });
     }
   }, {
     key: 'handleRedirect',
@@ -28376,6 +28394,7 @@ var Main = function (_React$Component) {
           profile = _state.profile,
           first = _state.first;
 
+      console.log(profile, 'in Main');
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
         null,
@@ -28392,7 +28411,7 @@ var Main = function (_React$Component) {
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/profile', render: function render(props) {
                 return _react2.default.createElement(_profile2.default, _extends({}, props, { profile: profile,
-                  first: first, handleRedirect: _this3.handleRedirect }));
+                  first: first, handleRedirect: _this3.handleRedirect, isLoggedin: isLoggedin }));
               } }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/admin', component: _admin2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/create', component: _createEvent2.default, profile: profile }),
@@ -28482,7 +28501,7 @@ var Profile = function (_Component) {
 
     _this.state = {
       profile: props.profile,
-      checkbox: props.profile.display,
+      checkbox: true,
       submit: false
     };
     return _this;
@@ -28527,16 +28546,17 @@ var Profile = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      if (this.state.submit || !this.props.isLoggedin) {
+        this.props.handleRedirect();
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
+      }
       var _state$profile = this.state.profile,
           name = _state$profile.name,
           email = _state$profile.email,
-          aboutme = _state$profile.aboutme;
+          aboutme = _state$profile.aboutme,
+          display = _state$profile.display;
       var first = this.props.first.first;
 
-      console.log(this.props, first);
-      if (this.state.submit) {
-        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
-      }
       return _react2.default.createElement(
         'form',
         { className: 'userform', onSubmit: this.handleSubmit.bind(this) },
@@ -28596,7 +28616,7 @@ var Profile = function (_Component) {
             _react2.default.createElement(
               'label',
               { className: 'checkbox' },
-              _react2.default.createElement('input', { type: 'checkbox', name: 'display', defaultChecked: this.state.checkbox, onChange: this.handleUncheck.bind(this) }),
+              _react2.default.createElement('input', { type: 'checkbox', name: 'display', defaultChecked: display, onChange: this.handleUncheck.bind(this) }),
               'Yes'
             )
           )

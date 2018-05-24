@@ -9,7 +9,7 @@ class Profile extends Component {
     super()
     this.state = {
       profile: props.profile,
-      checkbox: props.profile.display,
+      checkbox: true,
       submit: false
     }
   }
@@ -48,14 +48,14 @@ class Profile extends Component {
   }
 
   render () {
-    const {name, email, aboutme} = this.state.profile
-    const {first} = this.props.first
-    console.log(this.props, first)
-    if (this.state.submit) {
+    if (this.state.submit || !this.props.isLoggedin) {
+      this.props.handleRedirect()
       return (
         <Redirect to='/' />
       )
     }
+    const {name, email, aboutme, display} = this.state.profile
+    const {first} = this.props.first
     return (
       <form className='userform' onSubmit={this.handleSubmit.bind(this)}>
         <div className='field'>
@@ -80,7 +80,7 @@ class Profile extends Component {
           <label className='label'>Display profile picture</label>
           <div className='control'>
             <label className='checkbox'>
-              <input type='checkbox' name='display' defaultChecked={this.state.checkbox} onChange={this.handleUncheck.bind(this)} />
+              <input type='checkbox' name='display' defaultChecked={display} onChange={this.handleUncheck.bind(this)} />
       Yes
             </label>
           </div>
