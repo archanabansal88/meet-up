@@ -1,5 +1,4 @@
 import React from 'react'
-import './style.css'
 
 export const DateTimeLong = ({date}) => {
   const dateObj = new Date(date)
@@ -16,9 +15,11 @@ export const DateTimeShort = ({date}) => {
   const month = dateObj.toLocaleString('en-US', {month: 'short'})
   const newDate = dateObj.getDate()
   return (
-    <div className='event-date has-background-light'>
-      <div className='event-date__day has-text-danger'>{newDate}</div>
-      <div className='event-date__month has-text-dark'>{month}</div>
+    <div className='column'>
+      <div className='message column card has-background-light has-text-centered'>
+        <div className='has-text-weight-bold is-size-5 has-text-danger'>{newDate}</div>
+        <div className='is-uppercase has-text-dark'>{month}</div>
+      </div>
     </div>
   )
 }
