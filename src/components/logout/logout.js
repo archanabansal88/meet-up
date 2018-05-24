@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Button from '../../shared/button'
 
-import './style.css'
 class Logout extends Component {
   constructor (props) {
     super(props)
@@ -23,9 +22,7 @@ class Logout extends Component {
 
   render () {
     return (
-      <div className='logout'>
-        <Button href={'/logout'} onClick={this.onClick} label={'Logout'} />
-      </div>
+      <Button href={'/logout'} onClick={this.onClick} label='Logout' className='button is-inverted is-danger' />
     )
   }
 }

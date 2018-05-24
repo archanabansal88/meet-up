@@ -1,87 +1,43 @@
-const Login = require('./handler/login')
 const express = require('express')
 const bodyParser = require('body-parser')
 // const session = require('express-session')
 const path = require('path')
-const redis = require('redis')
-const uuid = require('uuid/v1')
-const client = redis.createClient()
-const {promisify} = require('util')
+const admin = require('./handler/admin')
+const user = require('./handler/user')
+const event = require('./handler/event')
+const attendee = require('./handler/attendee')
+const comment = require('./handler/comment')
+
 const app = express()
 const PORT = 3000
-
-client.on('connect', function () {
-  console.log('connected')
-})
-
-const clientHmset = promisify(client.hmset).bind(client)
-const clientHget = promisify(client.hget).bind(client)
-const clientHgetall = promisify(client.hgetall).bind(client)
-const clientLpush = promisify(client.lpush).bind(client)
-const clientLrange = promisify(client.lrange).bind(client)
-const clientLset = promisify(client.lset).bind(client)
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('build'))
 
 // API call for admin login
-app.post('/api/admin/login', Login)
+app.post('/api/admin/login', admin)
 
 // API call to get list of events
-app.get('/api/event', (req, res) => {
-  clientLrange('events', 0, -1).then((events) => {
-    const obj = events.map((event) => {
-      return JSON.parse(event)
-    })
-    res.json(obj)
-  })
-})
+app.get('/api/event', event.eventList)
 
 //  API call to get details of a particular event
-app.get('/api/event/:id', (req, res) => {
-  clientLrange('events', 0, -1).then((events) => {
-    const obj = events.filter((event) => {
-      const eventObj = JSON.parse(event)
-      return eventObj.id === req.params.id
-    }).map((value) => JSON.parse(value))
-    res.json(obj)
-  })
-})
+app.get('/api/event/:id', event.eventDetails)
 
 //  API call to save an attendee for a particular event
-app.post('/api/event/attendee', (req, res) => {
-  let selectedIndex = -1
-  let selectedEvent
-  clientLrange('events', 0, -1).then((events) => {
-    events.forEach((event, index) => {
-      const eventObj = JSON.parse(event)
-      if (eventObj.id === req.body.eventId) {
-        selectedEvent = eventObj
-        selectedIndex = index
-      }
-    })
-    return clientHgetall(req.body.email)
-  }).then((obj) => {
-    if (!selectedEvent.attendees) {
-      selectedEvent.attendees = []
-    }
-    selectedEvent.attendees.push(obj)
-    return clientLset('events', selectedIndex, JSON.stringify(selectedEvent))
-  }).then(() => {
-    res.end()
-  }).catch(() => {
-    res.status(500).send()
-  })
-})
+app.post('/api/event/attendee', attendee.saveAttendee)
+
+//  API call to remove an attendee for a particular event
+app.post('/api/event/attendee/cancel', attendee.deleteAttendee)
+
+//  API call to save a comment for a particular event
+app.post('/api/event/comment', comment.saveComment)
+
+//  API call to delete a comment for a particular event
+app.delete('/api/event/comment', comment.deleteComment)
 
 // API call to create an event
-app.post('/api/event/create', (req, res) => {
-  const obj = Object.assign({}, req.body, {id: uuid()})
-  clientLpush('events', JSON.stringify(obj)).then(() => {
-    res.end()
-  })
-})
+app.post('/api/event/create', event.create)
 
 app.get('/create', (req, res, next) => {
   // if (!req.session.email) {
@@ -91,23 +47,14 @@ app.get('/create', (req, res, next) => {
   // }
 })
 
-app.post('/api/user/get', (req, res) => {
-  const { email } = req.body
-  clientHget('users', email).then((obj) => {
-    res.json(JSON.parse(obj))
-  })
-})
+// API call for user details
+app.post('/api/user/get', user.getUserInfo)
 
 // API call for user login
-app.post('/api/user/login', (req, res) => {
-  const {email, name, id, image} = req.body
-  clientHmset('users', email, JSON.stringify({
-    name, id, email, image
-  })).then(() => {
-    res.status(200).send('success')
-  })
-  res.status(200).send('success')
-})
+app.post('/api/user/login', user.login)
+
+// API call for user logout
+app.get('/logout', user.logout)
 
 // to render UI...always place it at the bottom
 app.get('*', (req, res) => {

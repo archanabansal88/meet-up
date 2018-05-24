@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {Component} from 'react'
 import GoogleOauth from '../googleOauth'
 import config from '../../config/index'
-import './style.css'
+import http from '../../helper/http'
 
-class Login extends React.Component {
+class Login extends Component {
   constructor (props) {
     super(props)
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
@@ -13,15 +13,7 @@ class Login extends React.Component {
     const data = {
       emailid: profile.getEmail()
     }
-
-    fetch(`${config.url}api/admin/login`, {
-      body: JSON.stringify(data),
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
+    http.post(`${config.url}api/admin/login`, data)
       .then((response) => {
         if (response.status === 200) {
           this.props.history.push('/create')

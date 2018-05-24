@@ -1,5 +1,6 @@
 import React from 'react'
-const Input = props => {
+
+const TextArea = props => {
   const {label, isHorizontal, ...attributes} = props
   const clsName = isHorizontal ? 'field is-horizontal' : 'field'
 
@@ -11,11 +12,12 @@ const Input = props => {
       <div className='field-body'>
         <div className='field'>
           <div className='control'>
-            <input className='input' {...attributes} />
+            <textarea className='textarea' {...attributes} />
           </div>
         </div>
       </div>
     </div>
   )
 }
-export default Input
+
+export default TextArea

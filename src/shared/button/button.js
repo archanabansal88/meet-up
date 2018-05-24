@@ -1,12 +1,12 @@
 import React from 'react'
-import './index.css'
-
 const Button = props => {
+  const {label, ...attributes} = props
   return (
-    <button onClick={props.onClick} className='ui-component__button'>
-      {props.label}
-    </button>
+    <div className='field'>
+      <div className='control'>
+        <button {...attributes}>{props.label}</button>
+      </div>
+    </div>
   )
 }
-
 export default Button

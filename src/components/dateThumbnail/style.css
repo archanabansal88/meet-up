@@ -2,7 +2,6 @@
     padding: 5px 8px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    background: #f7f7f7;
     height: 62px;
     width: 62px;
     text-align: center;
@@ -10,19 +9,11 @@
 }
 
 .event-date__day{
-    color: #f13a59;
     font-weight: bold;
     font-size: 1.5em;
 }
 
 .event-date__month{
     font-size: 0.8em;
-    color: #3c3a3a;
     text-transform: uppercase;
-}
-
-
-.event-title__date{
-    color: #909090;
-    font-size: 1.2em;
 }

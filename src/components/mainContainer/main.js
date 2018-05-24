@@ -1,14 +1,15 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Content from '../content'
 import Header from '../header'
 import CreateEvent from '../createEvent'
 import EventDetails from '../eventDetails'
 import config from '../../config/index'
+import http from '../../helper/http'
 import Login from '../admin'
 import Profile from '../profile'
 
-class Main extends React.Component {
+class Main extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -38,18 +39,11 @@ class Main extends React.Component {
       aboutme: ''
     }
 
-    fetch(`${config.url}api/user/get`, {
-      body: JSON.stringify(data),
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
+    http.post(`${config.url}api/user/get`, data)
       .then(response => {
         response.json().then(profileinfo => {
           if (profileinfo === null && window.location.pathname !== '/profile') {
-            this.setState({isLoggedin: true, profile: data, first: true}, )
+            this.setState({isLoggedin: true, profile: data, first: true})
           } else {
             this.setState({isLoggedin: true, profile: profileinfo, first: false})
           }
@@ -87,8 +81,8 @@ class Main extends React.Component {
             <Route exact path='/profile' render={(props) => <Profile {...props} profile={profile}
               first={first} handleRedirect={this.handleRedirect} isLoggedin={isLoggedin} />} />
             <Route exact path='/admin' component={Login} />
-            <Route exact path='/create' component={CreateEvent} profile={profile} />
-            <Route exact path='/:id' render={(props) => <EventDetails {...props} isLoggedin={isLoggedin} profile={profile} />} />
+            <Route exact path='/create' component={CreateEvent} />
+            <Route exact path='/:id' render={(props) => <EventDetails {...props} onLoginSuccess={this.handleLoginSuccess} isLoggedin={isLoggedin} profile={profile} />} />
           </Switch>
         </div>
       </BrowserRouter>

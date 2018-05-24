@@ -1,11 +1,12 @@
 import React from 'react'
-import './style.css'
 
 const Description = (props) => {
   return (
-    <section className='event-description'>
-      <h2 className='event-description__title'>Details</h2>
-      <p className='event-description__content'>{props.description}</p>
+    <section className='section'>
+      <h2 className='title is-size-4'>Details</h2>
+      <div>
+        <p className='subtitle'>{props.description}</p>
+      </div>
     </section>
   )
 }

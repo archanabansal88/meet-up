@@ -1,12 +1,13 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Carousel from '../../shared/carousel'
 import EventCard from '../eventCard'
 import config from '../../config/index'
+import http from '../../helper/http'
 import './style.css'
 
-class EventContainer extends React.Component {
+class EventContainer extends Component {
   constructor (props) {
-    super(props)
+    super()
     this.state = {
       events: false,
       showErrorMsg: false
@@ -19,7 +20,7 @@ class EventContainer extends React.Component {
   }
 
   componentDidMount () {
-    fetch(`${config.url}api/event`)
+    http.get(`${config.url}api/event`)
       .then(response => response.json())
       .then((events) => {
         this.setState({events})
@@ -32,7 +33,7 @@ class EventContainer extends React.Component {
     const {events, showErrorMsg} = this.state
     return (
       <div className='event'>
-        <h2 className='event__header'>Events</h2>
+        <h2 className='subtitle'>Events</h2>
         {showErrorMsg && <div>There is a problem getting list of events.Please try after some time</div>}
         {events &&
         <Carousel>

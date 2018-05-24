@@ -32,7 +32,6 @@ class Profile extends Component {
     })
       .then((response) => {
         if (response.status === 200) {
-          console.log(this.props.history)
           this.props.handleRedirect()
           this.setState({
             submit: true
@@ -66,7 +65,7 @@ class Profile extends Component {
         </div>
         <div className='field'>
           <label className='label'>Email</label>
-          <div className='control has-icons-left has-icons-right'>
+          <div className='control'>
             <input className='input' type='email' placeholder='My Email ID is...' defaultValue={email} name='email' />
           </div>
         </div>

@@ -15,3 +15,4 @@
 * start redis server using 'redis-server'
 * run command "npm run dev-server" to start the express server
 * run command "Webpack -w" to watch for local js changes
+* type localhost:3000 in browser

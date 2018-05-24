@@ -1,22 +1,24 @@
 import React from 'react'
-import './style.css'
 
 const Attendee = ({value, index}) => {
   return (
-    <li key={index} className='event-attendees__item'>
-      <img className='event-attendees__image' src={value.image} />
-      <div className='event-attendees__name'>{value.name}</div>
+    <li key={index} className='box media-left'>
+      <img className=' image is-80x80' style={{'border-radius': '50px'}} src={value.image} />
+      <div className='is-size-6'>{value.name}</div>
     </li>
   )
 }
 
-const Attendees = (props) => {
+const Attendees = ({attendees}) => {
   return (
-    <section className='event-attendees'>
-      <h2 className='event-attendees__title'>Attendees</h2>
-      <ul className='event-attendees__list'>
-        {props.attendees.map((value, index) => <Attendee value={value} index={index} />)}
-      </ul>
+    <section className='section'>
+      <h2 className='title is-size-4'>Attendees</h2>
+      {attendees && attendees.length
+        ? <ul className='media'>
+          {attendees.map((value, index) => <Attendee value={value} index={index} />)}
+        </ul>
+        : <div className='card section has-text-centered'>No Attendees</div>
+      }
     </section>
   )
 }
