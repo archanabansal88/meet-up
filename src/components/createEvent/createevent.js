@@ -57,7 +57,10 @@ class CreateEvent extends Component {
   handleReset () {
     this.setState({
       name: '',
-      location: '',
+      address1: '',
+      address2: '',
+      address3: '',
+      pinCode: '',
       url: '',
       description: ''
     })
@@ -75,14 +78,12 @@ class CreateEvent extends Component {
               type='text'
               label='Event Name'
               onChange={this.handleInputChange.bind(this, 'name')}
-              isValid
               value={name}
               isHorizontal
             />
             <Input
               type='text'
               label='Address line 1'
-              isValid
               onChange={this.handleInputChange.bind(this, 'address1')}
               value={location}
               isHorizontal
@@ -90,7 +91,6 @@ class CreateEvent extends Component {
             <Input
               type='text'
               label='Address line 2'
-              isValid
               onChange={this.handleInputChange.bind(this, 'address2')}
               value={location}
               isHorizontal
@@ -99,7 +99,6 @@ class CreateEvent extends Component {
             <Input
               type='text'
               label='Address line 3'
-              isValid
               onChange={this.handleInputChange.bind(this, 'address3')}
               value={location}
               isHorizontal
@@ -108,7 +107,6 @@ class CreateEvent extends Component {
             <Input
               type='number'
               label='Pin Code'
-              isValid
               onChange={this.handleInputChange.bind(this, 'pinCode')}
               value={location}
               isHorizontal
@@ -116,7 +114,6 @@ class CreateEvent extends Component {
             <Input
               type='url'
               label='Event Url'
-              isValid
               onChange={this.handleInputChange.bind(this, 'url')}
               value={url}
               isHorizontal

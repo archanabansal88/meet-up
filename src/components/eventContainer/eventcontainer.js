@@ -3,7 +3,6 @@ import Carousel from '../../shared/carousel'
 import EventCard from '../eventCard'
 import config from '../../config/index'
 import http from '../../helper/http'
-import './style.css'
 
 class EventContainer extends Component {
   constructor (props) {
@@ -32,14 +31,14 @@ class EventContainer extends Component {
   render () {
     const {events, showErrorMsg} = this.state
     return (
-      <div className='event'>
-        <h2 className='subtitle'>Events</h2>
+      <div className='container section'>
+        <h2 className='title is-4 is-marginless'>Events</h2>
         {showErrorMsg && <div>There is a problem getting list of events.Please try after some time</div>}
         {events &&
         <Carousel>
           {events.map((event, index) => {
             return (
-              <div key={index} className='eventlist'>
+              <div key={index} className='is-inline-block'>
                 <EventCard event={event} onEventClick={this.handleEventClick} />
               </div>
             )

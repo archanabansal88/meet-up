@@ -65,7 +65,7 @@ class GoogleOauth extends Component {
 
   render () {
     return (
-      <div className='g-signin2' data-onsuccess='onSignIn' onClick={this.init.bind(this)} />
+      <div className='g-signin2' data-onsuccess='onSignIn' onClick={this.init} />
     )
   }
 }

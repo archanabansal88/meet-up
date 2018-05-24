@@ -63,21 +63,23 @@ class Comments extends Component {
       <section className='section'>
         <h2 className='title is-size-4'>Comments</h2>
         {isLoggedin &&
-          <div>
+          <div className='message'>
             <TextArea placeholder='Enter comment' onChange={this.handleInputChange} value={message} />
             <Button label='Add Comment' onClick={this.handleSubmitClick} className='button is-link' disabled={message.length === 0} />
           </div>
         }
-        {comments && comments.length ? <ul className='content'>
+        {comments && comments.length ? <ul>
           {comments.map((comment, index) => {
             return (
               <li className='box'>
                 <div className='media'>
                   <div className='media-left'>
-                    <img className=' image is-20x20' style={{'border-radius': '50px'}} src={comment.image} />
+                    <figure className='image is-64x64'>
+                      <img className='is-rounded' src={comment.image} />
+                    </figure>
                   </div>
                   <div className='media-content'>
-                    <h6>{comment.name}</h6>
+                    <h6 className='title is-size-5'>{comment.name}</h6>
                     <div className='has-text-grey-dark subtitle is-size-6'>{comment.message}</div>
                     <DateTimeLong date={comment.dateTime} />
                   </div>
@@ -90,7 +92,9 @@ class Comments extends Component {
               </li>
             )
           })}
-        </ul> : <div className='card section has-text-centered'>No Comments</div>}
+        </ul> : <article class='message is-dark has-background-white'>
+          <div class='message-body'>No Comments</div>
+        </article>}
       </section>
     )
   }
