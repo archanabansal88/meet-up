@@ -8,9 +8,7 @@ const attendee = {
       index = selectedIndex
       return util.getUserProfile(req.body.email)
     }).then((userInfo) => {
-      if (!event.attendees) {
-        event.attendees = []
-      }
+      userInfo = JSON.parse(userInfo)
       const attendee = event.attendees.filter((attendee) => attendee.email === req.body.email)[0]
       if (attendee) {
         return

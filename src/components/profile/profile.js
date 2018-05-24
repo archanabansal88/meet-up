@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Redirect} from 'react-router-dom'
 import config from '../../config/index'
-
+import http from '../../helper/http'
 import './style.css'
 
 class Profile extends Component {
@@ -12,6 +12,7 @@ class Profile extends Component {
       checkbox: true,
       submit: false
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleSubmit (e) {
@@ -22,14 +23,7 @@ class Profile extends Component {
       aboutme: e.target.aboutme.value,
       display: this.state.checkbox
     })
-    fetch(`${config.url}api/user/login`, {
-      body: JSON.stringify(data),
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
+    http.post(`${config.url}api/user/login`, data)
       .then((response) => {
         if (response.status === 200) {
           this.props.handleRedirect()
@@ -56,7 +50,7 @@ class Profile extends Component {
     const {name, email, aboutme, display} = this.state.profile
     const {first} = this.props.first
     return (
-      <form className='userform' onSubmit={this.handleSubmit.bind(this)}>
+      <form className='userform' onSubmit={this.handleSubmit}>
         <div className='field'>
           <label className='label'>Name</label>
           <div className='control'>
