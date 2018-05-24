@@ -20,8 +20,8 @@ const util = {
     return Redis.lset('events', index, JSON.stringify(event))
   },
 
-  getUserProfile: (email) => {
-    return Redis.hgetall(email)
+  getUserProfile: (store, email) => {
+    return Redis.hget(store, email)
   },
 
   createEvent: (obj) => {
@@ -32,10 +32,8 @@ const util = {
     return Redis.lrange('events', 0, -1)
   },
 
-  saveUserInfo: ({name, id, email, image}) => {
-    return Redis.hmset(email, {
-      name, id, email, image
-    })
+  saveUserInfo: (store, {email, name, id, image, aboutme, display}) => {
+    return Redis.hmset(store, email, JSON.stringify({email, name, id, image, aboutme, display}))
   }
 }
 

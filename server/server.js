@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const session = require('express-session')
+// const session = require('express-session')
 const path = require('path')
 const admin = require('./handler/admin')
 const user = require('./handler/user')
@@ -14,11 +14,6 @@ const PORT = 3000
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('build'))
-app.use(session({
-  resave: true,
-  saveUninitialized: false,
-  secret: 'abc'
-}))
 
 // API call for admin login
 app.post('/api/admin/login', admin)
@@ -45,11 +40,11 @@ app.delete('/api/event/comment', comment.deleteComment)
 app.post('/api/event/create', event.create)
 
 app.get('/create', (req, res, next) => {
-  if (!req.session.email) {
-    res.redirect('/')
-  } else {
-    next()
-  }
+  // if (!req.session.email) {
+  //   res.redirect('/')
+  // } else {
+  next()
+  // }
 })
 
 // API call for user details

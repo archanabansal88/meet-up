@@ -3,7 +3,7 @@ const Button = props => {
   const {label, ...attributes} = props
   return (
     <div className='field'>
-      <div class='control'>
+      <div className='control'>
         <button {...attributes}>{props.label}</button>
       </div>
     </div>

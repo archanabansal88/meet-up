@@ -2,8 +2,7 @@ const util = require('./utils')
 
 const user = {
   login: (req, res) => {
-    req.session.email = req.body.email
-    util.saveUserInfo(req.body).then(() => {
+    util.saveUserInfo('users', req.body).then(() => {
       res.status(200).send('success')
     })
   },
@@ -15,9 +14,10 @@ const user = {
   },
 
   getUserInfo: (req, res) => {
-    const { email } = req.body
-    util.getUserProfile(email).then((obj) => {
-      res.json(obj)
+    const email = req.body.email
+    util.getUserProfile('users', email).then((obj) => {
+      console.log(obj)
+      res.json(JSON.parse(obj))
     })
   }
 }

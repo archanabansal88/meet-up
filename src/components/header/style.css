@@ -1,0 +1,35 @@
+.header{
+    border-bottom: 1px solid #c1bbbb;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.header__link{
+    text-decoration: none;
+}
+
+.header__title{
+    margin: 0;
+    padding: 0 20px;
+    color: red;
+}
+
+.header__user-info{
+    display: flex;
+    align-items: center;
+    color: #333;
+}
+
+.header__user-image{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.profile_link a {
+    text-decoration: none;
+   }

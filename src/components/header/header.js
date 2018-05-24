@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import GoogleOauth from '../googleOauth'
 import Logout from '../logout'
 
-const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
+const Header = ({isLoggedin, onLoginSuccess, onLogoutSuccess, profile}) => {
   return (
     <div className='hero'>
       <div className='hero-head card'>
@@ -11,19 +11,22 @@ const Header = ({isLoggedin, profile, onLoginSuccess, onLogoutSuccess}) => {
           <Link to='/'>
             <h2 className='title'>Bangalore JS</h2>
           </Link>
-          {!isLoggedin ? <GoogleOauth onLoginSuccess={onLoginSuccess} />
+          {(!isLoggedin) ? <GoogleOauth onLoginSuccess={onLoginSuccess.bind(this)} />
             : <div className='level-right'>
               <div className='columns level-item'>
-                <figure className='image is-48x48'>
-                  <img className='is-rounded' src={profile ? profile.getImageUrl() : null} />
-                </figure>
+                <Link to='/profile'>
+                  <figure className='image is-48x48'>
+                    <img className='is-rounded' src={
+                      profile
+                        ? (profile.display ? profile.image : ('https://ui-avatars.com/api/?name=' + profile.name.replace(' ', '+'))) : null} />
+                  </figure>
+                </Link>
                 <div className='column'>
-                  {profile && profile.getName()}
+                  {profile ? profile.name : null}
                 </div>
                 <Logout onLogoutSuccess={onLogoutSuccess} />
               </div>
-            </div>
-          }
+            </div>}
         </div>
       </div>
     </div>

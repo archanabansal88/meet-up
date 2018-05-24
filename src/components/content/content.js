@@ -1,7 +1,13 @@
 import React from 'react'
+import {Redirect} from 'react-router-dom'
 import EventContainer from '../eventContainer'
 
-const Content = ({history}) => {
+const Content = ({history, first}) => {
+  if (first) {
+    return (
+      <Redirect to='/profile' />
+    )
+  }
   return (
     <div>
       <div className='container is-fluid is-clipped is-marginless' style={{'height': '450px'}}>
