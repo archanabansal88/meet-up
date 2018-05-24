@@ -2,3 +2,4 @@ node_modules
 /hot
 src/config/setup.js
 build/config/main.js.map
+build/main.js.map
