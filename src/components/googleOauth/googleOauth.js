@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import id from '../../config/setup.js'
 
-console.log(typeof id.clientid.google)
-
 class GoogleOauth extends Component {
   constructor (props) {
     super(props)

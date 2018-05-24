@@ -69,7 +69,6 @@ class Main extends Component {
 
   render () {
     const {isLoggedin, profile, first} = this.state
-    console.log(profile, 'in Main')
     return (
       <BrowserRouter>
         <div>
