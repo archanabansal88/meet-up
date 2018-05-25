@@ -92,8 +92,8 @@ class Comments extends Component {
               </li>
             )
           })}
-        </ul> : <article class='message is-dark has-background-white'>
-          <div class='message-body'>No Comments</div>
+        </ul> : <article className='message is-dark has-background-white'>
+          <div className='message-body'>No Comments</div>
         </article>}
       </section>
     )

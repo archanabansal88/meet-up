@@ -47,7 +47,7 @@ class Carousel extends Component {
     translatex = -translatex
     return (
       <div className='column is-12 is-paddingless container'>
-        <div className='is-overlay' style={{'top': '50%', 'z-index': '1', 'left': '-10px', 'right': 'initial'}}>
+        <div className='is-overlay' style={{'top': '50%', 'zIndex': '1', 'left': '-10px', 'right': 'initial'}}>
           <a className='button is-rounded is-overlay' onClick={this.handleLeftButtonClick}>&lt;</a>
         </div>
         <div className='is-clipped'>
@@ -57,7 +57,7 @@ class Carousel extends Component {
             )}
           </div>
         </div>
-        <div className='is-overlay' style={{'top': '50%', 'z-index': '1', 'right': '-22px', 'left': 'initial'}}>
+        <div className='is-overlay' style={{'top': '50%', 'zIndex': '1', 'right': '-22px', 'left': 'initial'}}>
           <a className='button is-rounded is-overlay' onClick={this.handleRightButtonClick}>&gt;</a>
         </div>
       </div>
