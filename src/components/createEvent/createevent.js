@@ -119,14 +119,7 @@ class CreateEvent extends Component {
               isHorizontal
             />
             <TextArea isHorizontal name='textarea' label='Event Description' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
-            <div className='field is-horizontal'>
-              <div className='field-label' />
-              <div className='field-body'>
-                <div className='field'>
-                  <Button className='button is-primary' label='Create Event' onClick={this.handleSubmitClick} />
-                </div>
-              </div>
-            </div>
+            <Button className='button is-primary' label='Create Event' onClick={this.handleSubmitClick} />
           </form>
         </div>
       </div>

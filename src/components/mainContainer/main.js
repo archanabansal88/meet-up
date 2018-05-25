@@ -41,7 +41,7 @@ class Main extends Component {
     http.post(`${config.url}api/user/get`, data)
       .then(response => {
         response.json().then(profileinfo => {
-          if (profileinfo === null && window.location.pathname !== '/profile') {
+          if (profileinfo === null) {
             this.setState({isLoggedin: true, profile: data, first: true})
           } else {
             this.setState({isLoggedin: true, profile: profileinfo, first: false})
