@@ -26,7 +26,7 @@ class Profile extends Component {
     http.post(`${config.url}api/user/login`, data)
       .then((response) => {
         if (response.status === 200) {
-          this.props.handleRedirect()
+          this.props.handleFirst()
           this.setState({
             submit: true
           })
@@ -41,8 +41,9 @@ class Profile extends Component {
   }
 
   render () {
+    console.log(this.props, 'passed props to profile')
     if (this.state.submit || !this.props.isLoggedin) {
-      this.props.handleRedirect()
+      this.props.handleFirst()
       return (
         <Redirect to='/' />
       )

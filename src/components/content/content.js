@@ -2,8 +2,10 @@ import React from 'react'
 import {Redirect} from 'react-router-dom'
 import EventContainer from '../eventContainer'
 
-const Content = ({history, first}) => {
+const Content = ({history, first, handleRedirect}) => {
   if (first) {
+    console.log(history.location.pathname, 'content')
+    handleRedirect(history.location.pathname)
     return (
       <Redirect to='/profile' />
     )
