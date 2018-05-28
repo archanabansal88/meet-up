@@ -9,9 +9,7 @@ const comment = {
       index = selectedIndex
       return util.getUserProfile(req.body.email)
     }).then((userInfo) => {
-      if (!event.comments) {
-        event.comments = []
-      }
+      userInfo = JSON.parse(userInfo)
       const obj = {
         message: req.body.message,
         dateTime: Date.now(),

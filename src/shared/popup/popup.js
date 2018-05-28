@@ -3,9 +3,9 @@ import Button from '../button'
 
 const PopUp = props => {
   return (
-    <div class='modal is-active'>
-      <div class='modal-background' />
-      <div class='modal-content'>
+    <div className='modal is-active'>
+      <div className='modal-background' />
+      <div className='modal-content'>
         <div className='box'>
           <h2 className='subtitle'>{props.title}</h2>
           {props.children}

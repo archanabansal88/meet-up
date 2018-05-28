@@ -1,17 +1,20 @@
 import React from 'react'
 import Title from '../eventTitle/title'
-import './style.css'
 
 const EventCard = ({ event, onEventClick }) => {
   const {url, address1} = event
   return (
-    <div className='event-card' onClick={onEventClick.bind(null, event)}>
-      <div>
-        <img src={url} className='event-card__image' />
-      </div>
-      <div className='event-card__content'>
-        <div>{address1}</div>
-        <Title {...event} />
+    <div className='column is-narrow'>
+      <div className='card box is-paddingless is-clipped' style={{'width': '330px'}} onClick={onEventClick.bind(null, event)}>
+        <div className='card-image'>
+          <figure className='image is-4by3'>
+            <img src={url} />
+          </figure>
+        </div>
+        <div className='card-content'>
+          <div className='has-text-grey-dark subtitle is-5'>{address1}</div>
+          <Title {...event} />
+        </div>
       </div>
     </div>
   )

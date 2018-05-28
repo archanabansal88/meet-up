@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import id from '../../config/setup.js'
 
-console.log(typeof id.clientid.google)
-
 class GoogleOauth extends Component {
   constructor (props) {
     super(props)
@@ -65,7 +63,7 @@ class GoogleOauth extends Component {
 
   render () {
     return (
-      <div className='g-signin2' data-onsuccess='onSignIn' onClick={this.init.bind(this)} />
+      <div className='g-signin2' data-onsuccess='onSignIn' onClick={this.init} />
     )
   }
 }

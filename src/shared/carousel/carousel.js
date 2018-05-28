@@ -1,14 +1,18 @@
 import React, {Component} from 'react'
-import './style.css'
 
 class Carousel extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedIndex: 0
+      selectedIndex: 0,
+      width: 0
     }
     this.handleLeftButtonClick = this.handleLeftButtonClick.bind(this)
     this.handleRightButtonClick = this.handleRightButtonClick.bind(this)
+  }
+
+  componentDidMount () {
+    this.setState({width: this.carouselContainer.children[0].offsetWidth})
   }
 
   handleLeftButtonClick () {
@@ -22,8 +26,9 @@ class Carousel extends Component {
   }
 
   handleRightButtonClick () {
-    let {selectedIndex} = this.state
-    if (selectedIndex < this.props.children.length - 3) {
+    let {selectedIndex, width} = this.state
+
+    if ((selectedIndex * width) + this.carouselContainer.offsetWidth < this.props.children.length * width) {
       selectedIndex++
     }
     this.setState({
@@ -32,19 +37,29 @@ class Carousel extends Component {
   }
 
   render () {
-    const {selectedIndex} = this.state
-    const translatex = -(selectedIndex * 330)
+    const {selectedIndex, width} = this.state
+    let translatex = (selectedIndex * width)
+
+    if (this.carouselContainer && translatex + this.carouselContainer.offsetWidth > this.props.children.length * width) {
+      translatex = this.props.children.length * width - this.carouselContainer.offsetWidth
+    }
+
+    translatex = -translatex
     return (
-      <div className='carousel'>
-        <a className='carousel__arrow carousel__arrow--left' onClick={this.handleLeftButtonClick}>&lt;</a>
-        <div className='carousel__wrapper'>
-          <div className='carousel__content' style={{transform: `translateX(${translatex}px)`}}>
-            {this.props.children.map((item, i) =>
-              <div key={i}>{item}</div>
+      <div className='column is-12 is-paddingless container'>
+        <div className='is-overlay' style={{'top': '50%', 'zIndex': '1', 'left': '-10px', 'right': 'initial'}}>
+          <a className='button is-rounded is-overlay' onClick={this.handleLeftButtonClick}>&lt;</a>
+        </div>
+        <div className='is-clipped'>
+          <div ref={(input) => { this.carouselContainer = input }} className='is-flex' style={{transform: `translateX(${translatex}px)`, 'transition': 'transform 0.25s cubic-bezier(.4, 0,.2, 1)'}}>
+            {this.props.children.map((item, index) =>
+              <div key={index}>{item}</div>
             )}
           </div>
         </div>
-        <a className='carousel__arrow carousel__arrow--right' onClick={this.handleRightButtonClick}>&gt;</a>
+        <div className='is-overlay' style={{'top': '50%', 'zIndex': '1', 'right': '-22px', 'left': 'initial'}}>
+          <a className='button is-rounded is-overlay' onClick={this.handleRightButtonClick}>&gt;</a>
+        </div>
       </div>
     )
   }

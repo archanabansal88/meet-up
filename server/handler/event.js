@@ -3,7 +3,7 @@ const util = require('./utils')
 
 const event = {
   create: (req, res) => {
-    const obj = Object.assign({}, req.body, {id: uuid()})
+    const obj = Object.assign({}, req.body, {id: uuid(), attendees: [], comments: []})
     util.createEvent(obj).then(() => {
       res.end()
     })
