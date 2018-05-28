@@ -3,26 +3,13 @@ const Http = {
     return fetch(url)
   },
 
-  post: (url, body) => {
+  post: (url, body, type = 'application/json') => {
     return fetch(url, {
-      body: JSON.stringify(body),
+      body: body,
       method: 'POST',
       credentials: 'same-origin',
       headers: {
-        'content-type': 'application/json'
-      }
-    })
-  },
-  postFile: (url, body) => {
-    return fetch(url, {
-      body: JSON.stringify(body),
-      mode: 'no-cors',
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Accept': 'application/json',
-        'type': 'formData'
+        'content-type': type
       }
     })
   },
