@@ -14,11 +14,13 @@ class CreateEvent extends Component {
       address2: '',
       address3: '',
       pinCode: '',
-      url: '',
       description: '',
-      showErrorMsg: false
+      url: '',
+      showErrorMsg: false,
+      selectedFile: null
     }
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
+    this.fileChangedHandler = this.fileChangedHandler.bind(this)
   }
 
   handleInputChange (type, e) {
@@ -27,8 +29,8 @@ class CreateEvent extends Component {
     })
   }
   handleValidation () {
-    const {name, address1, pinCode, url, description} = this.state
-    if (!name || !address1 || !pinCode || !url || !description) {
+    const {name, address1, pinCode, description, url, selectedFile} = this.state
+    if (!name || !address1 || !pinCode || !url || !description || !selectedFile) {
       return false
     }
     return true
@@ -38,8 +40,12 @@ class CreateEvent extends Component {
     this.setState({showErrorMsg: false})
 
     if (this.handleValidation()) {
-      const {name, address1, address2, address3, pinCode, url, description} = this.state
-      const obj = {title: name, address1, address2, address3, pinCode, url, description, dateTime: new Date()}
+      const {name, address1, address2, address3, url, pinCode, description, selectedFile} = this.state
+
+      const formData = new FormData()
+      formData.append('myFile', selectedFile.type, selectedFile.name)
+
+      const obj = {title: name, address1, address2, address3, url, pinCode, description, file: formData, dateTime: new Date()}
 
       http.post(`${config.url}api/event/create`, obj)
         .then((response) => {
@@ -54,6 +60,10 @@ class CreateEvent extends Component {
     }
   }
 
+  fileChangedHandler (event) {
+    this.setState({selectedFile: event.target.files[0]})
+  }
+
   handleReset () {
     this.setState({
       name: '',
@@ -61,8 +71,9 @@ class CreateEvent extends Component {
       address2: '',
       address3: '',
       pinCode: '',
+      description: '',
       url: '',
-      description: ''
+      selectedFile: null
     })
   }
 
@@ -73,7 +84,7 @@ class CreateEvent extends Component {
         <div>
           <h1 className='title'>Create a new Event</h1>
           {this.state.showErrorMsg && <div>Sorry, We are unable to create an event due to a technical glitch</div>}
-          <form className='notification'>
+          <form className='notification' encType='multipart/form-data'>
             <Input
               type='text'
               label='Event Name'
@@ -118,6 +129,20 @@ class CreateEvent extends Component {
               value={url}
               isHorizontal
             />
+            <div className='label'>Event image</div>
+            <div className='file'>
+              <label className='file-label'>
+                <input className='file-input' type='file' name='image' onChange={this.fileChangedHandler} />
+                <span className='file-cta'>
+                  <span className='file-icon'>
+                    <i className='fas fa-upload' />
+                  </span>
+                  <span className='file-label'>
+                        Choose a file…
+                  </span>
+                </span>
+              </label>
+            </div>
             <TextArea isHorizontal name='textarea' label='Event Description' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
             <Button className='button is-primary' label='Create Event' onClick={this.handleSubmitClick} />
           </form>
