@@ -13,7 +13,7 @@ class Login extends Component {
     const data = {
       emailid: profile.getEmail()
     }
-    http.post(`${config.url}api/admin/login`, data)
+    http.post(`${config.url}api/admin/login`, JSON.stringify(data))
       .then((response) => {
         if (response.status === 200) {
           this.props.history.push('/create')

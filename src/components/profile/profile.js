@@ -15,6 +15,7 @@ class Profile extends Component {
       submit: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleUncheck = this.handleUncheck.bind(this)
   }
 
   handleSubmit (e) {
@@ -25,7 +26,7 @@ class Profile extends Component {
       aboutme: e.target.aboutme.value,
       display: this.state.checkbox
     })
-    http.post(`${config.url}api/user/login`, data)
+    http.post(`${config.url}api/user/login`, JSON.stringify(data))
       .then((response) => {
         if (response.status === 200) {
           this.props.handleRedirect()
@@ -79,7 +80,7 @@ class Profile extends Component {
             <label className='label'>Display profile picture</label>
             <div className='control'>
               <label className='checkbox'>
-                <input type='checkbox' name='display' defaultChecked={display} onChange={this.handleUncheck.bind(this)} />
+                <input type='checkbox' name='display' defaultChecked={display} onChange={this.handleUncheck} />
                     Yes
               </label>
             </div>
