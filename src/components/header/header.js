@@ -3,18 +3,18 @@ import {Link} from 'react-router-dom'
 import GoogleOauth from '../googleOauth'
 import Logout from '../logout'
 
-const Header = ({isLoggedin, onLoginSuccess, onLogoutSuccess, profile}) => {
+const Header = ({isLoggedin, onLoginSuccess, onLogoutSuccess, profile, handleFirst, first, handleRedirect}) => {
   return (
     <div className='hero'>
       <div className='hero-head card'>
         <div className='card-content level has-background-light'>
-          <Link to='/'>
+          <Link to='/' onClick={() => handleRedirect(window.location.pathname)}>
             <h2 className='title'>Bangalore JS</h2>
           </Link>
           {(!isLoggedin) ? <GoogleOauth onLoginSuccess={onLoginSuccess.bind(this)} />
             : <div className='level-right'>
               <div className='columns level-item'>
-                <Link to='/profile'>
+                <Link to='/profile' onClick={() => handleRedirect(window.location.pathname)}>
                   <figure className='image is-48x48'>
                     <img className='is-rounded' src={
                       profile
@@ -24,7 +24,7 @@ const Header = ({isLoggedin, onLoginSuccess, onLogoutSuccess, profile}) => {
                 <div className='column'>
                   {profile ? profile.name : null}
                 </div>
-                <Logout onLogoutSuccess={onLogoutSuccess} />
+                <Logout onLogoutSuccess={onLogoutSuccess} handleFirst={handleFirst} first={first} />
               </div>
             </div>}
         </div>

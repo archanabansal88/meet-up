@@ -41,15 +41,29 @@ class Profile extends Component {
   }
 
   render () {
-    console.log(this.props, 'passed props to profile')
-    if (this.state.submit || !this.props.isLoggedin) {
-      this.props.handleFirst()
+    const {name, email, aboutme, display} = this.state.profile
+    const {first, redirect} = this.props
+    // Redirect logic
+    console.log(!this.props.isLoggedin, this.state.submit, redirect[redirect.length - 1])
+    if (!this.props.isLoggedin) {
+      if (redirect[redirect.length - 1]) {
+        return (
+          <Redirect to={redirect[redirect.length - 1]} />
+        )
+      }
       return (
         <Redirect to='/' />
       )
     }
-    const {name, email, aboutme, display} = this.state.profile
-    const {first} = this.props.first
+    console.log(this.state.submit, 'this is true now')
+    if (this.state.submit) {
+      this.props.handleRedirect(this.props.history.location.pathname)
+      this.props.handleFirst()
+      return (
+        <Redirect to={redirect[redirect.length - 2]} />
+      )
+    }
+    // Profile render
     return (
       <form className='userform' onSubmit={this.handleSubmit}>
         <div className='field'>
@@ -86,7 +100,7 @@ class Profile extends Component {
           </div>
           {!first
             ? <div className='control'>
-              <button className='button is-text'>Cancel</button>
+              <button className='button is-text' >Cancel</button>
             </div> : null}
         </div>
       </form>
