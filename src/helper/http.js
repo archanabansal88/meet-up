@@ -3,13 +3,13 @@ const Http = {
     return fetch(url)
   },
 
-  post: (url, body) => {
+  post: (url, body, type = 'application/json') => {
     return fetch(url, {
-      body: JSON.stringify(body),
+      body: body,
       method: 'POST',
       credentials: 'same-origin',
       headers: {
-        'content-type': 'application/json'
+        'content-type': type
       }
     })
   },

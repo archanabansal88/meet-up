@@ -14,11 +14,12 @@ class CreateEvent extends Component {
       address2: '',
       address3: '',
       pinCode: '',
-      url: '',
       description: '',
-      showErrorMsg: false
+      showErrorMsg: false,
+      image: null
     }
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
+    this.fileChangedHandler = this.fileChangedHandler.bind(this)
   }
 
   handleInputChange (type, e) {
@@ -27,8 +28,8 @@ class CreateEvent extends Component {
     })
   }
   handleValidation () {
-    const {name, address1, pinCode, url, description} = this.state
-    if (!name || !address1 || !pinCode || !url || !description) {
+    const {name, address1, pinCode, description, image} = this.state
+    if (!name || !address1 || !pinCode || !image || !description) {
       return false
     }
     return true
@@ -38,10 +39,19 @@ class CreateEvent extends Component {
     this.setState({showErrorMsg: false})
 
     if (this.handleValidation()) {
-      const {name, address1, address2, address3, pinCode, url, description} = this.state
-      const obj = {title: name, address1, address2, address3, pinCode, url, description, dateTime: new Date()}
+      const {name, address1, address2, address3, pinCode, description, image} = this.state
 
-      http.post(`${config.url}api/event/create`, obj)
+      const formData = new window.FormData()
+      formData.append('eventImage', image)
+      formData.append('title', name)
+      formData.append('address1', address1)
+      formData.append('address2', address2)
+      formData.append('address3', address3)
+      formData.append('pinCode', pinCode)
+      formData.append('description', description)
+      formData.append('dateTime', new Date())
+
+      http.post(`${config.url}api/event/create`, formData, 'multipart/form-data')
         .then((response) => {
           if (response.status === 200) {
             this.handleReset()
@@ -54,6 +64,10 @@ class CreateEvent extends Component {
     }
   }
 
+  fileChangedHandler (event) {
+    this.setState({image: event.target.files[0]})
+  }
+
   handleReset () {
     this.setState({
       name: '',
@@ -61,13 +75,13 @@ class CreateEvent extends Component {
       address2: '',
       address3: '',
       pinCode: '',
-      url: '',
-      description: ''
+      description: '',
+      image: null
     })
   }
 
   render () {
-    const {name, address1, address2, address3, pinCode, url, description} = this.state
+    const {name, address1, address2, address3, pinCode, description, image} = this.state
     return (
       <div className='hero-body container'>
         <div>
@@ -111,22 +125,27 @@ class CreateEvent extends Component {
               value={pinCode}
               isHorizontal
             />
-            <Input
-              type='url'
-              label='Event Url'
-              onChange={this.handleInputChange.bind(this, 'url')}
-              value={url}
-              isHorizontal
-            />
-            <TextArea isHorizontal name='textarea' label='Event Description' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
-            <div className='field is-horizontal'>
-              <div className='field-label' />
-              <div className='field-body'>
-                <div className='field'>
-                  <Button className='button is-primary' label='Create Event' onClick={this.handleSubmitClick} />
-                </div>
+            <div className='field'>
+              <div className='label'>Event image</div>
+              <div className='file'>
+                <label className='file-label'>
+                  <input className='file-input' type='file' name='image' onChange={this.fileChangedHandler} />
+                  <span className='file-cta'>
+                    <span className='file-icon'>
+                      <i className='fas fa-upload' />
+                    </span>
+                    <span className='file-label'>
+                        Choose a file…
+                    </span>
+                  </span>
+                  {image && <span className='file-name'>
+                    {image.name}
+                  </span>}
+                </label>
               </div>
             </div>
+            <TextArea isHorizontal name='textarea' label='Event Description' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
+            <Button className='button is-primary' label='Create Event' onClick={this.handleSubmitClick} />
           </form>
         </div>
       </div>
