@@ -7,6 +7,7 @@
  * Redis (v2.8 or higher)
  * Webpack (v4)
 
+ ### How to run the application Locally
  
  * clone/download the repository: git clone https://github.com/archanabansal88/meet-up.git
  * run command "npm i" to install dependencies and devDependencies
