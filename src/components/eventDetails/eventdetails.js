@@ -65,7 +65,7 @@ class EventDetails extends Component {
   }
 
   handleAttendee (email, eventId, url) {
-    http.post(url, JSON.stringify({email, eventId}))
+    http.post(url, {email, eventId})
       .then((response) => {
         if (response.status === 200) {
           this.getEventDetails()

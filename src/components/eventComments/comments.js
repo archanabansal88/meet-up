@@ -29,7 +29,7 @@ class Comments extends Component {
 
     const obj = {message, email: profile.email, eventId}
 
-    http.post(`${config.url}api/event/comment`, JSON.stringify(obj))
+    http.post(`${config.url}api/event/comment`, obj)
       .then((response) => {
         if (response.status === 200) {
           this.handleReset()

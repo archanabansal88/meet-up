@@ -40,9 +40,8 @@ class CreateEvent extends Component {
 
     if (this.handleValidation()) {
       const {name, address1, address2, address3, pinCode, description, image} = this.state
-
       const formData = new window.FormData()
-      formData.append('eventImage', image)
+      formData.append('file', image)
       formData.append('title', name)
       formData.append('address1', address1)
       formData.append('address2', address2)
@@ -51,7 +50,7 @@ class CreateEvent extends Component {
       formData.append('description', description)
       formData.append('dateTime', new Date())
 
-      http.post(`${config.url}api/event/create`, formData, 'multipart/form-data')
+      http.postFile(`${config.url}api/event/create`, formData)
         .then((response) => {
           if (response.status === 200) {
             this.handleReset()
