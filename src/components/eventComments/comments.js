@@ -29,7 +29,7 @@ class Comments extends Component {
 
     const obj = {message, email: profile.email, eventId}
 
-    http.post(`${config.url}api/event/comment`, obj)
+    http.post(`${config.url}api/event/comment`, JSON.stringify(obj))
       .then((response) => {
         if (response.status === 200) {
           this.handleReset()
@@ -71,7 +71,7 @@ class Comments extends Component {
         {comments.length > 0 ? <ul>
           {comments.map((comment, index) => {
             return (
-              <li className='box'>
+              <li className='box' key={index}>
                 <div className='media'>
                   <div className='media-left'>
                     <figure className='image is-64x64'>

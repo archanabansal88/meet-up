@@ -40,7 +40,7 @@ class Main extends Component {
       display: true,
       aboutme: ''
     }
-    http.post(`${config.url}api/user/get`, data)
+    http.post(`${config.url}api/user/get`, JSON.stringify(data))
       .then(response => {
         response.json().then(profileinfo => {
           if (profileinfo === null) {
