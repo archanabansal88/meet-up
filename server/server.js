@@ -12,9 +12,21 @@ const comment = require('./handler/comment')
 const app = express()
 const PORT = 3000
 
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './uploads')
+  },
+  filename: function (req, file, callback) {
+    callback(null, Date.now() + '_' + file.originalname)
+  }
+})
+
+const upload = multer({ storage })
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('build'))
+app.use(express.static('uploads'))
 
 // API call for admin login
 app.post('/api/admin/login', admin)
@@ -38,7 +50,7 @@ app.post('/api/event/comment', comment.saveComment)
 app.delete('/api/event/comment', comment.deleteComment)
 
 // API call to create an event
-app.post('/api/event/create', event.create)
+app.post('/api/event/create', upload.single('file'), event.create)
 
 app.get('/create', (req, res, next) => {
   // if (!req.session.email) {
