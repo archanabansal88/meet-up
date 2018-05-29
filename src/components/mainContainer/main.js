@@ -76,7 +76,6 @@ class Main extends Component {
   }
 
   render () {
-    console.log(this.state.redirect, 'main')
     const {isLoggedin, profile, first, redirect} = this.state
     return (
       <BrowserRouter>
@@ -92,7 +91,7 @@ class Main extends Component {
             <Route exact path='/admin' component={Login} />
             <Route exact path='/create' component={CreateEvent} />
             <Route exact path='/:id' render={(props) => <EventDetails {...props} onLoginSuccess={this.handleLoginSuccess}
-              isLoggedin={isLoggedin} profile={profile} />} />
+              isLoggedin={isLoggedin} profile={profile} first={first} handleFirst={this.handleFirst} handleRedirect={this.handleRedirect} />} />
           </Switch>
         </div>
       </BrowserRouter>
