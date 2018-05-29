@@ -3,3 +3,4 @@ node_modules
 src/config/setup.js
 build/main.js.map
 build/main.js
+/dump.rdb

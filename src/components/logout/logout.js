@@ -18,6 +18,9 @@ class Logout extends Component {
   onClick () {
     this.signOut()
     this.props.onLogoutSuccess()
+    if (this.props.first) {
+      this.props.handleFirst()
+    }
   }
 
   render () {

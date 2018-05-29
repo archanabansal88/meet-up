@@ -11,7 +11,7 @@ class Profile extends Component {
     super()
     this.state = {
       profile: props.profile,
-      checkbox: true,
+      checkbox: props.profile.display,
       submit: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -29,7 +29,7 @@ class Profile extends Component {
     http.post(`${config.url}api/user/login`, JSON.stringify(data))
       .then((response) => {
         if (response.status === 200) {
-          this.props.handleRedirect()
+          this.props.handleFirst()
           this.setState({
             submit: true
           })
@@ -44,14 +44,27 @@ class Profile extends Component {
   }
 
   render () {
-    if (this.state.submit || !this.props.isLoggedin) {
-      this.props.handleRedirect()
+    const {name, email, aboutme, display} = this.state.profile
+    const {first, redirect} = this.props
+    // Redirect logic
+    if (!this.props.isLoggedin) {
+      if (redirect[redirect.length - 1]) {
+        return (
+          <Redirect to={redirect[redirect.length - 1]} />
+        )
+      }
       return (
         <Redirect to='/' />
       )
     }
-    const {name, email, aboutme, display} = this.state.profile
-    const {first} = this.props.first
+    if (this.state.submit) {
+      this.props.handleRedirect(this.props.history.location.pathname)
+      this.props.handleFirst()
+      return (
+        <Redirect to={redirect[redirect.length - 2]} />
+      )
+    }
+    // Profile render
     return (
       <div className='hero-body container'>
         <h1 className='title'>Welcome {name}</h1>

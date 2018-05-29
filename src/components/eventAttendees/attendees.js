@@ -7,10 +7,14 @@ const Attendees = ({attendees}) => {
       {attendees && attendees.length
         ? <ul className='media'>
           {attendees.map((value, index) => {
+            console.log(value, 'printing attendees')
             return (
               <li key={index} className='box media-left'>
                 <figure className='image is-64x64'>
-                  <img className='is-rounded' src={value.image} />
+                  <img className='is-rounded'
+                    src={value.display
+                      ? value.image
+                      : ('https://ui-avatars.com/api/?name=' + value.name.replace(' ', '+'))} />
                 </figure>
                 <div className='is-size-6'>{value.name}</div>
               </li>
