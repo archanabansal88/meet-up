@@ -9,7 +9,7 @@ class Profile extends Component {
     super()
     this.state = {
       profile: props.profile,
-      checkbox: true,
+      checkbox: props.profile.display,
       submit: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)

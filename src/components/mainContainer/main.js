@@ -59,7 +59,7 @@ class Main extends Component {
         name: null,
         id: null,
         image: null,
-        display: null,
+        display: true,
         aboutme: null
       }
     })
