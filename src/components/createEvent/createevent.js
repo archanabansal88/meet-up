@@ -128,7 +128,7 @@ class CreateEvent extends Component {
               <div className='label'>Event image</div>
               <div className='file'>
                 <label className='file-label'>
-                  <input className='file-input' type='file' name='image' onChange={this.fileChangedHandler} />
+                  <input className='file-input' type='file' accept='image/*' name='image' onChange={this.fileChangedHandler} />
                   <span className='file-cta'>
                     <span className='file-icon'>
                       <i className='fas fa-upload' />
