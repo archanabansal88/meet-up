@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import GoogleOauth from '../googleOauth'
-// import GithubOauth from '../githubOauth'
+import GithubOauth from '../githubOauth'
 import Logout from '../logout'
 
 const Header = ({isLoggedin, onLoginSuccess, onLogoutSuccess, profile, handleFirst, first, handleRedirect}) => {
@@ -12,7 +12,7 @@ const Header = ({isLoggedin, onLoginSuccess, onLogoutSuccess, profile, handleFir
           <Link to='/' onClick={() => handleRedirect(window.location.pathname)}>
             <h2 className='title'>Bangalore JS</h2>
           </Link>
-
+          <GithubOauth />
           {(!isLoggedin) ? <GoogleOauth onLoginSuccess={onLoginSuccess.bind(this)} />
             : <div className='level-right'>
               <div className='columns level-item'>

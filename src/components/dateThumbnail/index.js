@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 
 export const DateTimeLong = ({date}) => {
-  const formattedDate = moment(date).format('MMM Do YYYY, hh:mm a')
+  const formattedDate = moment(date).format('dddd, MMM Do, hh:mm a')
   return (
     <div className='has-text-grey'>
       {formattedDate}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Redirect} from 'react-router-dom'
-import {DateTimeShort} from '../dateThumbnail'
+import {DateTimeShort, DateTimeLong} from '../dateThumbnail'
 import Title from '../eventTitle/title'
 import Description from '../eventDescription/description'
 import Attendees from '../eventAttendees/attendees'
@@ -138,12 +138,14 @@ class EventDetails extends Component {
               <article className='column'>
                 <div className='message is-info'>
                   <h2 className='message-header'>Location</h2>
-                  <section className='message-body' id='map' style={{height: '600px'}}>
+                  <section className='message-body'>
                     <div>{event.address1}</div>
                     <div>{event.address2}</div>
                     <div>{event.address3}</div>
                     <div>{event.pinCode}</div>
+                    <DateTimeLong date={event.dateTime} />
                   </section>
+                  <div id='map' style={{height: '500px'}} />
                 </div>
               </article>
             </div>

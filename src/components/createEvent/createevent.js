@@ -85,7 +85,7 @@ class CreateEvent extends Component {
       pinCode: '',
       description: '',
       image: null,
-      date: moment()
+      date: moment().add(1, 'd').set({'hour': 10, 'minute': 0})
     })
   }
 
