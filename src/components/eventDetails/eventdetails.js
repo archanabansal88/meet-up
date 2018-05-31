@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Redirect} from 'react-router-dom'
 import {DateTimeShort} from '../dateThumbnail'
 import Title from '../eventTitle/title'
 import Description from '../eventDescription/description'
@@ -18,7 +19,8 @@ class EventDetails extends Component {
       event: false,
       showErrorMsg: false,
       showPopUp: false,
-      isLocationLoaded: false
+      isLocationLoaded: false,
+      profile: props.profile
     }
     this.handleYesButtonClick = this.handleYesButtonClick.bind(this)
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this)
@@ -56,9 +58,10 @@ class EventDetails extends Component {
   }
 
   handleYesButtonClick () {
-    const {isLoggedin, profile} = this.props
+    let {isLoggedin, profile} = this.props
     if (!isLoggedin) {
       this.setState({showPopUp: true})
+      console.log(profile, 'handleYesButtonClick')
     } else {
       this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee`)
     }
@@ -82,24 +85,33 @@ class EventDetails extends Component {
     this.setState({showPopUp: false})
   }
 
-  handleLoginSuccess (profile) {
+  handleLoginSuccess (authProfile) {
     this.setState({showPopUp: false})
+    this.props.onLoginSuccess(authProfile)
     const {event} = this.state
-    const list = event.attendees.filter((attendee) => attendee.email === profile.getEmail())[0]
+    const list = event.attendees.filter((attendee) => attendee.email === this.props.profile.email)[0]
     if (!list) {
-      this.handleAttendee(profile.getEmail(), event.id, `${config.url}api/event/attendee`)
+      this.handleAttendee(this.props.profile.email, event.id, `${config.url}api/event/attendee`)
     }
   }
 
   render () {
     const {event, showPopUp} = this.state
-    const {isLoggedin, profile} = this.props
+    const {isLoggedin, profile, first} = this.props
     if (!event) {
       return null
     }
     const isUserAttending = isLoggedin && event.attendees.filter((attendee) =>
       attendee && attendee.email === profile.email
     )[0]
+    // profile redirect for first-time login
+    if (first) {
+      this.props.handleRedirect(this.props.history.location.pathname)
+      return (
+        <Redirect to='/profile' />
+      )
+    }
+    console.log(isLoggedin, profile, 'rendered')
     return (
       <main>
         {showPopUp && <PopUp onClose={this.handleCloseClick} title='Sign in'><GoogleOauth onLoginSuccess={this.handleLoginSuccess} /></PopUp>}
@@ -111,7 +123,9 @@ class EventDetails extends Component {
             </article>
             {isUserAttending
               ? <EventConfirm title='You are attending the event' label='Cancel' onClick={this.handleCancelButtonClick} />
-              : <EventConfirm title='Do you want to attend the event' label='Yes' onClick={this.handleYesButtonClick} />
+              : isLoggedin && profile.email
+                ? <EventConfirm title='Do you want to attend the event?' label='Yes' onClick={this.handleYesButtonClick} />
+                : <h2>Sign-in to register for this event</h2>
             }
           </section>
         </div>

@@ -4,3 +4,4 @@ src/config/setup.js
 build/main.js.map
 build/main.js
 server/data/data.json
+/dump.rdb
