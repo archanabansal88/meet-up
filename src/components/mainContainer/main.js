@@ -86,7 +86,7 @@ class Main extends Component {
           <Switch>
             <Route exact path='/' render={(props) => <Content {...props} first={first} handleRedirect={this.handleRedirect} />} />
             <Route exact path='/profile' render={(props) => <Profile {...props} profile={profile}
-              first={first} handleFirst={this.handleFirst} isLoggedin={isLoggedin} handleRedirect={this.handleRedirect} 
+              first={first} handleFirst={this.handleFirst} isLoggedin={isLoggedin} handleRedirect={this.handleRedirect}
               redirect={redirect} />} />
             <Route exact path='/admin' component={Login} />
             <Route exact path='/create' component={CreateEvent} />

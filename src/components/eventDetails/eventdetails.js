@@ -124,7 +124,7 @@ class EventDetails extends Component {
             {isUserAttending
               ? <EventConfirm title='You are attending the event' label='Cancel' onClick={this.handleCancelButtonClick} />
               : isLoggedin && profile.email
-                ? <EventConfirm title='Do you want to attend the event?' label='Yes' onClick={this.handleYesButtonClick} /> 
+                ? <EventConfirm title='Do you want to attend the event?' label='Yes' onClick={this.handleYesButtonClick} />
                 : <h2>Sign-in to register for this event</h2>
             }
           </section>
