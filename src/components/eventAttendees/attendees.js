@@ -7,7 +7,6 @@ const Attendees = ({attendees}) => {
       {attendees && attendees.length
         ? <ul className='media'>
           {attendees.map((value, index) => {
-            console.log(value, 'printing attendees')
             return (
               <li key={index} className='box media-left'>
                 <figure className='image is-64x64'>

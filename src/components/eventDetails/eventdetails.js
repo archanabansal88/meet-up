@@ -61,7 +61,6 @@ class EventDetails extends Component {
     let {isLoggedin, profile} = this.props
     if (!isLoggedin) {
       this.setState({showPopUp: true})
-      console.log(profile, 'handleYesButtonClick')
     } else {
       this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee`)
     }
@@ -111,7 +110,6 @@ class EventDetails extends Component {
         <Redirect to='/profile' />
       )
     }
-    console.log(isLoggedin, profile, 'rendered')
     return (
       <main>
         {showPopUp && <PopUp onClose={this.handleCloseClick} title='Sign in'><GoogleOauth onLoginSuccess={this.handleLoginSuccess} /></PopUp>}
