@@ -142,7 +142,6 @@ class EventDetails extends Component {
                     <div>{event.address1}</div>
                     <div>{event.address2}</div>
                     <div>{event.address3}</div>
-                    <div>{event.pinCode}</div>
                     <DateTimeLong date={event.dateTime} />
                   </section>
                   <div id='map' style={{height: '500px'}} />
