@@ -3,7 +3,10 @@ import Button from '../../shared/button'
 import Input from '../../shared/input'
 import TextArea from '../../shared/textarea'
 import config from '../../config/index'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 import http from '../../helper/http'
+import 'react-datepicker/dist/react-datepicker.min.css'
 
 class CreateEvent extends Component {
   constructor (props) {
@@ -16,10 +19,12 @@ class CreateEvent extends Component {
       pinCode: '',
       description: '',
       showErrorMsg: false,
-      image: null
+      image: null,
+      date: moment().add(1, 'd').set({'hour': 10, 'minute': 0})
     }
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
     this.fileChangedHandler = this.fileChangedHandler.bind(this)
+    this.handleDateChange = this.handleDateChange.bind(this)
   }
 
   handleInputChange (type, e) {
@@ -27,9 +32,13 @@ class CreateEvent extends Component {
       [type]: e.target.value
     })
   }
+
+  handleDateChange (date) {
+    this.setState({ date })
+  }
   handleValidation () {
-    const {name, address1, pinCode, description, image} = this.state
-    if (!name || !address1 || !pinCode || !image || !description) {
+    const {name, address1, pinCode, description, image, date} = this.state
+    if (!name || !address1 || !pinCode || !image || !date || !description) {
       return false
     }
     return true
@@ -39,7 +48,7 @@ class CreateEvent extends Component {
     this.setState({showErrorMsg: false})
 
     if (this.handleValidation()) {
-      const {name, address1, address2, address3, pinCode, description, image} = this.state
+      const {name, address1, address2, address3, pinCode, description, image, date} = this.state
       const formData = new window.FormData()
       formData.append('file', image)
       formData.append('title', name)
@@ -48,7 +57,7 @@ class CreateEvent extends Component {
       formData.append('address3', address3)
       formData.append('pinCode', pinCode)
       formData.append('description', description)
-      formData.append('dateTime', new Date())
+      formData.append('dateTime', date)
 
       http.postFile(`${config.url}api/event/create`, formData)
         .then((response) => {
@@ -75,12 +84,13 @@ class CreateEvent extends Component {
       address3: '',
       pinCode: '',
       description: '',
-      image: null
+      image: null,
+      date: moment()
     })
   }
 
   render () {
-    const {name, address1, address2, address3, pinCode, description, image} = this.state
+    const {name, address1, address2, address3, pinCode, description, image, date} = this.state
     return (
       <div className='hero-body container'>
         <div>
@@ -94,6 +104,20 @@ class CreateEvent extends Component {
               value={name}
               isHorizontal
             />
+            <div className='field'>
+              <div className='label'>Event date</div>
+              <DatePicker
+                selected={date}
+                onChange={this.handleDateChange}
+                showTimeSelect
+                timeFormat='HH:mm'
+                timeIntervals={30}
+                dateFormat='LLL'
+                minTime={moment().hours(10).minutes(0)}
+                maxTime={moment().hours(17).minutes(0)}
+                className='input'
+              />
+            </div>
             <Input
               type='text'
               label='Address line 1'
