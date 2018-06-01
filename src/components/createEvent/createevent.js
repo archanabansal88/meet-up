@@ -5,7 +5,6 @@ import TextArea from '../../shared/textarea'
 import config from '../../config/index'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
-import http from '../../helper/http'
 import 'react-datepicker/dist/react-datepicker.min.css'
 
 class CreateEvent extends Component {
@@ -59,14 +58,17 @@ class CreateEvent extends Component {
       formData.append('description', description)
       formData.append('dateTime', date)
 
-      http.postFile(`${config.url}api/event/create`, formData)
-        .then((response) => {
-          if (response.status === 200) {
-            this.handleReset()
-          }
-        }).catch((reject) => {
-          this.setState({showErrorMsg: true})
-        })
+      fetch(`${config.url}api/event/create`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: formData
+      }).then((response) => {
+        if (response.status === 200) {
+          this.handleReset()
+        }
+      }).catch((reject) => {
+        this.setState({showErrorMsg: true})
+      })
     } else {
       this.setState({showErrorMsg: true})
     }

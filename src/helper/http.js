@@ -13,13 +13,6 @@ const Http = {
       }
     })
   },
-  postFile: (url, body) => {
-    return fetch(url, {
-      method: 'POST',
-      credentials: 'same-origin',
-      body: body
-    })
-  },
   delete: (url, body) => {
     return fetch(url, {
       body: JSON.stringify(body),
