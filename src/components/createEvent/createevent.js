@@ -115,9 +115,9 @@ class CreateEvent extends Component {
                 timeFormat='HH:mm'
                 timeIntervals={30}
                 dateFormat='LLL'
-                minTime={moment().hours(10).minutes(0)}
-                maxTime={moment().hours(17).minutes(0)}
                 className='input'
+                minDate={moment()}
+                showDisabledMonthNavigation
               />
             </div>
             <Input
