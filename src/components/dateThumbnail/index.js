@@ -1,8 +1,8 @@
 import React from 'react'
+import moment from 'moment'
 
 export const DateTimeLong = ({date}) => {
-  const dateObj = new Date(date)
-  const formattedDate = dateObj.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+  const formattedDate = moment(date).format('dddd, MMM Do, hh:mm a')
   return (
     <div className='has-text-grey'>
       {formattedDate}

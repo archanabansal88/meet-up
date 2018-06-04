@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {DateTimeLong} from '../dateThumbnail'
 import TextArea from '../../shared/textarea'
 import Button from '../../shared/button'
 import http from '../../helper/http'
+import moment from 'moment'
 import config from '../../config/index'
 
 class Comments extends Component {
@@ -29,7 +29,7 @@ class Comments extends Component {
 
     const obj = {message, email: profile.email, eventId}
 
-    http.post(`${config.url}api/event/comment`, JSON.stringify(obj))
+    http.post(`${config.url}api/event/comment`, obj)
       .then((response) => {
         if (response.status === 200) {
           this.handleReset()
@@ -81,7 +81,7 @@ class Comments extends Component {
                   <div className='media-content'>
                     <h6 className='title is-size-5'>{comment.name}</h6>
                     <div className='has-text-grey-dark subtitle is-size-6'>{comment.message}</div>
-                    <DateTimeLong date={comment.dateTime} />
+                    <div>{moment(comment.dateTime).fromNow()}</div>
                   </div>
                   <div className='media-right'>
                     {isLoggedin && comment.email === profile.email &&

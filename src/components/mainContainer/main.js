@@ -40,7 +40,7 @@ class Main extends Component {
       display: true,
       aboutme: ''
     }
-    http.post(`${config.url}api/user/get`, JSON.stringify(data))
+    http.post(`${config.url}api/user/get`, data)
       .then(response => {
         response.json().then(profileinfo => {
           if (profileinfo === null) {
@@ -86,7 +86,7 @@ class Main extends Component {
           <Switch>
             <Route exact path='/' render={(props) => <Content {...props} first={first} handleRedirect={this.handleRedirect} />} />
             <Route exact path='/profile' render={(props) => <Profile {...props} profile={profile}
-              first={first} handleFirst={this.handleFirst} isLoggedin={isLoggedin} handleRedirect={this.handleRedirect} 
+              first={first} handleFirst={this.handleFirst} isLoggedin={isLoggedin} handleRedirect={this.handleRedirect}
               redirect={redirect} />} />
             <Route exact path='/admin' component={Login} />
             <Route exact path='/create' component={CreateEvent} />

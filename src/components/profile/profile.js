@@ -26,7 +26,7 @@ class Profile extends Component {
       aboutme: e.target.aboutme.value,
       display: this.state.checkbox
     })
-    http.post(`${config.url}api/user/login`, JSON.stringify(data))
+    http.post(`${config.url}api/user/login`, data)
       .then((response) => {
         if (response.status === 200) {
           this.props.handleFirst()

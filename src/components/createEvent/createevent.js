@@ -3,7 +3,9 @@ import Button from '../../shared/button'
 import Input from '../../shared/input'
 import TextArea from '../../shared/textarea'
 import config from '../../config/index'
-import http from '../../helper/http'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import 'react-datepicker/dist/react-datepicker.min.css'
 
 class CreateEvent extends Component {
   constructor (props) {
@@ -16,10 +18,12 @@ class CreateEvent extends Component {
       pinCode: '',
       description: '',
       showErrorMsg: false,
-      image: null
+      image: null,
+      date: moment().add(1, 'd').set({'hour': 10, 'minute': 0})
     }
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
     this.fileChangedHandler = this.fileChangedHandler.bind(this)
+    this.handleDateChange = this.handleDateChange.bind(this)
   }
 
   handleInputChange (type, e) {
@@ -27,9 +31,13 @@ class CreateEvent extends Component {
       [type]: e.target.value
     })
   }
+
+  handleDateChange (date) {
+    this.setState({ date })
+  }
   handleValidation () {
-    const {name, address1, pinCode, description, image} = this.state
-    if (!name || !address1 || !pinCode || !image || !description) {
+    const {name, address1, pinCode, description, image, date} = this.state
+    if (!name || !address1 || !pinCode || !image || !date || !description) {
       return false
     }
     return true
@@ -39,26 +47,28 @@ class CreateEvent extends Component {
     this.setState({showErrorMsg: false})
 
     if (this.handleValidation()) {
-      const {name, address1, address2, address3, pinCode, description, image} = this.state
-
+      const {name, address1, address2, address3, pinCode, description, image, date} = this.state
       const formData = new window.FormData()
-      formData.append('eventImage', image)
+      formData.append('file', image)
       formData.append('title', name)
       formData.append('address1', address1)
       formData.append('address2', address2)
       formData.append('address3', address3)
       formData.append('pinCode', pinCode)
       formData.append('description', description)
-      formData.append('dateTime', new Date())
+      formData.append('dateTime', date)
 
-      http.post(`${config.url}api/event/create`, formData, 'multipart/form-data')
-        .then((response) => {
-          if (response.status === 200) {
-            this.handleReset()
-          }
-        }).catch((reject) => {
-          this.setState({showErrorMsg: true})
-        })
+      fetch(`${config.url}api/event/create`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: formData
+      }).then((response) => {
+        if (response.status === 200) {
+          this.handleReset()
+        }
+      }).catch((reject) => {
+        this.setState({showErrorMsg: true})
+      })
     } else {
       this.setState({showErrorMsg: true})
     }
@@ -76,12 +86,13 @@ class CreateEvent extends Component {
       address3: '',
       pinCode: '',
       description: '',
-      image: null
+      image: null,
+      date: moment().add(1, 'd').set({'hour': 10, 'minute': 0})
     })
   }
 
   render () {
-    const {name, address1, address2, address3, pinCode, description, image} = this.state
+    const {name, address1, address2, address3, pinCode, description, image, date} = this.state
     return (
       <div className='hero-body container'>
         <div>
@@ -95,6 +106,20 @@ class CreateEvent extends Component {
               value={name}
               isHorizontal
             />
+            <div className='field'>
+              <div className='label'>Event date</div>
+              <DatePicker
+                selected={date}
+                onChange={this.handleDateChange}
+                showTimeSelect
+                timeFormat='HH:mm'
+                timeIntervals={30}
+                dateFormat='LLL'
+                className='input'
+                minDate={moment()}
+                showDisabledMonthNavigation
+              />
+            </div>
             <Input
               type='text'
               label='Address line 1'
@@ -129,7 +154,7 @@ class CreateEvent extends Component {
               <div className='label'>Event image</div>
               <div className='file'>
                 <label className='file-label'>
-                  <input className='file-input' type='file' name='image' onChange={this.fileChangedHandler} />
+                  <input className='file-input' type='file' accept='image/*' name='image' onChange={this.fileChangedHandler} />
                   <span className='file-cta'>
                     <span className='file-icon'>
                       <i className='fas fa-upload' />
