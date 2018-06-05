@@ -1,13 +1,10 @@
-const webpack = require('webpack')
+const path = require('path')
 
 module.exports = {
-  mode: 'development',
   entry: './src/app.js',
   output: {
-    path: __dirname,
-    filename: './build/main.js',
-    hotUpdateChunkFilename: 'hot/hot-update.js',
-    hotUpdateMainFilename: 'hot/hot-update.json'
+    path: path.resolve(__dirname, '../build/'),
+    filename: 'main.js'
   },
   resolve: {
     extensions: ['.js', '.jsx', '.css']
@@ -29,16 +26,5 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       }
     ]
-  },
-  plugins: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
-  ],
-  devServer: {
-    inline: true,
-    port: 3000,
-    historyApiFallback: true,
-    hot: true
-  },
-  devtool: 'source-map'
+  }
 }
