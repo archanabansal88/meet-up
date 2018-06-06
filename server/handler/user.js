@@ -14,6 +14,7 @@ const user = {
   },
 
   getUserInfo: (req, res) => {
+    req.session.user = req.body.email
     const email = req.body.email
     util.getUserProfile(email).then((obj) => {
       res.json(JSON.parse(obj))
