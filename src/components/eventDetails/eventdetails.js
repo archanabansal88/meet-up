@@ -19,14 +19,15 @@ class EventDetails extends Component {
       event: false,
       showErrorMsg: false,
       showPopUp: false,
-      isLocationLoaded: false,
-      profile: props.profile
+      isLocationLoaded: false
     }
     this.handleYesButtonClick = this.handleYesButtonClick.bind(this)
     this.handleCancelButtonClick = this.handleCancelButtonClick.bind(this)
     this.handleCloseClick = this.handleCloseClick.bind(this)
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
     this.getEventDetails = this.getEventDetails.bind(this)
+    this.handleEventAttending = this.handleEventAttending.bind(this)
+    this.checkAttendee = this.checkAttendee.bind(this)
   }
 
   getEventDetails () {
@@ -53,18 +54,47 @@ class EventDetails extends Component {
       })
   }
 
-  componentDidMount () {
+  componentWillMount () {
     this.getEventDetails()
+    // console.log(this.props.yes, this.props.profile, 'component will mount')
+    // if (this.props.yes && this.props.profile.email) {
+    //   console.log('this was triggered')
+    //   this.handleEventAttending()
+    // }
+  }
+
+  componentDidUpdate () {
+    // if (!this.props.profile.email && this.props.yes) {
+    //   this.handleEventAttending()
+    // }
+  }
+
+  handleEventAttending () {
+    let {profile} = this.props
+    if (profile.email) {
+      console.log(profile.email, 'handleEventAttending')
+      this.props.handleYes(false)
+      this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee`)
+    }
   }
 
   handleYesButtonClick () {
-    let {isLoggedin, profile} = this.props
-    if (!isLoggedin) {
-      this.setState({showPopUp: true})
-      console.log(profile, 'handleYesButtonClick')
-    } else {
-      this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee`)
+    let {isLoggedin, profile, handleYes} = this.props
+    handleYes(true)
+    if (isLoggedin) {
+      return this.handleEventAttending()
     }
+    this.setState({showPopUp: true})
+    // if (!isLoggedin) {
+    //   this.setState({showPopUp: true})
+    //   this.props.handleYes(true)
+    //   return console.log(profile, 'handleYesButtonClick')
+    // }
+    // console.log(this.props.yes, profile)
+    // if (this.props.yes && profile.email) {
+    //   this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee`)
+    //   this.props.handleYes(false)
+    // }
   }
 
   handleAttendee (email, eventId, url) {
@@ -77,17 +107,22 @@ class EventDetails extends Component {
   }
 
   handleCancelButtonClick () {
-    const {profile} = this.props
+    const {profile, handleYes} = this.props
+    handleYes(false)
     this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee/cancel`)
   }
 
   handleCloseClick () {
+    this.props.handleYes(false)
     this.setState({showPopUp: false})
   }
 
   handleLoginSuccess (authProfile) {
     this.setState({showPopUp: false})
-    this.props.onLoginSuccess(authProfile)
+    this.props.onLoginSuccess(authProfile, this.checkAttendee)
+  }
+
+  checkAttendee () {
     const {event} = this.state
     const list = event.attendees.filter((attendee) => attendee.email === this.props.profile.email)[0]
     if (!list) {
@@ -122,9 +157,7 @@ class EventDetails extends Component {
             </article>
             {isUserAttending
               ? <EventConfirm title='You are attending the event' label='Cancel' onClick={this.handleCancelButtonClick} />
-              : isLoggedin && profile.email
-                ? <EventConfirm title='Do you want to attend the event?' label='Yes' onClick={this.handleYesButtonClick} />
-                : <h2>Sign-in to register for this event</h2>
+              : <EventConfirm title='Do you want to attend the event?' label='Yes' onClick={this.handleYesButtonClick} />
             }
           </section>
         </div>

@@ -23,15 +23,17 @@ class Main extends Component {
         aboutme: null
       },
       first: false,
-      redirect: []
+      redirect: [],
+      yes: false
     }
     this.handleLoginSuccess = this.handleLoginSuccess.bind(this)
     this.handleLogoutSuccess = this.handleLogoutSuccess.bind(this)
     this.handleFirst = this.handleFirst.bind(this)
     this.handleRedirect = this.handleRedirect.bind(this)
+    this.handleYes = this.handleYes.bind(this)
   }
 
-  handleLoginSuccess (profile) {
+  handleLoginSuccess (profile, cb) {
     const data = {
       email: profile.getEmail(),
       name: profile.getName(),
@@ -44,9 +46,11 @@ class Main extends Component {
       .then(response => {
         response.json().then(profileinfo => {
           if (profileinfo === null) {
-            this.setState({isLoggedin: true, profile: data, first: true})
+            this.setState({isLoggedin: true, profile: data, first: true}, cb
+              ? cb() : null)
           } else {
-            this.setState({isLoggedin: true, profile: profileinfo, first: false})
+            this.setState({isLoggedin: true, profile: profileinfo, first: false}, cb
+              ? cb() : null)
           }
         })
       })
@@ -75,8 +79,12 @@ class Main extends Component {
     this.setState({redirect: array})
   }
 
+  handleYes (bool) {
+    this.setState({yes: bool})
+  }
+
   render () {
-    const {isLoggedin, profile, first, redirect} = this.state
+    const {isLoggedin, profile, first, redirect, yes} = this.state
     return (
       <BrowserRouter>
         <div>
@@ -90,8 +98,8 @@ class Main extends Component {
               redirect={redirect} />} />
             <Route exact path='/admin' component={Login} />
             <Route exact path='/create' component={CreateEvent} />
-            <Route exact path='/:id' render={(props) => <EventDetails {...props} onLoginSuccess={this.handleLoginSuccess}
-              isLoggedin={isLoggedin} profile={profile} first={first} handleFirst={this.handleFirst} handleRedirect={this.handleRedirect} />} />
+            <Route exact path='/:id' render={(props) => <EventDetails {...props} isLoggedin={isLoggedin} profile={profile} first={first} yes={yes}
+              onLoginSuccess={this.handleLoginSuccess} handleFirst={this.handleFirst} handleRedirect={this.handleRedirect} handleYes={this.handleYes} />} />
           </Switch>
         </div>
       </BrowserRouter>
