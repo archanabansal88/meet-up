@@ -8,6 +8,7 @@ import config from '../../config/index'
 import http from '../../helper/http'
 import Login from '../admin'
 import Profile from '../profile'
+import DashBoard from '../admin/dashboard'
 
 class Main extends Component {
   constructor (props) {
@@ -29,6 +30,7 @@ class Main extends Component {
     this.handleLogoutSuccess = this.handleLogoutSuccess.bind(this)
     this.handleFirst = this.handleFirst.bind(this)
     this.handleRedirect = this.handleRedirect.bind(this)
+    this.handleEventClick = this.handleEventClick.bind(this)
   }
 
   handleLoginSuccess (profile) {
@@ -75,6 +77,10 @@ class Main extends Component {
     this.setState({redirect: array})
   }
 
+  handleEventClick (history, event) {
+    history.push(`/${event.id}`)
+  }
+
   render () {
     const {isLoggedin, profile, first, redirect} = this.state
     return (
@@ -84,11 +90,12 @@ class Main extends Component {
             onLogoutSuccess={this.handleLogoutSuccess} profile={profile} handleFirst={this.handleFirst} first={first}
             handleRedirect={this.handleRedirect} />
           <Switch>
-            <Route exact path='/' render={(props) => <Content {...props} first={first} handleRedirect={this.handleRedirect} />} />
+            <Route exact path='/' render={(props) => <Content {...props} first={first} handleRedirect={this.handleRedirect} onEventClick={this.handleEventClick.bind(null, props.history)} />} />
             <Route exact path='/profile' render={(props) => <Profile {...props} profile={profile}
               first={first} handleFirst={this.handleFirst} isLoggedin={isLoggedin} handleRedirect={this.handleRedirect}
               redirect={redirect} />} />
             <Route exact path='/admin' component={Login} />
+            <Route exact path='/dashboard' component={DashBoard} />
             <Route exact path='/create' component={CreateEvent} />
             <Route exact path='/:id' render={(props) => <EventDetails {...props} onLoginSuccess={this.handleLoginSuccess}
               isLoggedin={isLoggedin} profile={profile} first={first} handleFirst={this.handleFirst} handleRedirect={this.handleRedirect} />} />
