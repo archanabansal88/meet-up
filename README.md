@@ -13,5 +13,5 @@
  * run command "npm i" to install dependencies and devDependencies
  * start redis server using 'redis-server'
  * run command "npm run dev-server" to start the express server
- * run command "Webpack -w" to watch for local js changes
+ * run command "npm run start" to watch for local js changes
  * type localhost:3000 in browser
