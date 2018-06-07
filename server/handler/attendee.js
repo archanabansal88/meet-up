@@ -6,13 +6,13 @@ const attendee = {
     util.getEvent(req.body.eventId).then(({selectedEvent, selectedIndex}) => {
       event = selectedEvent
       index = selectedIndex
-      return util.getUserProfile(req.body.email)
+      return req.body.profile
     }).then((userInfo) => {
-      userInfo = JSON.parse(userInfo)
-      const attendee = event.attendees.filter((attendee) => attendee.email === req.body.email)[0]
+      const attendee = event.attendees.filter(attendee => attendee.email === userInfo.email)[0]
       if (attendee) {
         return
       }
+      console.log(userInfo, 'USERINFO')
       event.attendees.push(userInfo)
       return util.addEventToIndex(index, event)
     }).then(() => {
@@ -23,8 +23,10 @@ const attendee = {
   },
 
   deleteAttendee: (req, res) => {
+    console.log(req.body.profile)
     util.getEvent(req.body.eventId).then(({selectedEvent, selectedIndex}) => {
-      selectedEvent.attendees = selectedEvent.attendees.filter((attendee) => attendee.email !== req.body.email)
+      selectedEvent.attendees = selectedEvent.attendees.filter((attendee) => attendee.email !== req.body.profile.email)
+      console.log(selectedIndex, selectedEvent)
       return util.addEventToIndex(selectedIndex, selectedEvent)
     }).then(() => {
       res.end()

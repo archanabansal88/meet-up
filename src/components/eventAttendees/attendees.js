@@ -1,13 +1,13 @@
 import React from 'react'
 
 const Attendees = ({attendees}) => {
+  console.log(attendees, 'printing attendees')
   return (
     <section className='section'>
       <h2 className='title is-size-4'>Attendees</h2>
       {attendees && attendees.length
         ? <ul className='media'>
           {attendees.map((value, index) => {
-            console.log(value, 'printing attendees')
             return (
               <li key={index} className='box media-left'>
                 <figure className='image is-64x64'>

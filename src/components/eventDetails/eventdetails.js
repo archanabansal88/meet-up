@@ -72,33 +72,22 @@ class EventDetails extends Component {
   handleEventAttending () {
     let {profile} = this.props
     if (profile.email) {
-      console.log(profile.email, 'handleEventAttending')
       this.props.handleYes(false)
-      this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee`)
+      this.handleAttendee(profile, this.state.event.id, `${config.url}api/event/attendee`)
     }
   }
 
   handleYesButtonClick () {
-    let {isLoggedin, profile, handleYes} = this.props
+    let {isLoggedin, handleYes} = this.props
     handleYes(true)
     if (isLoggedin) {
       return this.handleEventAttending()
     }
     this.setState({showPopUp: true})
-    // if (!isLoggedin) {
-    //   this.setState({showPopUp: true})
-    //   this.props.handleYes(true)
-    //   return console.log(profile, 'handleYesButtonClick')
-    // }
-    // console.log(this.props.yes, profile)
-    // if (this.props.yes && profile.email) {
-    //   this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee`)
-    //   this.props.handleYes(false)
-    // }
   }
 
-  handleAttendee (email, eventId, url) {
-    http.post(url, {email, eventId})
+  handleAttendee (profile, eventId, url) {
+    http.post(url, {profile, eventId})
       .then((response) => {
         if (response.status === 200) {
           this.getEventDetails()
@@ -109,7 +98,7 @@ class EventDetails extends Component {
   handleCancelButtonClick () {
     const {profile, handleYes} = this.props
     handleYes(false)
-    this.handleAttendee(profile.email, this.state.event.id, `${config.url}api/event/attendee/cancel`)
+    this.handleAttendee(profile, this.state.event.id, `${config.url}api/event/attendee/cancel`)
   }
 
   handleCloseClick () {
@@ -125,9 +114,10 @@ class EventDetails extends Component {
   checkAttendee () {
     const {event} = this.state
     const list = event.attendees.filter((attendee) => attendee.email === this.props.profile.email)[0]
-    if (!list) {
-      this.handleAttendee(this.props.profile.email, event.id, `${config.url}api/event/attendee`)
+    if (!list && this.props.profile.email) {
+      this.handleAttendee(this.props.profile, event.id, `${config.url}api/event/attendee`)
     }
+    this.props.handleYes(false)
   }
 
   render () {
@@ -136,9 +126,8 @@ class EventDetails extends Component {
     if (!event) {
       return null
     }
-    const isUserAttending = isLoggedin && event.attendees.filter((attendee) =>
-      attendee && attendee.email === profile.email
-    )[0]
+    const isUserAttending = isLoggedin && (event.attendees.filter((attendee) =>
+      attendee ? attendee.email === profile.email : null)).length
     // profile redirect for first-time login
     if (first) {
       this.props.handleRedirect(this.props.history.location.pathname)
