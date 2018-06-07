@@ -17,7 +17,7 @@ const PORT = 3000
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, './uploads')
+    callback(null, './build/images')
   },
   filename: function (req, file, callback) {
     callback(null, Date.now() + '_' + file.originalname)
@@ -36,7 +36,6 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('build'))
-app.use(express.static('uploads'))
 
 // API call for admin login
 app.post('/api/admin/login', admin)
@@ -63,7 +62,7 @@ app.delete('/api/event/comment', comment.deleteComment)
 app.post('/api/event/create', upload.single('file'), event.create)
 
 app.get('/admin/create', (req, res, next) => {
-  if (req.session.user !== req.session.admin) {
+  if (!req.session.admin) {
     res.redirect('/')
   } else {
     next()
@@ -71,7 +70,8 @@ app.get('/admin/create', (req, res, next) => {
 })
 
 app.get('/admin/dashboard', (req, res, next) => {
-  if (req.session.user !== req.session.admin) {
+  // console.log(req.session.admin, req.session.user, '-----------')
+  if (!req.session.admin) {
     res.redirect('/')
   } else {
     next()

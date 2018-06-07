@@ -3,7 +3,7 @@ const util = require('./utils')
 
 const event = {
   create: (req, res) => {
-    const data = req.file
+    const data = Object.assign(req.file, {destination: '/images/'})
     const obj = Object.assign({}, req.body, {id: uuid(), image: data, attendees: [], comments: []})
     util.createEvent(obj).then(() => {
       res.json(obj)
