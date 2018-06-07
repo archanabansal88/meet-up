@@ -11,7 +11,6 @@ class DashBoard extends Component {
     console.log(event.id)
   }
   render () {
-    console.log('call the dash board')
     return (
       <div>
         <EventContainer onEventClick={this.handleEventClick} />
