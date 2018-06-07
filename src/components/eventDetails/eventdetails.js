@@ -63,12 +63,6 @@ class EventDetails extends Component {
     // }
   }
 
-  componentDidUpdate () {
-    // if (!this.props.profile.email && this.props.yes) {
-    //   this.handleEventAttending()
-    // }
-  }
-
   handleEventAttending () {
     let {profile} = this.props
     if (profile.email) {

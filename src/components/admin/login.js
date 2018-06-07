@@ -11,13 +11,15 @@ class Login extends Component {
 
   handleLoginSuccess (profile) {
     const data = {
-      emailid: profile.getEmail()
+      email: profile.getEmail()
     }
     http.post(`${config.url}api/admin/login`, data)
       .then((response) => {
         if (response.status === 200) {
-          this.props.history.push('/create')
+          this.props.history.push('/admin/dashboard')
         }
+      }).catch((reject) => {
+        this.props.history.push('/')
       })
   }
   render () {

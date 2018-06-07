@@ -1,2 +1,2 @@
-import Login from './login'
-export default Login
+import Admin from './admin'
+export default Admin

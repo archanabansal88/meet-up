@@ -8,6 +8,7 @@ import config from '../../config/index'
 import http from '../../helper/http'
 import Login from '../admin'
 import Profile from '../profile'
+// import DashBoard from '../admin/dashboard'
 
 class Main extends Component {
   constructor (props) {
@@ -31,6 +32,7 @@ class Main extends Component {
     this.handleFirst = this.handleFirst.bind(this)
     this.handleRedirect = this.handleRedirect.bind(this)
     this.handleYes = this.handleYes.bind(this)
+    this.handleEventClick = this.handleEventClick.bind(this)
   }
 
   handleLoginSuccess (profile, cb) {
@@ -83,6 +85,10 @@ class Main extends Component {
     this.setState({yes: bool})
   }
 
+  handleEventClick (history, event) {
+    history.push(`/${event.id}`)
+  }
+
   render () {
     const {isLoggedin, profile, first, redirect, yes} = this.state
     return (
@@ -92,14 +98,14 @@ class Main extends Component {
             onLogoutSuccess={this.handleLogoutSuccess} profile={profile} handleFirst={this.handleFirst} first={first}
             handleRedirect={this.handleRedirect} />
           <Switch>
-            <Route exact path='/' render={(props) => <Content {...props} first={first} handleRedirect={this.handleRedirect} />} />
+            <Route exact path='/' render={(props) => <Content {...props} first={first} handleRedirect={this.handleRedirect} onEventClick={this.handleEventClick.bind(null, props.history)} />} />
             <Route exact path='/profile' render={(props) => <Profile {...props} profile={profile}
               first={first} handleFirst={this.handleFirst} isLoggedin={isLoggedin} handleRedirect={this.handleRedirect}
               redirect={redirect} />} />
-            <Route exact path='/admin' component={Login} />
             <Route exact path='/create' component={CreateEvent} />
             <Route exact path='/:id' render={(props) => <EventDetails {...props} isLoggedin={isLoggedin} profile={profile} first={first} yes={yes}
               onLoginSuccess={this.handleLoginSuccess} handleFirst={this.handleFirst} handleRedirect={this.handleRedirect} handleYes={this.handleYes} />} />
+            <Route path='/admin' component={Login} />
           </Switch>
         </div>
       </BrowserRouter>

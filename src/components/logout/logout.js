@@ -25,7 +25,7 @@ class Logout extends Component {
 
   render () {
     return (
-      <Button href={'/logout'} onClick={this.onClick} label='Logout' className='button is-inverted is-danger' />
+      <Button onClick={this.onClick} label='Logout' className='button is-inverted is-danger' />
     )
   }
 }

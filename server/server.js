@@ -1,6 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-// const session = require('express-session')
+const redis = require('redis')
+const client = redis.createClient()
+const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
 const path = require('path')
 const multer = require('multer')
 const admin = require('./handler/admin')
@@ -22,6 +25,13 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage })
+
+app.use(session({
+  secret: 'ssshhhhh',
+  store: new RedisStore({host: 'localhost', port: 6379, client: client, ttl: 260}),
+  saveUninitialized: false,
+  resave: false
+}))
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -52,12 +62,20 @@ app.delete('/api/event/comment', comment.deleteComment)
 // API call to create an event
 app.post('/api/event/create', upload.single('file'), event.create)
 
-app.get('/create', (req, res, next) => {
-  // if (!req.session.email) {
-  //   res.redirect('/')
-  // } else {
-  next()
-  // }
+app.get('/admin/create', (req, res, next) => {
+  if (req.session.user !== req.session.admin) {
+    res.redirect('/')
+  } else {
+    next()
+  }
+})
+
+app.get('/admin/dashboard', (req, res, next) => {
+  if (req.session.user !== req.session.admin) {
+    res.redirect('/')
+  } else {
+    next()
+  }
 })
 
 // API call for user details

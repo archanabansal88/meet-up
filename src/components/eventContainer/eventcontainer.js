@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Carousel from '../../shared/carousel'
+import EventList from './eventList'
 import EventCard from '../eventCard'
 import config from '../../config/index'
 import http from '../../helper/http'
@@ -11,11 +12,6 @@ class EventContainer extends Component {
       events: false,
       showErrorMsg: false
     }
-    this.handleEventClick = this.handleEventClick.bind(this)
-  }
-
-  handleEventClick (event) {
-    this.props.history.push(`/${event.id}`)
   }
 
   componentDidMount () {
@@ -30,20 +26,27 @@ class EventContainer extends Component {
 
   render () {
     const {events, showErrorMsg} = this.state
+    const {onEventClick, showCarousel} = this.props
     return (
       <div className='container section'>
         <h2 className='title is-4 is-marginless'>Events</h2>
         {showErrorMsg && <div>There is a problem getting list of events.Please try after some time</div>}
         {events && events.length > 0 &&
-        <Carousel>
-          {events.map((event, index) => {
-            return (
-              <div key={index} className='is-inline-block'>
-                <EventCard event={event} onEventClick={this.handleEventClick} />
-              </div>
-            )
-          })}
-        </Carousel>}
+          <div>
+            {showCarousel
+              ? <Carousel>
+                {events.map((event, index) => {
+                  return (
+                    <div key={index} className='is-inline-block'>
+                      <EventCard event={event} onEventClick={onEventClick} />
+                    </div>
+                  )
+                })}
+              </Carousel>
+              : <div className='columns is-multiline'><EventList onEventClick={onEventClick} events={events} /></div>
+            }
+          </div>
+        }
       </div>
     )
   }

@@ -82,6 +82,7 @@ class Profile extends Component {
             placeholder='My Email ID is...'
             name='email'
             defaultValue={email}
+            readonly
           />
           <TextArea
             name='aboutme'
