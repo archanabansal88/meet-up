@@ -12,7 +12,6 @@ const attendee = {
       if (attendee) {
         return
       }
-      console.log(userInfo, 'USERINFO')
       event.attendees.push(userInfo)
       return util.addEventToIndex(index, event)
     }).then(() => {
@@ -23,10 +22,8 @@ const attendee = {
   },
 
   deleteAttendee: (req, res) => {
-    console.log(req.body.profile)
     util.getEvent(req.body.eventId).then(({selectedEvent, selectedIndex}) => {
       selectedEvent.attendees = selectedEvent.attendees.filter((attendee) => attendee.email !== req.body.profile.email)
-      console.log(selectedIndex, selectedEvent)
       return util.addEventToIndex(selectedIndex, selectedEvent)
     }).then(() => {
       res.end()

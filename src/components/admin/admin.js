@@ -10,7 +10,7 @@ class Admin extends Component {
       <div>
         <Route path='/' component={Login} />
         <Route exact path='/admin/dashboard' component={DashBoard} />
-        <Route exact path='/admin/create' render={(props) => <CreateEvent {...props} handleRedirect={this.props.handleRedirect} />} />
+        <Route exact path='/admin/create' component={CreateEvent} />
       </div>
     )
   }
