@@ -6,7 +6,7 @@ const event = {
     const data = req.file
     const obj = Object.assign({}, req.body, {id: uuid(), image: data, attendees: [], comments: []})
     util.createEvent(obj).then(() => {
-      res.end()
+      res.json(obj)
     })
   },
   eventList: (req, res) => {

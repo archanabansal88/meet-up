@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Redirect} from 'react-router-dom'
 import Button from '../../shared/button'
 import Input from '../../shared/input'
 import TextArea from '../../shared/textarea'
@@ -19,7 +20,8 @@ class CreateEvent extends Component {
       description: '',
       showErrorMsg: false,
       image: null,
-      date: moment().add(1, 'd').set({'hour': 10, 'minute': 0})
+      date: moment().add(1, 'd').set({'hour': 10, 'minute': 0}),
+      eventId: false
     }
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
     this.fileChangedHandler = this.fileChangedHandler.bind(this)
@@ -62,13 +64,12 @@ class CreateEvent extends Component {
         method: 'POST',
         credentials: 'same-origin',
         body: formData
-      }).then((response) => {
-        if (response.status === 200) {
-          this.handleReset()
-        }
-      }).catch((reject) => {
-        this.setState({showErrorMsg: true})
-      })
+      }).then(response => response.json())
+        .then((event) => {
+          this.setState({eventId: event.id})
+        }).catch((reject) => {
+          this.setState({showErrorMsg: true})
+        })
     } else {
       this.setState({showErrorMsg: true})
     }
@@ -78,23 +79,11 @@ class CreateEvent extends Component {
     this.setState({image: event.target.files[0]})
   }
 
-  handleReset () {
-    this.setState({
-      name: '',
-      address1: '',
-      address2: '',
-      address3: '',
-      pinCode: '',
-      description: '',
-      image: null,
-      date: moment().add(1, 'd').set({'hour': 10, 'minute': 0})
-    })
-  }
-
   render () {
-    const {name, address1, address2, address3, pinCode, description, image, date} = this.state
+    const {name, address1, address2, address3, pinCode, description, image, date, eventId} = this.state
     return (
       <div className='hero-body container'>
+        {eventId && <Redirect to={`/${eventId}`} />}
         <div>
           <h1 className='title'>Create a new Event</h1>
           {this.state.showErrorMsg && <div>Sorry, We are unable to create an event due to a technical glitch</div>}
