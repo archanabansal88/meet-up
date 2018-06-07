@@ -9,7 +9,7 @@ const EventCard = ({ event, onEventClick }) => {
       <div className='card box is-paddingless is-clipped' style={{'width': '330px', 'height': '440px'}} onClick={onEventClick.bind(null, event)}>
         <div className='card-image'>
           <figure className='image is-4by3'>
-            {image && <img src={`./${image.filename}`} />}
+            {image && <img src={`/${image.filename}`} />}
           </figure>
         </div>
         <div className='card-content'>
