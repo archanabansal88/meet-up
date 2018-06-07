@@ -16,7 +16,7 @@ class Login extends Component {
     http.post(`${config.url}api/admin/login`, data)
       .then((response) => {
         if (response.status === 200) {
-          this.props.history.push('/create')
+          this.props.history.push('/admin/dashboard')
         }
       }).catch((reject) => {
         this.props.history.push('/')
