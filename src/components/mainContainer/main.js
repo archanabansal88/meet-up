@@ -94,9 +94,7 @@ class Main extends Component {
             <Route exact path='/profile' render={(props) => <Profile {...props} profile={profile}
               first={first} handleFirst={this.handleFirst} isLoggedin={isLoggedin} handleRedirect={this.handleRedirect}
               redirect={redirect} />} />
-            <Route exact path='/admin' component={Login} />
-            <Route exact path='/dashboard' component={DashBoard} />
-            <Route exact path='/create' component={CreateEvent} />
+            <Route path='/admin' component={Login} />
             <Route exact path='/:id' render={(props) => <EventDetails {...props} onLoginSuccess={this.handleLoginSuccess}
               isLoggedin={isLoggedin} profile={profile} first={first} handleFirst={this.handleFirst} handleRedirect={this.handleRedirect} />} />
           </Switch>
