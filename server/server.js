@@ -62,7 +62,15 @@ app.delete('/api/event/comment', comment.deleteComment)
 // API call to create an event
 app.post('/api/event/create', upload.single('file'), event.create)
 
-app.get('/create', (req, res, next) => {
+app.get('/admin/create', (req, res, next) => {
+  if (req.session.user !== req.session.admin) {
+    res.redirect('/')
+  } else {
+    next()
+  }
+})
+
+app.get('/admin/dashboard', (req, res, next) => {
   if (req.session.user !== req.session.admin) {
     res.redirect('/')
   } else {
