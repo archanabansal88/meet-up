@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Redirect} from 'react-router-dom'
 import {DateTimeShort, DateTimeLong} from '../dateThumbnail'
 import Title from '../eventTitle/title'
 import Description from '../eventDescription/description'
@@ -56,11 +55,6 @@ class EventDetails extends Component {
 
   componentWillMount () {
     this.getEventDetails()
-    // console.log(this.props.yes, this.props.profile, 'component will mount')
-    // if (this.props.yes && this.props.profile.email) {
-    //   console.log('this was triggered')
-    //   this.handleEventAttending()
-    // }
   }
 
   handleEventAttending () {
@@ -116,7 +110,7 @@ class EventDetails extends Component {
 
   render () {
     const {event, showPopUp} = this.state
-    const {isLoggedin, profile, first} = this.props
+    const {isLoggedin, profile, first, history} = this.props
     if (!event) {
       return null
     }
@@ -124,10 +118,7 @@ class EventDetails extends Component {
       attendee ? attendee.email === profile.email : null)).length
     // profile redirect for first-time login
     if (first) {
-      this.props.handleRedirect(this.props.history.location.pathname)
-      return (
-        <Redirect to='/profile' />
-      )
+      history.push('/profile')
     }
     return (
       <main>

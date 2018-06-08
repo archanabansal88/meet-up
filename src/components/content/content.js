@@ -1,9 +1,8 @@
 import React from 'react'
 import EventContainer from '../eventContainer'
 
-const Content = ({history, first, handleRedirect, onEventClick}) => {
+const Content = ({history, first, onEventClick}) => {
   if (first) {
-    console.log('redirecting from content')
     history.push('/profile')
   }
   return (

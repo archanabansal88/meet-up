@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Redirect} from 'react-router-dom'
 import Button from '../../shared/button'
 import Input from '../../shared/input'
 import TextArea from '../../shared/textarea'
@@ -45,24 +44,15 @@ class Profile extends Component {
 
   render () {
     const {name, email, aboutme, display} = this.state.profile
-    const {first, redirect} = this.props
+    const {first, history} = this.props
     // Redirect logic
     if (!this.props.isLoggedin) {
-      if (redirect[redirect.length - 1]) {
-        return (
-          <Redirect to={redirect[redirect.length - 1]} />
-        )
-      }
-      return (
-        <Redirect to='/' />
-      )
+      history.goBack()
+      return (null)
     }
     if (this.state.submit) {
-      this.props.handleRedirect(this.props.history.location.pathname)
-      this.props.handleFirst()
-      return (
-        <Redirect to={redirect[redirect.length - 2]} />
-      )
+      history.goBack()
+      return (null)
     }
     // Profile render
     return (
