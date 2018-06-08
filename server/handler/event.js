@@ -3,12 +3,26 @@ const util = require('./utils')
 
 const event = {
   create: (req, res) => {
-    const data = Object.assign(req.file, {destination: '/images/'})
+    const data = Object.assign(req.file, {destination: '/images/', name: req.file.filename})
     const obj = Object.assign({}, req.body, {id: uuid(), image: data, attendees: [], comments: []})
     util.createEvent(obj).then(() => {
       res.json(obj)
     })
   },
+
+  edit: (req, res) => {
+    util.getEvent(req.body.id).then(({selectedEvent, selectedIndex}) => {
+      let image = selectedEvent.image
+      if (req.file) {
+        image = Object.assign(req.file, {destination: '/images/', name: req.file.filename})
+      }
+      const event = Object.assign(selectedEvent, req.body, {image})
+      return util.addEventToIndex(selectedIndex, event)
+    }).then(() => {
+      res.json({id: req.body.id})
+    })
+  },
+
   eventList: (req, res) => {
     util.getAllEvent().then((events) => {
       const obj = events.map((event) => {

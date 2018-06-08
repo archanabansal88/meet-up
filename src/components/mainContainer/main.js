@@ -100,9 +100,10 @@ class Main extends Component {
             <Route exact path='/profile' render={(props) => <Profile {...props} profile={profile}
               first={first} handleFirst={this.handleFirst} isLoggedin={isLoggedin} handleRedirect={this.handleRedirect}
               redirect={redirect} />} />
+            <Route path='/admin' component={Admin} />
             <Route exact path='/:id' render={(props) => <EventDetails {...props} isLoggedin={isLoggedin} profile={profile} first={first} yes={yes}
               onLoginSuccess={this.handleLoginSuccess} handleFirst={this.handleFirst} handleRedirect={this.handleRedirect} handleYes={this.handleYes} />} />
-            <Route path='/admin' component={Admin} />
+
           </Switch>
         </div>
       </BrowserRouter>

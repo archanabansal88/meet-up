@@ -59,7 +59,18 @@ app.post('/api/event/comment', comment.saveComment)
 app.delete('/api/event/comment', comment.deleteComment)
 
 // API call to create an event
-app.post('/api/event/create', upload.single('file'), event.create)
+app.post('/api/event', upload.single('file'), event.create)
+
+// API call to edit an event
+app.put('/api/event', upload.single('file'), event.edit)
+
+app.get('/admin', (req, res, next) => {
+  if (req.session.admin) {
+    res.redirect('/admin/dashboard')
+  } else {
+    next()
+  }
+})
 
 app.get('/admin/create', (req, res, next) => {
   if (!req.session.admin) {
