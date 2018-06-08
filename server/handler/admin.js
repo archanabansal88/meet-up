@@ -1,13 +1,18 @@
-function login (req, res) {
-  const {email} = req.body
-  const admin = 'archanamittal0388@gmail.com'
-  if (email === admin) {
-    req.session.admin = email
-    res.status(200).send('User Authentified')
-  } else {
-    req.session.email = false
-    res.status(401).send('Invalid User')
+const admin = {
+  authorize: (req, res, next) => {
+    if (req.session.admin) {
+      res.redirect('/admin/dashboard')
+    } else {
+      next()
+    }
+  },
+  authenticate: (req, res, next) => {
+    if (!req.session.admin) {
+      res.redirect('/')
+    } else {
+      next()
+    }
   }
 }
 
-module.exports = login
+module.exports = admin

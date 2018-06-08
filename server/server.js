@@ -37,11 +37,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('build'))
 
-// API call for admin login
-app.post('/api/admin/login', admin)
-
 // API call to get list of events
 app.get('/api/event', event.eventList)
+
+// API call to create an event
+app.post('/api/event', upload.single('file'), event.create)
+
+// API call to edit an event
+app.put('/api/event', upload.single('file'), event.edit)
 
 //  API call to get details of a particular event
 app.get('/api/event/:id', event.eventDetails)
@@ -58,37 +61,6 @@ app.post('/api/event/comment', comment.saveComment)
 //  API call to delete a comment for a particular event
 app.delete('/api/event/comment', comment.deleteComment)
 
-// API call to create an event
-app.post('/api/event', upload.single('file'), event.create)
-
-// API call to edit an event
-app.put('/api/event', upload.single('file'), event.edit)
-
-app.get('/admin', (req, res, next) => {
-  if (req.session.admin) {
-    res.redirect('/admin/dashboard')
-  } else {
-    next()
-  }
-})
-
-app.get('/admin/create', (req, res, next) => {
-  if (!req.session.admin) {
-    res.redirect('/')
-  } else {
-    next()
-  }
-})
-
-app.get('/admin/dashboard', (req, res, next) => {
-  // console.log(req.session.admin, req.session.user, '-----------')
-  if (!req.session.admin) {
-    res.redirect('/')
-  } else {
-    next()
-  }
-})
-
 // API call for user details
 app.post('/api/user/get', user.getUserInfo)
 
@@ -97,6 +69,13 @@ app.post('/api/user/login', user.login)
 
 // API call for user logout
 app.get('/logout', user.logout)
+
+// Authenticate Admin
+app.get('/admin', admin.authorize)
+
+app.get('/admin/create', admin.authenticate)
+
+app.get('/admin/dashboard', admin.authenticate)
 
 // to render UI...always place it at the bottom
 app.get('*', (req, res) => {
