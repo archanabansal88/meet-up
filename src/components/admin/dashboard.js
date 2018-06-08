@@ -1,14 +1,12 @@
-import React, {Component} from 'react'
+import React from 'react'
 import EventContainer from '../eventContainer'
 
-class DashBoard extends Component {
-  render () {
-    return (
-      <div>
-        <EventContainer onEventClick={this.props.onEventClick} />
-      </div>
-    )
-  }
+const DashBoard = ({onEventClick}) => {
+  return (
+    <div>
+      <EventContainer onEventClick={onEventClick} />
+    </div>
+  )
 }
 
 export default DashBoard

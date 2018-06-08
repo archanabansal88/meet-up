@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Attendees = ({attendees}) => {
-  console.log(attendees, 'printing attendees')
   return (
     <section className='section'>
       <h2 className='title is-size-4'>Attendees</h2>
