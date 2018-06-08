@@ -7,7 +7,7 @@ import http from '../../helper/http'
 
 class Profile extends Component {
   constructor (props) {
-    super()
+    super(props)
     this.state = {
       profile: props.profile,
       checkbox: props.profile.display,
@@ -44,14 +44,16 @@ class Profile extends Component {
 
   render () {
     const {name, email, aboutme, display} = this.state.profile
-    const {first, history} = this.props
+    const {first, history, isLoggedin} = this.props
     // Redirect logic
-    if (!this.props.isLoggedin) {
-      history.goBack()
+    if (!isLoggedin) {
+      console.log('redirecting from isLoggedin', history, this.props)
+      history.go(-1)
       return (null)
     }
     if (this.state.submit) {
-      history.goBack()
+      console.log('redirecting from submit')
+      history.go(-1)
       return (null)
     }
     // Profile render
@@ -95,7 +97,7 @@ class Profile extends Component {
               <input className='button is-link' type='submit' value='Submit' />
             </div>
             {!first
-              ? <Button className='button is-text' label='Cancel' />
+              ? <Button className='button is-text' label='Cancel' onClick={() => history.go(-1)} />
               : null}
           </div>
         </form>

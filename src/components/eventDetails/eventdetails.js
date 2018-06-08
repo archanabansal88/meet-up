@@ -119,6 +119,7 @@ class EventDetails extends Component {
     // profile redirect for first-time login
     if (first) {
       history.push('/profile')
+      return (null)
     }
     return (
       <main>
@@ -140,7 +141,7 @@ class EventDetails extends Component {
             <div className='columns'>
               <article className='column is-two-thirds'>
                 <Description description={event.description} />
-                <Attendees attendees={event.attendees} />
+                <Attendees attendees={event.attendees} profile={profile} />
                 <Comments comments={event.comments} isLoggedin={isLoggedin} eventId={event.id} profile={profile} eventDetails={this.getEventDetails} />
               </article>
               <article className='column'>

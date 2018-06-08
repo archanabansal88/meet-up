@@ -1,7 +1,6 @@
 import React from 'react'
 
-const Attendees = ({attendees}) => {
-  console.log(attendees, 'printing attendees')
+const Attendees = ({attendees, profile}) => {
   return (
     <section className='section'>
       <h2 className='title is-size-4'>Attendees</h2>
@@ -12,7 +11,7 @@ const Attendees = ({attendees}) => {
               <li key={index} className='box media-left'>
                 <figure className='image is-64x64'>
                   <img className='is-rounded'
-                    src={value.display
+                    src={value.email === profile.email && profile.display
                       ? value.image
                       : ('https://ui-avatars.com/api/?name=' + value.name.replace(' ', '+'))} />
                 </figure>
