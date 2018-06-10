@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
+import {withRouter} from 'react-router-dom'
 import Button from '../../shared/button'
+import config from '../../config/index'
+import http from '../../helper/http'
 
 class Logout extends Component {
   constructor (props) {
@@ -9,25 +12,32 @@ class Logout extends Component {
 
   signOut () {
     const auth2 = window.gapi.auth2.getAuthInstance()
-    auth2.disconnect()
-      .then(function () {
-        console.log('User signed out.')
-      })
+    return auth2.disconnect()
   }
+  componentDidMount () {
 
+  }
   onClick () {
-    this.signOut()
-    this.props.onLogoutSuccess()
-    if (this.props.first) {
-      this.props.handleFirst()
-    }
+    http.delete(`${config.url}api/user/logout`, {})
+      .then(() => {
+        console.log('logout')
+        this.signOut()
+      }).then(() => {
+        this.props.history.push('/')
+        this.props.onLogoutSuccess()
+        if (this.props.first) {
+          this.props.handleFirst()
+        }
+      })
   }
 
   render () {
     return (
-      <Button onClick={this.onClick} label='Logout' className='button is-inverted is-danger' />
+      <div>
+        <Button onClick={this.onClick} label='Logout' className='button is-inverted is-danger' />
+      </div>
     )
   }
 }
 
-export default Logout
+export default withRouter(Logout)
