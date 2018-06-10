@@ -1,5 +1,5 @@
 const uuid = require('uuid/v1')
-const util = require('./utils')
+const util = require('../model/utils')
 
 const event = {
   create: (req, res) => {

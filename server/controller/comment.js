@@ -1,18 +1,22 @@
-const util = require('./utils')
+const util = require('../model/utils')
+const uuid = require('uuid/v1')
 
-const attendee = {
-  saveAttendee: (req, res) => {
+const comment = {
+  saveComment: (req, res) => {
     let event, index
     util.getEvent(req.body.eventId).then(({selectedEvent, selectedIndex}) => {
       event = selectedEvent
       index = selectedIndex
-      return req.body.profile
+      return util.getUserProfile(req.body.email)
     }).then((userInfo) => {
-      const attendee = event.attendees.filter(attendee => attendee.email === userInfo.email)[0]
-      if (attendee) {
-        return
+      userInfo = JSON.parse(userInfo)
+      const obj = {
+        message: req.body.message,
+        dateTime: Date.now(),
+        commentId: uuid(),
+        ...userInfo
       }
-      event.attendees.push(userInfo)
+      event.comments.unshift(obj)
       return util.addEventToIndex(index, event)
     }).then(() => {
       res.end()
@@ -20,10 +24,9 @@ const attendee = {
       res.status(500).send()
     })
   },
-
-  deleteAttendee: (req, res) => {
+  deleteComment: (req, res) => {
     util.getEvent(req.body.eventId).then(({selectedEvent, selectedIndex}) => {
-      selectedEvent.attendees = selectedEvent.attendees.filter((attendee) => attendee.email !== req.body.profile.email)
+      selectedEvent.comments = selectedEvent.comments.filter((comment) => comment.commentId !== req.body.commentId)
       return util.addEventToIndex(selectedIndex, selectedEvent)
     }).then(() => {
       res.end()
@@ -33,4 +36,4 @@ const attendee = {
   }
 }
 
-module.exports = attendee
+module.exports = comment

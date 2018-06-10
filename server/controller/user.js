@@ -1,4 +1,4 @@
-const util = require('./utils')
+const util = require('../model/utils')
 
 const user = {
   login: (req, res) => {

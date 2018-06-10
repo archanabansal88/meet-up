@@ -1,4 +1,4 @@
-const Redis = require('../redis')
+const Redis = require('./redis')
 
 const util = {
   getEvent: (eventId) => {
