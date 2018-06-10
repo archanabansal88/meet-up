@@ -1,8 +1,8 @@
-const util = require('./utils')
+const userModel = require('../model/user')
 
-const user = {
+const userController = {
   login: (req, res) => {
-    util.saveUserInfo(req.body).then(() => {
+    userModel.saveUserInfo(req.body).then(() => {
       res.status(200).send('success')
     })
   },
@@ -22,10 +22,10 @@ const user = {
       req.session.admin = ''
     }
     const email = req.body.email
-    util.getUserProfile(email).then((obj) => {
+    userModel.getUserProfile(email).then((obj) => {
       res.json(JSON.parse(obj))
     })
   }
 }
 
-module.exports = user
+module.exports = userController

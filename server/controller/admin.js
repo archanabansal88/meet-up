@@ -1,4 +1,4 @@
-const admin = {
+const adminController = {
   authorize: (req, res, next) => {
     if (req.session.admin) {
       res.redirect('/admin/dashboard')
@@ -15,4 +15,4 @@ const admin = {
   }
 }
 
-module.exports = admin
+module.exports = adminController

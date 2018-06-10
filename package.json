@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --config webpack/webpack.dev.js",
     "build": "webpack --config webpack/webpack.prod.js",
-    "dev-server": "node ./server/server"
+    "dev-server": "nodemon ./server/server"
   },
   "author": "Archana Bansal",
   "contributors": [

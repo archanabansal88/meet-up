@@ -1,6 +1,18 @@
 const Redis = require('../redis')
+const multer = require('multer')
 
-const util = {
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, '../../build/images')
+  },
+  filename: function (req, file, callback) {
+    callback(null, Date.now() + '_' + file.originalname)
+  }
+})
+
+const upload = multer({ storage })
+
+const eventModel = {
   getEvent: (eventId) => {
     let selectedIndex = -1
     let selectedEvent
@@ -20,10 +32,6 @@ const util = {
     return Redis.lset('events', index, JSON.stringify(event))
   },
 
-  getUserProfile: (email) => {
-    return Redis.hget('users', email)
-  },
-
   createEvent: (obj) => {
     return Redis.lpush('events', JSON.stringify(obj))
   },
@@ -32,9 +40,9 @@ const util = {
     return Redis.lrange('events', 0, -1)
   },
 
-  saveUserInfo: ({email, name, id, image, aboutme, display}) => {
-    return Redis.hmset('users', email, JSON.stringify({email, name, id, image, aboutme, display}))
+  fileUpload: () => {
+    return upload.single('file')
   }
 }
 
-module.exports = util
+module.exports = eventModel
