@@ -68,7 +68,7 @@ app.post('/api/user/get', user.getUserInfo)
 app.post('/api/user/login', user.login)
 
 // API call for user logout
-app.get('/logout', user.logout)
+app.delete('/api/user/logout', user.logout)
 
 // Authenticate Admin
 app.get('/admin', admin.authorize)

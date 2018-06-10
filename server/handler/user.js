@@ -8,9 +8,9 @@ const user = {
   },
 
   logout: (req, res) => {
-    req.session.destroy()
-    res.clearCookie()
-    res.redirect('/')
+    req.session.destroy(() => {
+      res.end()
+    })
   },
 
   getUserInfo: (req, res) => {
