@@ -8,6 +8,20 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.min.css'
 
+const DatePickerWrapper = ({onClick, value}) => {
+  return (
+    <div className='control has-icons-left' onClick={onClick}>
+      <div className='input'>
+        {value}
+      </div>
+      <span className='icon is-medium is-left'>
+        <i className='fas fa-calendar-alt' />
+      </span>
+    </div>
+
+  )
+}
+
 class EventForm extends Component {
   constructor (props) {
     super(props)
@@ -111,6 +125,7 @@ class EventForm extends Component {
                 dateFormat='LLL'
                 className='input'
                 minDate={moment()}
+                customInput={<DatePickerWrapper />}
                 showDisabledMonthNavigation
               />
             </div>
