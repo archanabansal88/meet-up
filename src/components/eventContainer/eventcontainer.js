@@ -29,7 +29,7 @@ class EventContainer extends Component {
     const {onEventClick, showCarousel} = this.props
     return (
       <div className='container section'>
-        <h2 className='title is-4 is-marginless'>Events</h2>
+        <h2 className='title is-4'>Events</h2>
         {showErrorMsg && <div>There is a problem getting list of events.Please try after some time</div>}
         {events && events.length > 0 &&
           <div>

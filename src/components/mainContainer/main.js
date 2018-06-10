@@ -2,13 +2,11 @@ import React, {Component} from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Content from '../content'
 import Header from '../header'
-import CreateEvent from '../createEvent'
 import EventDetails from '../eventDetails'
 import config from '../../config/index'
 import http from '../../helper/http'
-import Login from '../admin'
+import Admin from '../admin'
 import Profile from '../profile'
-// import DashBoard from '../admin/dashboard'
 
 class Main extends Component {
   constructor (props) {

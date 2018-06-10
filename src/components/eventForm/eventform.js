@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Redirect} from 'react-router-dom'
 import Button from '../../shared/button'
 import Input from '../../shared/input'
 import TextArea from '../../shared/textarea'
@@ -7,19 +8,20 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.min.css'
 
-class CreateEvent extends Component {
+class EventForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      name: '',
-      address1: '',
-      address2: '',
-      address3: '',
-      pinCode: '',
-      description: '',
+      name: props.title || '',
+      address1: props.address1 || '',
+      address2: props.address2 || '',
+      address3: props.address3 || '',
+      pinCode: props.pinCode || '',
+      description: props.description || '',
       showErrorMsg: false,
-      image: null,
-      date: moment().add(1, 'd').set({'hour': 10, 'minute': 0})
+      image: props.image || null,
+      date: props.date || moment().add(1, 'd').set({'hour': 10, 'minute': 0}),
+      createdEventId: false
     }
     this.handleSubmitClick = this.handleSubmitClick.bind(this)
     this.fileChangedHandler = this.fileChangedHandler.bind(this)
@@ -48,6 +50,8 @@ class CreateEvent extends Component {
 
     if (this.handleValidation()) {
       const {name, address1, address2, address3, pinCode, description, image, date} = this.state
+      const {isEditMode, id} = this.props
+
       const formData = new window.FormData()
       formData.append('file', image)
       formData.append('title', name)
@@ -57,18 +61,18 @@ class CreateEvent extends Component {
       formData.append('pinCode', pinCode)
       formData.append('description', description)
       formData.append('dateTime', date)
+      id && formData.append('id', id)
 
-      fetch(`${config.url}api/event/create`, {
-        method: 'POST',
+      fetch(`${config.url}api/event`, {
+        method: isEditMode ? 'PUT' : 'POST',
         credentials: 'same-origin',
         body: formData
-      }).then((response) => {
-        if (response.status === 200) {
-          this.handleReset()
-        }
-      }).catch((reject) => {
-        this.setState({showErrorMsg: true})
-      })
+      }).then(response => response.json())
+        .then((event) => {
+          this.setState({createdEventId: event.id})
+        }).catch((reject) => {
+          this.setState({showErrorMsg: true})
+        })
     } else {
       this.setState({showErrorMsg: true})
     }
@@ -78,23 +82,13 @@ class CreateEvent extends Component {
     this.setState({image: event.target.files[0]})
   }
 
-  handleReset () {
-    this.setState({
-      name: '',
-      address1: '',
-      address2: '',
-      address3: '',
-      pinCode: '',
-      description: '',
-      image: null,
-      date: moment().add(1, 'd').set({'hour': 10, 'minute': 0})
-    })
-  }
-
   render () {
-    const {name, address1, address2, address3, pinCode, description, image, date} = this.state
+    const {name, address1, address2, address3, pinCode, description, image, date, createdEventId} = this.state
+    const {isEditMode} = this.props
+
     return (
       <div className='hero-body container'>
+        {createdEventId && <Redirect to={`/${createdEventId}`} />}
         <div>
           <h1 className='title'>Create a new Event</h1>
           {this.state.showErrorMsg && <div>Sorry, We are unable to create an event due to a technical glitch</div>}
@@ -170,7 +164,7 @@ class CreateEvent extends Component {
               </div>
             </div>
             <TextArea isHorizontal name='textarea' label='Event Description' placeholder='Enter description here' onChange={this.handleInputChange.bind(this, 'description')} value={description} />
-            <Button className='button is-primary' label='Create Event' onClick={this.handleSubmitClick} />
+            <Button className='button is-primary' label={isEditMode ? 'Edit Event' : 'Create Event'} onClick={this.handleSubmitClick} />
           </form>
         </div>
       </div>
@@ -178,4 +172,4 @@ class CreateEvent extends Component {
   }
 }
 
-export default CreateEvent
+export default EventForm

@@ -13,7 +13,7 @@ const EventList = ({events, onEventClick}) => {
             </div>
             <Link to='/admin/create'>
               <div className='card-content'>
-                <div className='has-text-grey-dark subtitle is-5'>createEvent</div>
+                <div className='has-text-grey-dark subtitle is-5'>Create</div>
               </div>
             </Link>
           </div>
